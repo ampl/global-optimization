@@ -7,4 +7,5 @@ Sources:
 * `Global library <http://www.gamsworld.org/global/globallib.htm>`_
 
 See also the `COCONUT benchmark
-<http://www.mat.univie.ac.at/~neum/glopt/coconut/Benchmark/Benchmark.html>`_.
+<http://www.mat.univie.ac.at/~neum/glopt/coconut/Benchmark/Benchmark.html>`_
+which also contains constraint satisfaction problems.
