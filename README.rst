@@ -1,4 +1,6 @@
-global-optimization
-===================
+Global Optimization Test Set
+============================
 
-`Global optimization <http://en.wikipedia.org/wiki/Global_optimization>`_ problems
+Sources:
+
+* [CUTE](http://orfe.princeton.edu/~rvdb/ampl/nlmodels/cute/) nonlinear optimization problems
