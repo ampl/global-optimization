@@ -1,0 +1,54 @@
+MINOS 5.5: MINOS 5.5: optimal solution found.
+5 iterations, objective 0
+Nonlin evals: constrs = 3, Jac = 2.
+Objective = find a feasible point.
+SR = 27.4523
+LR = 1.5
+PK = 10
+EF = 0
+SX = 19.2166
+LX = 1.5
+SD = 3.5688
+SK = 4.0696
+ST = 34.315
+SF = 88.025
+LF = 5.1306
+AM = 0
+CA = -0.14809
+CB = 0.7598
+SO = 0
+SS = 0
+IMPDER = 114.7
+IMPK = 500
+IMPFUS = 1760.5
+QI = 2325.6
+PT = 5.6788
+MV = 14197.1
+MC = 12589.3
+MD = 28394.2
+PD = 0.2
+NS = 1
+VS = 0
+CR = 100
+PM = 15
+DV = 0
+MZ = 500
+VN = 10
+QV = 814.9
+QF = 3140.5
+IMPTRAIN = 1945
+IMPMOT = 190.85
+IMPNMOT = 35
+IMPPET = 100.001
+IMPPIL = 200
+IMPCAN = 120
+IMPSNA = 700
+MS = 1000
+EL = 4.9367
+DE = 0
+DS = 0
+IMPVOIL = 5000
+NM = 1
+NP = 1
+NG = 1
+
