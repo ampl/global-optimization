@@ -14,9 +14,9 @@
 # Optimal argument value: x* = 17.29903524
 
 # Variables
-var x{1..1}; # 1-variable model
+var x; # 1-variable model
 
 # Objective function
-minimize ObjFct: log(x[1])*sin(x[1]);
+minimize ObjFct: log(x)*sin(x);
 # Bound constraint[s]
-s.t. Box1: 1 <= x[1] <= 20;
+s.t. Box1: 1 <= x <= 20;
