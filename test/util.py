@@ -2,7 +2,7 @@
 
 import hashlib, os, tempfile
 from contextlib import contextmanager
-from subprocess import check_call
+from subprocess import check_call, Popen, PIPE
 
 def files(dirname, filenames):
   """
@@ -34,7 +34,7 @@ def temp_nl_file(ampl_filename):
   """
   dirname, filename = os.path.split(ampl_filename)
   with tempfile.NamedTemporaryFile(suffix='.nl') as f:
-    check_call(['ampl', '-ob' + f.name[:-3], filename], cwd=dirname)
+    check_call(['ampl', '-ob' + os.path.splitext(f.name)[0], filename], cwd=dirname)
     yield f
 
 def sha1_file(filename):
@@ -47,3 +47,36 @@ def sha1_file(filename):
       hasher.update(buf)
       buf = f.read(blocksize)
     return hasher.hexdigest()
+
+@contextmanager
+def solve_nl(nl_filename, solver):
+  "Solves the NL problem given in *nl_filename* with the specified solver."
+  sol_filename = os.path.splitext(nl_filename)[0] + '.sol'
+  p = None
+  try:
+    p = Popen([solver, nl_filename, '-AMPL'], stdout=PIPE)
+    p.communicate()
+    yield sol_filename
+  finally:
+    if p:
+      # Wait for the child process to terminate in case communicate() was
+      # interrupted by SIGINT.
+      p.wait()
+    # Remove solution file if it exists.
+    try:
+      os.remove(sol_filename)
+    except OSError:
+      pass
+
+def solve(ampl_filename, **kwargs):
+  """
+  Solves the AMPL problem given in *ampl_filename*.
+  The *solver* arguments specifies the solver to use.
+  The default solver is `minos`.
+  Example:
+    solve('test.ampl', solver='couenne')
+  """
+  solver = kwargs.get('solver', 'minos')
+  with temp_nl_file(ampl_filename) as nl_file:
+    with solve_nl(nl_file.name, solver) as sol_filename:
+      pass # TODO: yield sol_filename
