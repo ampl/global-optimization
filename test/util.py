@@ -4,6 +4,11 @@ def files(dirname, filenames):
   """
   Parses *filenames* which is a string containing one name per line, possibly
   ended with a # comment, and returns the list of names joined with *dirname*.
+  Example:
+    filenames = files('nlmodels', '''
+      blend.mod
+      branin.mod
+      ''')
   """
   results = []
   for filename in filenames.split('\n'):
