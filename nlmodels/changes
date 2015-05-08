@@ -14,3 +14,7 @@ rather than 1000.
 Sun Dec 20 14:53:58 EST 1998
   steenbre.mod: in the data section, add a := to the "var capacity"
 line, for the benefit of older AMPL processors (prior to 19960819).
+
+Fri May  8 09:52:45 PDT 2015
+  camel1u.mod: a variant of camel1.mod with an additional constraint
+to guarantee the unique solution
