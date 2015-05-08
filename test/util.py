@@ -1,6 +1,8 @@
 # Test utilities
 
-import os
+import os, tempfile
+from contextlib import contextmanager
+from subprocess import check_call
 
 def files(dirname, filenames):
   """
@@ -16,8 +18,21 @@ def files(dirname, filenames):
   for filename in filenames.split('\n'):
     comment_pos = filename.find('#')
     if comment_pos != -1:
-      filename = filename[0:comment_pos]
+      filename = filename[:comment_pos]
     filename = filename.strip()
     if filename != '':
       results.append(os.path.join(dirname, filename))
   return results
+
+@contextmanager
+def temp_nl_file(ampl_filename):
+  """
+  Translates *ampl_filename* with AMPL and generates a temporary NL file.
+  Example:
+    with temp_nl_file('test.ampl') as f:
+      print(f.name)
+  """
+  dirname, filename = os.path.split(ampl_filename)
+  with tempfile.NamedTemporaryFile(suffix='.nl') as f:
+    check_call(['ampl', '-ob' + f.name[:-3], filename], cwd=dirname)
+    yield f
