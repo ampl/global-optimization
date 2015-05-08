@@ -1,7 +1,9 @@
 # Maximum area for unit-diameter polygon of N sides.
 # The following model started as a GAMS model by Francisco J. Prieto.
 
-param N integer > 0;
+# The default value of N is 6, but it can be changed with with a let statement:
+#   let N := 10;
+param N integer > 0 default 6;
 set I := 1..N;
 
 param pi := 4*atan(1.);
@@ -22,13 +24,3 @@ s.t. fix_theta: the[N] = pi;
 s.t. fix_rho:   rho[N] = 0;
 
 maximize area: .5*sum{i in 2..N} rho[i]*rho[i-1]*sin(the[i]-the[i-1]);
-
-data;
-param N :=
-
-# This assumes that N will be given separately.  For example,
-# you might invoke
-#    ampl -omp6 pgon.mod -
-# and then type
-#    6; end;
-# to generate the 6-sided version of this problem (in files p6.*).
