@@ -49,34 +49,26 @@ def sha1_file(filename):
     return hasher.hexdigest()
 
 @contextmanager
-def solve_nl(nl_filename, solver):
-  "Solves the NL problem given in *nl_filename* with the specified solver."
-  sol_filename = os.path.splitext(nl_filename)[0] + '.sol'
-  p = None
-  try:
-    p = Popen([solver, nl_filename, '-AMPL'], stdout=PIPE)
-    p.communicate()
-    yield sol_filename
-  finally:
-    if p:
-      # Wait for the child process to terminate in case communicate() was
-      # interrupted by SIGINT.
-      p.wait()
-    # Remove solution file if it exists.
-    try:
-      os.remove(sol_filename)
-    except OSError:
-      pass
-
-def solve(ampl_filename, **kwargs):
+def solve(ampl_filename, solver):
   """
-  Solves the AMPL problem given in *ampl_filename*.
-  The *solver* arguments specifies the solver to use.
-  The default solver is `minos`.
+  Solves the AMPL problem given in *ampl_filename* with the specified solver.
   Example:
-    solve('test.ampl', solver='couenne')
+    solve('test.ampl', 'minos')
   """
-  solver = kwargs.get('solver', 'minos')
   with temp_nl_file(ampl_filename) as nl_file:
-    with solve_nl(nl_file.name, solver) as sol_filename:
-      pass # TODO: yield sol_filename
+    sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
+    p = None
+    try:
+      p = Popen([solver, nl_file.name, '-AMPL'], stdout=PIPE)
+      p.communicate()
+      yield sol_filename
+    finally:
+      if p:
+        # Wait for the child process to terminate in case communicate() was
+        # interrupted by SIGINT.
+        p.wait()
+      # Remove solution file if it exists.
+      try:
+        os.remove(sol_filename)
+      except OSError:
+        pass

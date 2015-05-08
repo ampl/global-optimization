@@ -2,6 +2,8 @@
 
 import os, tempfile, util
 
+solver = 'couenne'
+
 def test_files():
   f = util.files('foo', '''
     bar # comment
@@ -26,16 +28,25 @@ def test_sha1_file():
     f.flush()
     assert(util.sha1_file(f.name) == '4f7a376f6110cb8aad4f02e319b52f7325d63a83')
 
-def test_solve_nl():
+def test_solve():
   with tempfile.NamedTemporaryFile() as ampl_file:
     ampl_file.write('var x >= 42; minimize o: x;')
     ampl_file.flush()
-    with util.temp_nl_file(ampl_file.name) as nl_file:
-      nl_filename = nl_file.name
-      sol_filename = os.path.splitext(nl_filename)[0] + '.sol'
-      with util.solve_nl(nl_filename, 'minos') as sf:
-        assert(sol_filename == sf)
-        assert(os.path.exists(sol_filename))
-      assert(not os.path.exists(sol_filename))
-
-# TODO: test if solution is removed in case of SIGINT
+    nl_filename = None
+    sol_filename = None
+    with util.solve(ampl_file.name, solver) as sf:
+      nl_filename = os.path.splitext(sf)[0] + '.nl'
+      sol_filename = sf
+      assert(os.path.exists(nl_filename))
+      assert(os.path.exists(sol_filename))
+    assert(not os.path.exists(nl_filename))
+    assert(not os.path.exists(sol_filename))
+    # Check if files are deleted even in case of KeyboardInterrupt.
+    with util.solve(ampl_file.name, solver) as sf:
+      nl_filename = os.path.splitext(sf)[0] + '.nl'
+      sol_filename = sf
+      assert(os.path.exists(nl_filename))
+      assert(os.path.exists(sol_filename))
+      raise KeyboardInterrupt()
+    assert(not os.path.exists(nl_filename))
+    assert(not os.path.exists(sol_filename))
