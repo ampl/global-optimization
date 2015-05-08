@@ -1,6 +1,6 @@
 # Test utilities
 
-import os, tempfile
+import hashlib, os, tempfile
 from contextlib import contextmanager
 from subprocess import check_call
 
@@ -36,3 +36,14 @@ def temp_nl_file(ampl_filename):
   with tempfile.NamedTemporaryFile(suffix='.nl') as f:
     check_call(['ampl', '-ob' + f.name[:-3], filename], cwd=dirname)
     yield f
+
+def sha1_file(filename):
+  "Computes a SHA-1 hash of file *filename*"
+  blocksize = 65536
+  hasher = hashlib.sha1()
+  with open(filename, 'rb') as f:
+    buf = f.read(blocksize)
+    while len(buf) > 0:
+      hasher.update(buf)
+      buf = f.read(blocksize)
+    return hasher.hexdigest()

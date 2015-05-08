@@ -19,3 +19,9 @@ def test_temp_nl_file():
       assert(nl_filename.endswith('.nl'))
       assert(os.path.exists(nl_filename))
     assert(not os.path.exists(nl_filename))
+
+def test_sha1_file():
+  with tempfile.NamedTemporaryFile() as f:
+    f.write('some useful content')
+    f.flush()
+    assert(util.sha1_file(f.name) == '4f7a376f6110cb8aad4f02e319b52f7325d63a83')
