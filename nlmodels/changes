@@ -20,3 +20,4 @@ Fri May  8 09:52:45 PDT 2015
 to guarantee the unique solution
   braninu.mod: a variant of branin.mod with an additional constraint
 to guarantee the unique solution
+  hs15a.mod: a variant of hs15.mod with an additional bound x[2] >= 2
