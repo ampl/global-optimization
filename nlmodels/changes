@@ -21,7 +21,8 @@ to guarantee the unique solution
   braninu.mod: a variant of branin.mod with an additional constraint
 to guarantee the unique solution
   hs15a.mod: a variant of hs15.mod with an additional bound x[2] >= 2
-  p2gon.mod: copied from http://www.netlib.org/ampl/models/
+  p2gon.mod: copied from http://www.netlib.org/ampl/models/ and set
+the default value of N to 20
   pgon.mod: copied from http://www.netlib.org/ampl/models/ and set
 the default value of N to 6
   qb2.mod: a toy model received from David Gay
