@@ -18,3 +18,5 @@ line, for the benefit of older AMPL processors (prior to 19960819).
 Fri May  8 09:52:45 PDT 2015
   camel1u.mod: a variant of camel1.mod with an additional constraint
 to guarantee the unique solution
+  braninu.mod: a variant of branin.mod with an additional constraint
+to guarantee the unique solution
