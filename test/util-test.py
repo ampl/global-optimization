@@ -1,4 +1,4 @@
-# util test
+# The util module tests
 
 from util import files
 
