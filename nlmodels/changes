@@ -24,3 +24,4 @@ to guarantee the unique solution
   p2gon.mod: copied from http://www.netlib.org/ampl/models/
   pgon.mod: copied from http://www.netlib.org/ampl/models/ and set
 the default value of N to 6
+  qb2.mod: a toy model received from David Gay
