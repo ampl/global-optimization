@@ -21,32 +21,3 @@ minimize objective: abs(x^2 + y^2 - z^2);
 s.t. eq1: x^2 + y^2 + z^2 + x - y - z - 44 == 0;
 s.t. eq2: x*y*z + x*y - 3*x - y - 2*z - 49 == 0;
 s.t. eq3: x*z + 2*x*y + x + z - 47 <= 0;
-
-# Set the solver option
-option solver lgo;
-# objective = 0
-# x = 3
-# y = 4
-# z = 5
-
-# Try also the solver options shown below 
-
-# option solver knitro;
-# objective = 3.36962e-08
-
-# option solver loqo;
-# objective = 30.7738
-
-# option solver minos;
-# objective = 6.33862
-
-# option solver snopt;
-# objective = 7.24754e-13
-
-# Solve the model as stated above
-solve;
-
-# Display results in command window
-display objective;
-display _varname, _var; 
-display _conname, _con, _con.slack;
