@@ -7,6 +7,7 @@ Sources:
 * global: `GLOBAL library <http://www.gamsworld.org/global/globallib.htm>`_
 * csp: `Constraint satisfaction test problems <http://icwww.epfl.ch/~sam/Coconut-benchs/>`_
 * nlmodels: models from the `AMPL repository on Netlib <http://www.netlib.org/ampl/>`_
+  with a few `changes <https://github.com/ampl/global-optimization/blob/master/nlmodels/changes>`_
 * jdp: models by Janos D. Pinter
 
 See also the `COCONUT benchmark
