@@ -57,28 +57,30 @@ def solve(ampl_filename, **kwargs):
   """
   with temp_nl_file(ampl_filename) as nl_file:
     sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
-    process = thread = None
     timeout = kwargs.get('timeout', 1e9)
-    stop_event = threading.Event()
+    done = threading.Event()
     def kill_on_timeout():
-      if not stop_event.wait(timeout):
+      if not done.wait(timeout):
         process.kill()
     thread = threading.Thread(target=kill_on_timeout)
     try:
       process = Popen([kwargs.get('solver', 'minos'), nl_file.name, '-AMPL'], stdout=PIPE)
       thread.start()
       process.communicate()
-    finally:
+    except KeyboardInterrupt:
       if process:
         # Wait for the child process to terminate in case communicate() was
         # interrupted by SIGINT.
         process.wait()
-      stop_event.set()
-      if thread:
-        thread.join()
-      yield sol_filename
-      # Remove solution file if it exists.
+    finally:
       try:
-        os.remove(sol_filename)
-      except OSError:
-        pass
+        done.set()
+        if thread.isAlive():
+          thread.join()
+        yield sol_filename
+      finally:
+        # Remove the solution file if it exists.
+        try:
+          os.remove(sol_filename)
+        except OSError:
+          pass

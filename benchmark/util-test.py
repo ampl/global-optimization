@@ -1,8 +1,9 @@
 # The util module tests
 
 import os, tempfile, time, util
+from subprocess import check_call
 
-solver = 'couenne'
+solver = './mock-solver'
 
 def test_files():
   f = util.files('foo', '''
@@ -28,6 +29,16 @@ def test_sha1_file():
     f.flush()
     assert(util.sha1_file(f.name) == '4f7a376f6110cb8aad4f02e319b52f7325d63a83')
 
+def test_mock_solver():
+  try:
+    sol_filename = None
+    with tempfile.NamedTemporaryFile(suffix='.nl') as nl_file:
+      sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
+      check_call([solver, nl_file.name])
+    assert(os.path.exists(sol_filename))
+  finally:
+    os.remove(sol_filename)
+
 def test_solve():
   with tempfile.NamedTemporaryFile() as ampl_file:
     ampl_file.write('var x >= 42; minimize o: x;')
@@ -49,10 +60,10 @@ def test_solve():
         assert(os.path.exists(nl_filename))
         assert(os.path.exists(sol_filename))
         raise KeyboardInterrupt()
-      assert(not os.path.exists(nl_filename))
-      assert(not os.path.exists(sol_filename))
     except KeyboardInterrupt:
       pass
+    assert(not os.path.exists(nl_filename))
+    assert(not os.path.exists(sol_filename))
 
 repo_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
