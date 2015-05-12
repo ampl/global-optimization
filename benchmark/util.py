@@ -67,20 +67,13 @@ def solve(ampl_filename, **kwargs):
       process = Popen([kwargs.get('solver', 'minos'), nl_file.name, '-AMPL'], stdout=PIPE)
       thread.start()
       process.communicate()
-    except KeyboardInterrupt:
-      if process:
-        # Wait for the child process to terminate in case communicate() was
-        # interrupted by SIGINT.
-        process.wait()
+      # Stop the timeout thread.
+      done.set()
+      thread.join()
+      yield sol_filename
     finally:
+      # Remove the solution file if it exists.
       try:
-        done.set()
-        if thread.isAlive():
-          thread.join()
-        yield sol_filename
-      finally:
-        # Remove the solution file if it exists.
-        try:
-          os.remove(sol_filename)
-        except OSError:
-          pass
+        os.remove(sol_filename)
+      except OSError:
+        pass

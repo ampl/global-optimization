@@ -53,6 +53,7 @@ def test_solve():
     assert(not os.path.exists(nl_filename))
     assert(not os.path.exists(sol_filename))
     # Check if files are deleted even in case of KeyboardInterrupt.
+    caught = False
     try:
       with util.solve(ampl_file.name, solver=solver) as sf:
         nl_filename = os.path.splitext(sf)[0] + '.nl'
@@ -61,7 +62,8 @@ def test_solve():
         assert(os.path.exists(sol_filename))
         raise KeyboardInterrupt()
     except KeyboardInterrupt:
-      pass
+      caught = True
+    assert(caught)
     assert(not os.path.exists(nl_filename))
     assert(not os.path.exists(sol_filename))
 
