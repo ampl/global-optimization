@@ -1,6 +1,6 @@
 # The util module tests
 
-import os, tempfile, util
+import os, tempfile, time, util
 
 solver = 'couenne'
 
@@ -34,7 +34,7 @@ def test_solve():
     ampl_file.flush()
     nl_filename = None
     sol_filename = None
-    with util.solve(ampl_file.name, solver) as sf:
+    with util.solve(ampl_file.name, solver=solver) as sf:
       nl_filename = os.path.splitext(sf)[0] + '.nl'
       sol_filename = sf
       assert(os.path.exists(nl_filename))
@@ -42,11 +42,23 @@ def test_solve():
     assert(not os.path.exists(nl_filename))
     assert(not os.path.exists(sol_filename))
     # Check if files are deleted even in case of KeyboardInterrupt.
-    with util.solve(ampl_file.name, solver) as sf:
-      nl_filename = os.path.splitext(sf)[0] + '.nl'
-      sol_filename = sf
-      assert(os.path.exists(nl_filename))
-      assert(os.path.exists(sol_filename))
-      raise KeyboardInterrupt()
-    assert(not os.path.exists(nl_filename))
-    assert(not os.path.exists(sol_filename))
+    try:
+      with util.solve(ampl_file.name, solver=solver) as sf:
+        nl_filename = os.path.splitext(sf)[0] + '.nl'
+        sol_filename = sf
+        assert(os.path.exists(nl_filename))
+        assert(os.path.exists(sol_filename))
+        raise KeyboardInterrupt()
+      assert(not os.path.exists(nl_filename))
+      assert(not os.path.exists(sol_filename))
+    except KeyboardInterrupt:
+      pass
+
+repo_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+
+def test_solve_timeout():
+  start_time = time.time()
+  with util.solve(os.path.join(repo_dir, 'nlmodels', 'camel1u.mod'),
+                  solver='couenne', timeout=1) as sf:
+    elapsed_time = time.time() - start_time
+    assert elapsed_time >= 1 and elapsed_time < 2

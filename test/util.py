@@ -1,6 +1,6 @@
 # Test utilities
 
-import hashlib, os, tempfile
+import hashlib, os, tempfile, threading
 from contextlib import contextmanager
 from subprocess import check_call, Popen, PIPE
 
@@ -49,24 +49,34 @@ def sha1_file(filename):
     return hasher.hexdigest()
 
 @contextmanager
-def solve(ampl_filename, solver):
+def solve(ampl_filename, **kwargs):
   """
-  Solves the AMPL problem given in *ampl_filename* with the specified solver.
+  Solves the AMPL problem given in *ampl_filename*.
   Example:
-    solve('test.ampl', 'minos')
+    solve('test.ampl', solver='minos', timeout=100)
   """
   with temp_nl_file(ampl_filename) as nl_file:
     sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
-    p = None
+    process = thread = None
+    timeout = kwargs.get('timeout', 1e9)
+    stop_event = threading.Event()
+    def kill_on_timeout():
+      if not stop_event.wait(timeout):
+        process.kill()
+    thread = threading.Thread(target=kill_on_timeout)
     try:
-      p = Popen([solver, nl_file.name, '-AMPL'], stdout=PIPE)
-      p.communicate()
-      yield sol_filename
+      process = Popen([kwargs.get('solver', 'minos'), nl_file.name, '-AMPL'], stdout=PIPE)
+      thread.start()
+      process.communicate()
     finally:
-      if p:
+      if process:
         # Wait for the child process to terminate in case communicate() was
         # interrupted by SIGINT.
-        p.wait()
+        process.wait()
+      stop_event.set()
+      if thread:
+        thread.join()
+      yield sol_filename
       # Remove solution file if it exists.
       try:
         os.remove(sol_filename)
