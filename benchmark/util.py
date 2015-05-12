@@ -1,4 +1,4 @@
-# Test utilities
+# Benchmark utilities
 
 import hashlib, os, tempfile, threading
 from contextlib import contextmanager
