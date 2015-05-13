@@ -17,7 +17,7 @@ def files(dirname, filenames):
       ''')
   """
   results = []
-  for filename in filenames.split('\n'):
+  for filename in filenames.splitlines():
     comment_pos = filename.find('#')
     if comment_pos != -1:
       filename = filename[:comment_pos]
@@ -61,12 +61,19 @@ def read_solution(ampl_filename, sol_filename):
     model "{}";
     solution "{}";
     display _obj[1];
+    print solve_message;
     '''.format(ampl_filename, sol_filename))[0]
   obj = '_obj[1] = '
-  for line in output.split('\n'):
-    if line.startswith(obj):
-      return float(line[len(obj):])
-  return float('nan')
+  obj_value = float('nan')
+  solve_message = None
+  for line in output.splitlines():
+    if solve_message is not None:
+      if line:
+        solve_message += line + '\n'
+    elif line.startswith(obj):
+      obj_value = float(line[len(obj):])
+      solve_message = ''
+  return (obj_value, solve_message)
 
 class SolveResult:
   def __init__(self, sol_filename, output, solution_time):
@@ -147,9 +154,19 @@ class Benchmark:
     ampl_filename = os.path.join(repo_dir, model)
     with solve(ampl_filename, solver=self.solver, solver_options=self.solver_options,
                     timeout=self.timeout) as result:
-      obj_value = read_solution(ampl_filename, result.sol_filename)
+      obj_value, solve_message = read_solution(ampl_filename, result.sol_filename)
       self.write_log(model=model, sha=sha1_file(ampl_filename),
-                     time=result.solution_time, obj_value=obj_value, output=result.output)
+                     time=result.solution_time, obj_value=obj_value,
+                     output=result.output, solve_message=solve_message)
+
+  def write_log_multiline(self, key, text):
+    self.log.write('  {}: '.format(key))
+    if text:
+      self.log.write('|\n')
+      for line in text.splitlines():
+        self.log.write('    {}\n'.format(line))
+    else:
+      self.log.write('{}\n'.format(text))
 
   def write_log(self, **kwargs):
     self.log.write('- model: {}\n'.format(kwargs.get('model')))
@@ -165,8 +182,7 @@ class Benchmark:
     self.log.write('  time: {}\n'.format(time))
     self.log.write('  timeout: {}\n'.format(time >= self.timeout))
     self.log.write('  obj_value: {}\n'.format(kwargs.get('obj_value')))
-    self.log.write('  output: |\n')
-    for line in kwargs.get('output').split('\n'):
-      self.log.write('    {}\n'.format(line))
+    self.write_log_multiline('solve_message', kwargs.get('solve_message'))
+    self.write_log_multiline('output', kwargs.get('output'))
     self.log.write('\n')
     self.log.flush()

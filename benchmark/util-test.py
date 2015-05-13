@@ -41,7 +41,9 @@ def test_read_solution():
     with util.temp_nl_file(ampl_file.name) as nl_file:
       check_call([solver, nl_file.name, '-AMPL'], stdout=PIPE, stderr=PIPE)
       sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
-      assert util.read_solution(ampl_file.name, sol_filename) == 42
+      obj_value, solve_message = util.read_solution(ampl_file.name, sol_filename)
+      assert obj_value == 42
+      assert 'couenne' in solve_message
 
 def test_mock_solver():
   try:
