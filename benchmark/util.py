@@ -68,32 +68,47 @@ def read_solution(ampl_filename, sol_filename):
       return float(line[len(obj):])
   return float('nan')
 
+class SolveResult:
+  def __init__(self, sol_filename, output, solution_time):
+    # Solution (.sol) filename
+    self.sol_filename = sol_filename
+    # Solver output
+    self.output = output
+    # Solution time in seconds
+    self.solution_time = solution_time
+
 @contextmanager
 def solve(ampl_filename, **kwargs):
   """
   Solves the AMPL problem given in *ampl_filename*.
   Example:
-    solve('test.ampl', solver='minos', timeout=100)
+    with solve('test.ampl', solver='lgo', solver_options={'opmode': 3}, timeout=100) as result:
+      print(result.output)
   """
   with temp_nl_file(ampl_filename) as nl_file:
     sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
+    # Prepare the solver command.
+    command = [kwargs.get('solver', 'minos'), nl_file.name, '-AMPL']
+    for name, value in kwargs.get('solver_options', {}).iteritems():
+      command.append('{}={}'.format(name, value))
+    # Create the timeout thread.
     timeout = kwargs.get('timeout', default_timeout)
     done = threading.Event()
     def kill_on_timeout():
       if not done.wait(timeout):
         process.send_signal(signal.SIGINT)
     thread = threading.Thread(target=kill_on_timeout)
+    # Invoke the solver.
     start_time = time.time()
     try:
-      process = Popen([kwargs.get('solver', 'minos'), nl_file.name, '-AMPL'],
-                      stdout=PIPE, stderr=STDOUT)
+      process = Popen(command, stdout=PIPE, stderr=STDOUT)
       thread.start()
-      process.communicate()
-      elapsed_time = time.time() - start_time
+      output = process.communicate()[0]
+      solution_time = time.time() - start_time
       # Stop the timeout thread.
       done.set()
       thread.join()
-      yield elapsed_time, sol_filename
+      yield SolveResult(sol_filename, output, solution_time)
     finally:
       # Remove the solution file if it exists.
       try:
@@ -109,6 +124,8 @@ class Benchmark:
   def __init__(self, **kwargs):
     # AMPL solver name
     self.solver = kwargs.get('solver')
+    # A dict of solver options
+    self.solver_options = kwargs.get('solver_options', {})
     # Solver timeout in seconds
     self.timeout = kwargs.get('timeout', default_timeout)
     # Log filename
@@ -128,11 +145,11 @@ class Benchmark:
     passing it to solver, reading the solution and writing it to log.
     """
     ampl_filename = os.path.join(repo_dir, model)
-    with solve(ampl_filename, solver=self.solver,
-                    timeout=self.timeout) as (time, sol_filename):
-      obj_value = read_solution(ampl_filename, sol_filename)
+    with solve(ampl_filename, solver=self.solver, solver_options=self.solver_options,
+                    timeout=self.timeout) as result:
+      obj_value = read_solution(ampl_filename, result.sol_filename)
       self.write_log(model=model, sha=sha1_file(ampl_filename),
-                     time=time, obj_value=obj_value)
+                     time=result.solution_time, obj_value=obj_value)
 
   def write_log(self, **kwargs):
     self.log.write('- model: {}\n'.format(kwargs.get('model')))
@@ -140,6 +157,10 @@ class Benchmark:
     # of the model was used.
     self.log.write('  sha: {}\n'.format(kwargs.get('sha')))
     self.log.write('  solver: {}\n'.format(self.solver))
+    if len(self.solver_options) > 0:
+      self.log.write('  solver_options:\n')
+      for name, value in self.solver_options.iteritems():
+        self.log.write('    {}: {}\n'.format(name, value))
     time = kwargs.get('time')
     self.log.write('  time: {}\n'.format(time))
     self.log.write('  timeout: {}\n'.format(time >= self.timeout))
