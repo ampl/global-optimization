@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # A mock solver
 
-from __future__ import print_function
 import os, sys
 
 filename = os.path.splitext(sys.argv[1])[0] + '.sol'
