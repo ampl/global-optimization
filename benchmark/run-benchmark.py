@@ -56,7 +56,20 @@ models += files('jdp', '''
   jdp4.mod
   ''')
 
-with Benchmark(solver='lgo', timeout=1) as b:
+# Timeout in seconds
+TIMEOUT = 10
+
+LGO_LOCAL_SEARCH_MODE = 0
+LGO_MULTISTART_MODE   = 3
+
+with Benchmark(log='lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
+               solver_options={'opmode': LGO_LOCAL_SEARCH_MODE}) as b:
+  for model in models:
+    print(model)
+    b.run(model)
+
+with Benchmark(log='lgo-multistart.yaml', solver='lgo', timeout=TIMEOUT,
+               solver_options={'opmode': LGO_MULTISTART_MODE}) as b:
   for model in models:
     print(model)
     b.run(model)
