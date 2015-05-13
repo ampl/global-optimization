@@ -1,6 +1,6 @@
 # The util module tests
 
-import os, tempfile, time, util
+import os, tempfile, time, util, yaml
 from subprocess import check_call, PIPE
 
 solver = 'couenne'
@@ -85,3 +85,31 @@ def test_solve_timeout():
                   solver=solver, timeout=1) as sf:
     elapsed_time = time.time() - start_time
     assert elapsed_time >= 1 and elapsed_time < 2
+
+def test_benchmark():
+  b = util.Benchmark()
+  assert b.solver == None
+  assert b.timeout == 1e9
+  assert b.log_filename == 'benchmark.log'
+  b = util.Benchmark(solver='testsolver', timeout=42, log='test.log')
+  assert b.solver == 'testsolver'
+  assert b.timeout == 42
+  assert b.log_filename == 'test.log'
+  assert not os.path.exists('test.log')
+  with tempfile.NamedTemporaryFile() as ampl_file:
+    ampl_file.write('var x >= 42; minimize o: x;')
+    ampl_file.flush()
+    with tempfile.NamedTemporaryFile() as log_file:
+      with util.Benchmark(solver='./mock-solver', log=log_file.name) as b:
+        assert log_file.read() == ''
+        b.run(ampl_file.name)
+      log = yaml.load(log_file.read())
+      assert len(log) == 1
+      entry = log[0]
+      assert entry['model'] == ampl_file.name
+      assert entry['sha'] == util.sha1_file(ampl_file.name)
+      assert entry['solver'] == './mock-solver'
+      assert float(entry['time']) > 0
+      assert not entry['timeout']
+      assert float(entry['obj_value'])
+      #assert log_file.read() == ''

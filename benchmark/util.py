@@ -4,6 +4,8 @@ import hashlib, os, signal, tempfile, threading, time
 from contextlib import contextmanager
 from subprocess import check_call, Popen, PIPE, STDOUT
 
+default_timeout = 1e9
+
 def files(dirname, filenames):
   """
   Parses *filenames* which is a string containing one name per line, possibly
@@ -64,7 +66,7 @@ def read_solution(ampl_filename, sol_filename):
   for line in output.split('\n'):
     if line.startswith(obj):
       return float(line[len(obj):])
-  return None
+  return float('nan')
 
 @contextmanager
 def solve(ampl_filename, **kwargs):
@@ -75,7 +77,7 @@ def solve(ampl_filename, **kwargs):
   """
   with temp_nl_file(ampl_filename) as nl_file:
     sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
-    timeout = kwargs.get('timeout', 1e9)
+    timeout = kwargs.get('timeout', default_timeout)
     done = threading.Event()
     def kill_on_timeout():
       if not done.wait(timeout):
@@ -98,3 +100,49 @@ def solve(ampl_filename, **kwargs):
         os.remove(sol_filename)
       except OSError:
         pass
+
+repo_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+
+class Benchmark:
+  "A solver benchmark"
+
+  def __init__(self, **kwargs):
+    # AMPL solver name
+    self.solver = kwargs.get('solver')
+    # Solver timeout in seconds
+    self.timeout = kwargs.get('timeout', default_timeout)
+    # Log filename
+    self.log_filename = kwargs.get('log', 'benchmark.log')
+
+  def __enter__(self):
+    self.log = open(self.log_filename, 'w')
+    return self
+
+  def __exit__(self, exc_type, exc_value, traceback):
+    self.log.close()
+
+  # model: AMPL model filename relative to the repository root
+  def run(self, model):
+    """
+    Runs the benchmark by translating the AMPL *model* into NL format,
+    passing it to solver, reading the solution and writing it to log.
+    """
+    ampl_filename = os.path.join(repo_dir, model)
+    with solve(ampl_filename, solver=self.solver,
+                    timeout=self.timeout) as (time, sol_filename):
+      obj_value = read_solution(ampl_filename, sol_filename)
+      self.write_log(model=model, sha=sha1_file(ampl_filename),
+                     time=time, obj_value=obj_value)
+
+  def write_log(self, **kwargs):
+    self.log.write('- model: {}\n'.format(kwargs.get('model')))
+    # Write SHA-1 hash of the AMPL file to be able to track which version
+    # of the model was used.
+    self.log.write('  sha: {}\n'.format(kwargs.get('sha')))
+    self.log.write('  solver: {}\n'.format(self.solver))
+    time = kwargs.get('time')
+    self.log.write('  time: {}\n'.format(time))
+    self.log.write('  timeout: {}\n'.format(time >= self.timeout))
+    self.log.write('  obj_value: {}\n'.format(kwargs.get('obj_value')))
+    self.log.write('\n')
+    self.log.flush()
