@@ -99,7 +99,7 @@ def test_benchmark():
   b = util.Benchmark()
   assert b.solver == None
   assert b.timeout == 1e9
-  assert b.log_filename == 'benchmark.log'
+  assert b.log_filename == 'benchmark-log.yaml'
   b = util.Benchmark(solver='testsolver', timeout=42, log='test.log')
   assert b.solver == 'testsolver'
   assert b.timeout == 42
@@ -121,3 +121,4 @@ def test_benchmark():
       assert float(entry['time']) > 0
       assert not entry['timeout']
       assert float(entry['obj_value'])
+      assert entry['output'].endswith("'-AMPL', 'answer=42']\n")

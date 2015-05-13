@@ -129,7 +129,7 @@ class Benchmark:
     # Solver timeout in seconds
     self.timeout = kwargs.get('timeout', default_timeout)
     # Log filename
-    self.log_filename = kwargs.get('log', 'benchmark.log')
+    self.log_filename = kwargs.get('log', 'benchmark-log.yaml')
 
   def __enter__(self):
     self.log = open(self.log_filename, 'w')
@@ -149,7 +149,7 @@ class Benchmark:
                     timeout=self.timeout) as result:
       obj_value = read_solution(ampl_filename, result.sol_filename)
       self.write_log(model=model, sha=sha1_file(ampl_filename),
-                     time=result.solution_time, obj_value=obj_value)
+                     time=result.solution_time, obj_value=obj_value, output=result.output)
 
   def write_log(self, **kwargs):
     self.log.write('- model: {}\n'.format(kwargs.get('model')))
@@ -165,5 +165,8 @@ class Benchmark:
     self.log.write('  time: {}\n'.format(time))
     self.log.write('  timeout: {}\n'.format(time >= self.timeout))
     self.log.write('  obj_value: {}\n'.format(kwargs.get('obj_value')))
+    self.log.write('  output: |\n')
+    for line in kwargs.get('output').split('\n'):
+      self.log.write('    {}\n'.format(line))
     self.log.write('\n')
     self.log.flush()
