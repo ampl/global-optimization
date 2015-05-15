@@ -8,14 +8,25 @@ from subprocess import Popen, PIPE, STDOUT
 
 repo_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
-def model_name(path):
-  return os.path.splitext(os.path.split(path)[1])[0]
+def model_name(result):
+  "Extracts the model name from a benchmark result."
+  return os.path.splitext(os.path.split(result['model'])[1])[0]
 
 def num_func_evals(result):
-  m = re.search(r'(\d+) function (and constraint )?evaluations', result['solve_message'])
+  m = re.search(r'(\d+) function (and constraint )?evaluations',
+                result['solve_message'])
   return int(m.group(1)) if m else None
 
-# Read the log and get the number of variables in each problem.
+def load_index(*args):
+  index = {}
+  for dirname in args:
+    index.update(yaml.load(open(os.path.join(repo_dir, dirname, 'index.yaml'))))
+  return index
+
+index = load_index('nlmodels', 'jdp')
+
+# Read the log and get the number of variables and best known objective value
+# for each problem.
 def read_log(filename):
   results = yaml.load(file(filename, 'r'))
   for result in results:
@@ -40,15 +51,17 @@ def format_header(authors, legend, columns):
     print(c + '  ' + legend[c])
   print()
 
-columns = ['MN', 'NV', 'OS', 'FE', 'RT']
+columns = ['MN', 'NV', 'OV', 'OS', 'FE', 'RT']
 
 def format_results(log_filename):
   results = read_log(log_filename)
   df = pd.DataFrame({
     # Model Name
-    'MN': [model_name(r['model']) for r in results],
+    'MN': [model_name(r) for r in results],
     # Number of variables
     'NV': [r['num_vars'] for r in results],
+    # Best known objective value
+    'OV': [index[model_name(r)]['best_obj'] for r in results],
     # Objective value returned by the solver
     'OS': [r['obj_value'] for r in results],
     # Number of function evaluations
@@ -56,7 +69,8 @@ def format_results(log_filename):
     # Solver runtime
     'RT': [r['time'] for r in results]
     }, columns=columns)
-  df['OS'] = df['OS'].map('{}'.format)
+  for col in ['OV', 'OS']:
+    df[col] = df[col].map('{:g}'.format)
   print(df)
 
 legend = {
