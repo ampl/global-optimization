@@ -41,9 +41,10 @@ def test_read_solution():
     with util.temp_nl_file(ampl_file.name) as nl_file:
       check_call([solver, nl_file.name, '-AMPL'], stdout=PIPE, stderr=PIPE)
       sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
-      obj_value, solve_message = util.read_solution(ampl_file.name, sol_filename)
-      assert obj_value == 42
-      assert 'couenne' in solve_message
+      sol = util.read_solution(ampl_file.name, sol_filename)
+      assert sol.obj == 42
+      assert sol.solve_result == 'solved'
+      assert 'couenne' in sol.solve_message
 
 def test_mock_solver():
   try:
@@ -116,6 +117,7 @@ def test_benchmark():
       log = yaml.load(log_file.read())
       assert len(log) == 1
       entry = log[0]
+      print(entry)
       assert entry['model'] == ampl_file.name
       assert entry['sha'] == util.sha1_file(ampl_file.name)
       assert entry['solver'] == './mock-solver'
@@ -123,4 +125,6 @@ def test_benchmark():
       assert float(entry['time']) > 0
       assert not entry['timeout']
       assert float(entry['obj_value'])
+      assert entry['solve_result']
+      assert entry['solve_message']
       assert entry['output'].endswith("'-AMPL', 'answer=42']\n")

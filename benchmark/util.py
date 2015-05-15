@@ -50,6 +50,12 @@ def temp_nl_file(ampl_filename):
     check_call(['ampl', '-ob' + os.path.splitext(f.name)[0], filename], cwd=dirname)
     yield f
 
+class Solution:
+  def __init__(self):
+    self.obj = float('nan')
+    self.solve_result = None
+    self.solve_message = None
+
 def read_solution(ampl_filename, sol_filename):
   """
   Read the solution of the model *ampl_filename* from *sol_filename*
@@ -61,19 +67,22 @@ def read_solution(ampl_filename, sol_filename):
     model "{}";
     solution "{}";
     display _obj[1];
+    display solve_result;
     print solve_message;
     '''.format(ampl_filename, sol_filename))[0]
   obj = '_obj[1] = '
-  obj_value = float('nan')
-  solve_message = None
+  solve_result = 'solve_result = '
+  sol = Solution()
   for line in output.splitlines():
-    if solve_message is not None:
+    if sol.solve_message is not None:
       if line:
-        solve_message += line + '\n'
+        sol.solve_message += line + '\n'
     elif line.startswith(obj):
-      obj_value = float(line[len(obj):])
-      solve_message = ''
-  return (obj_value, solve_message)
+      sol.obj = float(line[len(obj):])
+    elif line.startswith(solve_result):
+      sol.solve_result = line[len(solve_result):]
+      sol.solve_message = ''
+  return sol
 
 class SolveResult:
   def __init__(self, sol_filename, output, solution_time):
@@ -154,10 +163,9 @@ class Benchmark:
     ampl_filename = os.path.join(repo_dir, model)
     with solve(ampl_filename, solver=self.solver, solver_options=self.solver_options,
                     timeout=self.timeout) as result:
-      obj_value, solve_message = read_solution(ampl_filename, result.sol_filename)
+      sol = read_solution(ampl_filename, result.sol_filename)
       self.write_log(model=model, sha=sha1_file(ampl_filename),
-                     time=result.solution_time, obj_value=obj_value,
-                     output=result.output, solve_message=solve_message)
+                     time=result.solution_time, output=result.output, solution=sol)
 
   def write_log_multiline(self, key, text):
     self.log.write('  {}: '.format(key))
@@ -181,8 +189,10 @@ class Benchmark:
     time = kwargs.get('time')
     self.log.write('  time: {}\n'.format(time))
     self.log.write('  timeout: {}\n'.format(time >= self.timeout))
-    self.log.write('  obj_value: {}\n'.format(kwargs.get('obj_value')))
-    self.write_log_multiline('solve_message', kwargs.get('solve_message'))
+    sol = kwargs.get('solution')
+    self.log.write('  obj_value: {}\n'.format(sol.obj))
+    self.log.write('  solve_result: {}\n'.format(sol.solve_result))
+    self.write_log_multiline('solve_message', sol.solve_message)
     self.write_log_multiline('output', kwargs.get('output'))
     self.log.write('\n')
     self.log.flush()
