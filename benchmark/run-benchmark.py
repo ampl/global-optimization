@@ -57,7 +57,7 @@ models += files('jdp', '''
   ''')
 
 # Timeout in seconds
-TIMEOUT = 10
+TIMEOUT = 60
 
 LGO_LOCAL_SEARCH_MODE = 0
 LGO_MULTISTART_MODE   = 3
