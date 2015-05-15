@@ -80,7 +80,7 @@ def read_solution(ampl_filename, sol_filename):
     elif line.startswith(obj):
       sol.obj = float(line[len(obj):])
     elif line.startswith(solve_result):
-      sol.solve_result = line[len(solve_result):]
+      sol.solve_result = line[len(solve_result):].strip("'")
       sol.solve_message = ''
   return sol
 
