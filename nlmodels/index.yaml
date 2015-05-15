@@ -1,0 +1,91 @@
+# Problem index
+# best_obj: best known objective value
+
+blend:
+  best_obj: 0.05172772
+branin:
+  best_obj: 0.39788736
+braninu:
+  best_obj: 0.39788736
+camel1:
+  best_obj: -1.03162845
+camel1u:
+  best_obj: -1.03162845
+chemeq:
+  best_obj: -1910.87044355
+chi:
+  best_obj: -6.04110051
+gold:
+  best_obj: 3.0
+gridneta:
+  best_obj: 0.69356981
+griewank:
+  best_obj: 0.0
+hs105:
+  best_obj: 0.0
+hs106:
+  best_obj: 7049.2480151
+hs109:
+  best_obj: 5326.85133009
+hs111:
+  best_obj: -47.76119086
+hs112:
+  best_obj: -55.13982946
+hs114:
+  best_obj: -1768.80696358
+hs116:
+  best_obj: 97.58750956
+hs15:
+  best_obj: 306.5
+hs15a:
+hs23:
+  best_obj: 2.0
+hs35:
+  best_obj: 0.11111111
+hs44:
+  best_obj: -15.0
+hs5:
+  best_obj: -1.91322295
+hs54:
+  best_obj: -0.99680511
+hs6:
+  best_obj: 0.0
+hs62:
+  best_obj: -26272.51448732
+hs64:
+  best_obj: 6299.84242839
+hs8:
+  best_obj: -1.0
+hs87:
+  best_obj: 8827.59773552
+kowalik:
+  best_obj: 0.00030749
+levy3:
+  best_obj: -165.6596935
+ljcluster:
+  best_obj: -19.13577015
+osborne1:
+  best_obj: 5.465e-05
+p2gon:
+pgon:
+powell:
+  best_obj: 0.0
+price:
+  best_obj: 0.0
+qb2:
+rosenbr:
+  best_obj: 0.0
+s324:
+  best_obj: 5.0
+s383:
+  best_obj: 728593.64595402
+schwefel:
+  best_obj: 0.0
+shekel:
+  best_obj: -10.15319968
+steenbre:
+  best_obj: 1.64
+tre:
+  best_obj: 0.0
+weapon:
+  best_obj: -1735.56957986
