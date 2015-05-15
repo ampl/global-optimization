@@ -84,7 +84,7 @@ def print_results(results):
     df[col] = df[col].map('{:g}'.format)
   print(df.to_string())
 
-def print_summary(results):
+def print_summary(results, obj_tolerance):
   print()
   print('Summary of results')
   print('Number of test problems: {}'.format(len(results)))
@@ -92,6 +92,7 @@ def print_summary(results):
   total_time = 0
   normalized_func_evals = 0
   num_solved = 0
+  total_rel_error = 0
   for r in results:
     total_time += r['time']
     if r['solver_options']['opmode'] != opmode:
@@ -100,10 +101,16 @@ def print_summary(results):
     ncons = r['num_cons']
     modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1
     normalized_func_evals += num_func_evals(r) / modc
-    if r['solve_result'].startswith('solved'):
-      num_solved += 1
+    obj = r['obj_value']
+    best_obj = index[model_name(r)]['best_obj']
+    rel_error = abs(obj - best_obj) / (1 + abs(best_obj))
+    if r['solve_result'].startswith('solved') and rel_error <= obj_tolerance:
+        total_rel_error += rel_error
+        num_solved += 1
   print('LGO operational mode: {}'.format(opmode))
+  print('Relative error tolerance for successful solution: {}'.format(obj_tolerance))
   print('Number of successful solutions: {} of {}'.format(num_solved, len(results)))
+  print('Average relative error of solutions found: {:.2}'.format(total_rel_error / num_solved))
   print('Average normalized number of function evaluations (FE/modc): {}'.
         format(normalized_func_evals / len(results)))
   print('where modc is the estimated model complexity')
@@ -126,4 +133,5 @@ legend = {
 print_header('János D. Pintér and Victor Zverovich', legend, columns)
 results = read_log(sys.argv[1])
 print_results(results)
-print_summary(results)
+obj_tolerance = 0.0001
+print_summary(results, obj_tolerance)
