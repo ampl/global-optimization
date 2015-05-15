@@ -12,6 +12,10 @@ def model_name(result):
   "Extracts the model name from a benchmark result."
   return os.path.splitext(os.path.split(result['model'])[1])[0]
 
+def max_con_violations(result):
+  m = re.search(r'Maximum constraint violation (.+)', result['solve_message'])
+  return m.group(1) if m else '-'
+
 def num_func_evals(result):
   m = re.search(r'(\d+) function (and constraint )?evaluations',
                 result['solve_message'])
@@ -55,7 +59,7 @@ def format_header(authors, legend, columns):
     print(c + '  ' + legend[c])
   print()
 
-columns = ['MN', 'NV', 'NC', 'OV', 'OS', 'FE', 'RT']
+columns = ['MN', 'NV', 'NC', 'OV', 'OS', 'CV', 'FE', 'RT']
 
 def format_results(log_filename):
   results = read_log(log_filename)
@@ -70,6 +74,8 @@ def format_results(log_filename):
     'OV': [index[model_name(r)]['best_obj'] for r in results],
     # Objective value returned by the solver
     'OS': [r['obj_value'] for r in results],
+    # Maximal constraint violation
+    'CV': [max_con_violations(r) for r in results],
     # Number of function evaluations
     'FE': [num_func_evals(r) for r in results],
     # Solver runtime
@@ -85,6 +91,8 @@ legend = {
   'NC': 'Number of constraints',
   'OV': 'Known optimal value (or best known objective value)',
   'OS': 'Numerical optimal value returned by the solver',
+  'OV': 'Known optimal value (or best known objective value)',
+  'CV': 'Maximal constraint violation',
   'FE': 'Number of model function and constraint evaluations',
   'RT': 'Solver runtime (complete execution time including input '
         'and license verification time)'
