@@ -38,6 +38,7 @@ hs116:
 hs15:
   best_obj: 306.5
 hs15a:
+  best_obj: 306.5
 hs23:
   best_obj: 2.0
 hs35:
@@ -67,12 +68,15 @@ ljcluster:
 osborne1:
   best_obj: 5.465e-05
 p2gon:
+  best_obj: 0.776858756
 pgon:
+  best_obj: 0.6749814429
 powell:
   best_obj: 0.0
 price:
   best_obj: 0.0
 qb2:
+  best_obj: 0.16
 rosenbr:
   best_obj: 0.0
 s324:
