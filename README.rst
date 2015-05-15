@@ -8,7 +8,7 @@ Sources:
 * csp: `Constraint satisfaction test problems <http://icwww.epfl.ch/~sam/Coconut-benchs/>`_
 * nlmodels: models from the `AMPL repository on Netlib <http://www.netlib.org/ampl/>`_
   with a few `changes <https://github.com/ampl/global-optimization/blob/master/nlmodels/changes>`_
-* jdp: models by Janos D. Pinter
+* jdp: models by János D. Pintér
 
 See also the `COCONUT benchmark
 <http://www.mat.univie.ac.at/~neum/glopt/coconut/Benchmark/Benchmark.html>`_.
