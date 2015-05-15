@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from __future__ import print_function
 import os, re, sys, yaml
@@ -31,6 +32,16 @@ def read_log(filename):
         result['num_vars'] = int(line[len(snvars):])
   return results
 
+def format_header(authors, legend, columns):
+  print(authors)
+  print()
+  print('Legend')
+  for c in columns:
+    print(c + '  ' + legend[c])
+  print()
+
+columns = ['MN', 'NV', 'OS', 'FE', 'RT']
+
 def format_results(log_filename):
   results = read_log(log_filename)
   df = pd.DataFrame({
@@ -44,8 +55,18 @@ def format_results(log_filename):
     'FE': [num_func_evals(r) for r in results],
     # Solver runtime
     'RT': [r['time'] for r in results]
-    }, columns=['MN', 'NV', 'OS', 'FE', 'RT'])
+    }, columns=columns)
   df['OS'] = df['OS'].map('{}'.format)
   print(df)
 
+legend = {
+  'MN': 'Model Name',
+  'NV': 'Number of variables',
+  'OV': 'Known optimal value (or best known objective value)',
+  'OS': 'Numerical optimal value returned by the solver',
+  'FE': 'Number of model function and constraint evaluations',
+  'RT': 'Solver runtime (complete execution time including input '
+        'and license verification time)'
+  }
+format_header('János D. Pintér and Victor Zverovich', legend, columns)
 format_results(sys.argv[1])
