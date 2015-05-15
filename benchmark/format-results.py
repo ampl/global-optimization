@@ -25,7 +25,7 @@ def load_index(*args):
 
 index = load_index('nlmodels', 'jdp')
 
-# Read the log and get the number of variables and best known objective value
+# Read the log and get the number of variables and constraints
 # for each problem.
 def read_log(filename):
   results = yaml.load(file(filename, 'r'))
@@ -36,11 +36,15 @@ def read_log(filename):
     output = p.communicate('''
       model "{}";
       display _snvars;
+      display _sncons;
       '''.format(ampl_filename))[0]
     snvars = '_snvars = '
+    sncons = '_sncons = '
     for line in output.split('\n'):
       if line.startswith(snvars):
         result['num_vars'] = int(line[len(snvars):])
+      elif line.startswith(sncons):
+        result['num_cons'] = int(line[len(sncons):])
   return results
 
 def format_header(authors, legend, columns):
@@ -51,7 +55,7 @@ def format_header(authors, legend, columns):
     print(c + '  ' + legend[c])
   print()
 
-columns = ['MN', 'NV', 'OV', 'OS', 'FE', 'RT']
+columns = ['MN', 'NV', 'NC', 'OV', 'OS', 'FE', 'RT']
 
 def format_results(log_filename):
   results = read_log(log_filename)
@@ -60,6 +64,8 @@ def format_results(log_filename):
     'MN': [model_name(r) for r in results],
     # Number of variables
     'NV': [r['num_vars'] for r in results],
+    # Number of constraints
+    'NC': [r['num_cons'] for r in results],
     # Best known objective value
     'OV': [index[model_name(r)]['best_obj'] for r in results],
     # Objective value returned by the solver
@@ -76,6 +82,7 @@ def format_results(log_filename):
 legend = {
   'MN': 'Model Name',
   'NV': 'Number of variables',
+  'NC': 'Number of constraints',
   'OV': 'Known optimal value (or best known objective value)',
   'OS': 'Numerical optimal value returned by the solver',
   'FE': 'Number of model function and constraint evaluations',
