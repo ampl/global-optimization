@@ -51,7 +51,7 @@ def read_log(filename):
         result['num_cons'] = int(line[len(sncons):])
   return results
 
-def format_header(authors, legend, columns):
+def print_header(authors, legend, columns):
   print(authors)
   print()
   print('Legend')
@@ -61,8 +61,7 @@ def format_header(authors, legend, columns):
 
 columns = ['MN', 'NV', 'NC', 'OV', 'OS', 'CV', 'FE', 'RT']
 
-def format_results(log_filename):
-  results = read_log(log_filename)
+def print_results(results):
   df = pd.DataFrame({
     # Model Name
     'MN': [model_name(r) for r in results],
@@ -83,7 +82,33 @@ def format_results(log_filename):
     }, columns=columns)
   for col in ['OV', 'OS']:
     df[col] = df[col].map('{:g}'.format)
-  print(df)
+  print(df.to_string())
+
+def print_summary(results):
+  print()
+  print('Summary of results')
+  print('Number of test problems: {}'.format(len(results)))
+  opmode = results[0]['solver_options']['opmode']
+  total_time = 0
+  normalized_func_evals = 0
+  num_solved = 0
+  for r in results:
+    total_time += r['time']
+    if r['solver_options']['opmode'] != opmode:
+      raise Exception('Inconsistent opmode')
+    nvars = r['num_vars']
+    ncons = r['num_cons']
+    modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1
+    normalized_func_evals += num_func_evals(r) / modc
+    if r['solve_result'].startswith('solved'):
+      num_solved += 1
+  print('LGO operational mode: {}'.format(opmode))
+  print('Number of successful solutions: {} of {}'.format(num_solved, len(results)))
+  print('Average normalized number of function evaluations (FE/modc): {}'.
+        format(normalized_func_evals / len(results)))
+  print('where modc is the estimated model complexity')
+  print('modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1')
+  print('Total LGO solver runtime (seconds): {:.2f}'.format(total_time))
 
 legend = {
   'MN': 'Model Name',
@@ -97,5 +122,8 @@ legend = {
   'RT': 'Solver runtime (complete execution time including input '
         'and license verification time)'
   }
-format_header('János D. Pintér and Victor Zverovich', legend, columns)
-format_results(sys.argv[1])
+
+print_header('János D. Pintér and Victor Zverovich', legend, columns)
+results = read_log(sys.argv[1])
+print_results(results)
+print_summary(results)
