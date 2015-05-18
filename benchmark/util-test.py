@@ -122,9 +122,10 @@ def test_benchmark():
       assert entry['sha'] == util.sha1_file(ampl_file.name)
       assert entry['solver'] == './mock-solver'
       assert entry['solver_options'] == {'answer': 42}
+      assert entry['start']
       assert float(entry['time']) > 0
       assert not entry['timeout']
-      assert float(entry['obj_value'])
+      assert float(entry['obj'])
       assert entry['solve_result']
       assert entry['solve_message']
       assert entry['output'].endswith("'-AMPL', 'answer=42']\n")

@@ -30,7 +30,7 @@ def num_func_evals(result):
   return int(m.group(1)) if m else None
 
 def check_obj(result, obj_tolerance):
-  obj = result['obj_value']
+  obj = result['obj']
   best_obj = index[model_name(result)]['best_obj']
   rel_error = abs(obj - best_obj) / (1 + abs(best_obj))
   solved = result['solve_result'].startswith('solved') and rel_error <= obj_tolerance
@@ -80,7 +80,7 @@ def print_results(results, obj_tolerance):
     # Best known objective value
     'OV': [index[model_name(r)]['best_obj'] for r in results],
     # Objective value returned by the solver
-    'OS': [r['obj_value'] for r in results],
+    'OS': [r['obj'] for r in results],
     # Maximal constraint violation
     'CV': [max_con_violations(r) for r in results],
     # Number of function evaluations

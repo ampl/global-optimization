@@ -2,6 +2,7 @@
 
 import hashlib, os, signal, tempfile, threading, time
 from contextlib import contextmanager
+from datetime import datetime
 from subprocess import check_call, Popen, PIPE, STDOUT
 
 default_timeout = 1e9
@@ -161,10 +162,11 @@ class Benchmark:
     passing it to solver, reading the solution and writing it to log.
     """
     ampl_filename = os.path.join(repo_dir, model)
+    start = datetime.now()
     with solve(ampl_filename, solver=self.solver, solver_options=self.solver_options,
                     timeout=self.timeout) as result:
       sol = read_solution(ampl_filename, result.sol_filename)
-      self.write_log(model=model, sha=sha1_file(ampl_filename),
+      self.write_log(model=model, sha=sha1_file(ampl_filename), start=start,
                      time=result.solution_time, output=result.output, solution=sol)
 
   def write_log_multiline(self, key, text):
@@ -186,11 +188,12 @@ class Benchmark:
       self.log.write('  solver_options:\n')
       for name, value in self.solver_options.iteritems():
         self.log.write('    {}: {}\n'.format(name, value))
+    self.log.write('  start: {}\n'.format(kwargs.get('start')))
     time = kwargs.get('time')
     self.log.write('  time: {}\n'.format(time))
     self.log.write('  timeout: {}\n'.format(time >= self.timeout))
     sol = kwargs.get('solution')
-    self.log.write('  obj_value: {}\n'.format(sol.obj))
+    self.log.write('  obj: {}\n'.format(sol.obj))
     self.log.write('  solve_result: {}\n'.format(sol.solve_result))
     self.write_log_multiline('solve_message', sol.solve_message)
     self.write_log_multiline('output', kwargs.get('output'))
