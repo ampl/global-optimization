@@ -62,7 +62,7 @@ hs87:
 kowalik:
   best_obj: 0.00030749
 levy3:
-  best_obj: -165.6596935
+  best_obj: -210.482294 # Solution (5.48286, 5.48286) found by LGO
 ljcluster:
   best_obj: -19.13577015
 osborne1:
