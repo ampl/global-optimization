@@ -8,6 +8,14 @@ from subprocess import Popen, PIPE, STDOUT
 
 repo_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
+def load_index(*args):
+  index = {}
+  for dirname in args:
+    index.update(yaml.load(open(os.path.join(repo_dir, dirname, 'index.yaml'))))
+  return index
+
+index = load_index('nlmodels', 'jdp')
+
 def model_name(result):
   "Extracts the model name from a benchmark result."
   return os.path.splitext(os.path.split(result['model'])[1])[0]
@@ -21,13 +29,12 @@ def num_func_evals(result):
                 result['solve_message'])
   return int(m.group(1)) if m else None
 
-def load_index(*args):
-  index = {}
-  for dirname in args:
-    index.update(yaml.load(open(os.path.join(repo_dir, dirname, 'index.yaml'))))
-  return index
-
-index = load_index('nlmodels', 'jdp')
+def check_obj(result, obj_tolerance):
+  obj = result['obj_value']
+  best_obj = index[model_name(result)]['best_obj']
+  rel_error = abs(obj - best_obj) / (1 + abs(best_obj))
+  solved = result['solve_result'].startswith('solved') and rel_error <= obj_tolerance
+  return (solved, rel_error)
 
 # Read the log and get the number of variables and constraints
 # for each problem.
@@ -56,12 +63,13 @@ def print_header(authors, legend, columns):
   print()
   print('Legend')
   for c in columns:
-    print(c + '  ' + legend[c])
+    if legend[c]:
+      print(c + '  ' + legend[c])
   print()
 
-columns = ['MN', 'NV', 'NC', 'OV', 'OS', 'CV', 'FE', 'RT']
+columns = ['MN', 'NV', 'NC', 'OV', 'OS', 'CV', 'FE', 'RT', ' ']
 
-def print_results(results):
+def print_results(results, obj_tolerance):
   df = pd.DataFrame({
     # Model Name
     'MN': [model_name(r) for r in results],
@@ -78,7 +86,8 @@ def print_results(results):
     # Number of function evaluations
     'FE': [num_func_evals(r) for r in results],
     # Solver runtime
-    'RT': [r['time'] for r in results]
+    'RT': [r['time'] for r in results],
+    ' ':  [' ' if check_obj(r, obj_tolerance)[0] else '?' for r in results]
     }, columns=columns)
   for col in ['OV', 'OS']:
     df[col] = df[col].map('{:g}'.format)
@@ -101,10 +110,8 @@ def print_summary(results, obj_tolerance):
     ncons = r['num_cons']
     modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1
     normalized_func_evals += num_func_evals(r) / modc
-    obj = r['obj_value']
-    best_obj = index[model_name(r)]['best_obj']
-    rel_error = abs(obj - best_obj) / (1 + abs(best_obj))
-    if r['solve_result'].startswith('solved') and rel_error <= obj_tolerance:
+    solved, rel_error = check_obj(r, obj_tolerance)
+    if solved:
         total_rel_error += rel_error
         num_solved += 1
   print('LGO operational mode: {}'.format(opmode))
@@ -127,11 +134,12 @@ legend = {
   'CV': 'Maximal constraint violation',
   'FE': 'Number of model function and constraint evaluations',
   'RT': 'Solver runtime (complete execution time including input '
-        'and license verification time)'
+        'and license verification time)',
+  ' ' : None
   }
 
 print_header('János D. Pintér and Victor Zverovich', legend, columns)
 results = read_log(sys.argv[1])
-print_results(results)
 obj_tolerance = 0.0001
+print_results(results, obj_tolerance)
 print_summary(results, obj_tolerance)
