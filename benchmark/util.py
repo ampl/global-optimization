@@ -99,10 +99,14 @@ def solve(ampl_filename, **kwargs):
   """
   Solves the AMPL problem given in *ampl_filename*.
   Example:
-    with solve('test.ampl', solver='lgo', solver_options={'opmode': 3}, timeout=100) as result:
+    with solve('test.ampl', solver='lgo', solver_options={'opmode': 3},
+               timeout=100, on_nl_file=update_options) as result:
       print(result.output)
   """
   with temp_nl_file(ampl_filename) as nl_file:
+    on_nl_file = kwargs.get('on_nl_file')
+    if on_nl_file:
+      on_nl_file(nl_file)
     sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
     # Prepare the solver command.
     command = [kwargs.get('solver', 'minos'), nl_file.name, '-AMPL']
@@ -147,6 +151,8 @@ class Benchmark:
     self.timeout = kwargs.get('timeout', default_timeout)
     # Log filename
     self.log_filename = kwargs.get('log', 'benchmark-log.yaml')
+    # Callback called after .nl file is written
+    self.on_nl_file = kwargs.get('on_nl_file')
 
   def __enter__(self):
     self.log = open(self.log_filename, 'w')
@@ -164,7 +170,7 @@ class Benchmark:
     ampl_filename = os.path.join(repo_dir, model)
     start = datetime.now()
     with solve(ampl_filename, solver=self.solver, solver_options=self.solver_options,
-                    timeout=self.timeout) as result:
+                    timeout=self.timeout, on_nl_file=self.on_nl_file) as result:
       sol = read_solution(ampl_filename, result.sol_filename)
       self.write_log(model=model, sha=sha1_file(ampl_filename), start=start,
                      time=result.solution_time, output=result.output, solution=sol)
