@@ -1,5 +1,6 @@
 # Benchmark utilities
 
+from __future__ import print_function
 import hashlib, os, signal, tempfile, threading, time
 from contextlib import contextmanager
 from datetime import datetime
@@ -220,3 +221,36 @@ class Benchmark:
     self.write_log_multiline('output', kwargs.get('output'))
     self.log.write('\n')
     self.log.flush()
+
+class AMPL:
+  def __enter__(self):
+    self.process = Popen(['ampl', '-b'], stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+    self.eval()
+    return self
+
+  def __exit__(self, exc_type, exc_value, traceback):
+    self.process.stdin.close();
+    self.process.wait()
+
+  def eval(self, ampl_code=None):
+    if ampl_code:
+      self.process.stdin.write('{} {}\n'.format(len(ampl_code) + 1, ampl_code))
+    stdout = self.process.stdout
+    results = []
+    while True:
+      header = stdout.readline()
+      sep = header.index(' ')
+      size = int(header[:sep])
+      kind = header[sep + 1:].strip()
+      output = stdout.read(size - len(header) + sep + 1)
+      if kind.startswith('prompt'):
+        return results
+      results.append((kind, output))
+
+  def eval_expr(self, ampl_expr):
+    kind, output = self.eval('print {};'.format(ampl_expr))[0]
+    output = output[:-1]
+    try:
+      return float(output)
+    except ValueError:
+      return output

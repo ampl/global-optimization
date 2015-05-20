@@ -159,3 +159,8 @@ def test_benchmark():
       assert entry['solve_result']
       assert entry['solve_message']
       assert entry['output'].endswith("'-AMPL', 'answer=42']\n")
+
+def test_ampl():
+  with util.AMPL() as ampl:
+    assert ampl.eval('print 42;') == [('print', '42\n')]
+    assert ampl.eval_expr(42) == 42
