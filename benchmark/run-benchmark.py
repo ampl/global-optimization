@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-from util import files, Benchmark
+from util import files, Benchmark, read_nl_header
 
 models = files('nlmodels', '''
   blend.mod
@@ -68,8 +68,16 @@ with Benchmark(log='lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
     print(model)
     b.run(model)
 
-with Benchmark(log='lgo-multistart.yaml', solver='lgo', timeout=TIMEOUT,
-               solver_options={'opmode': LGO_MULTISTART_MODE}) as b:
-  for model in models:
-    print(model)
-    b.run(model)
+def update_options(nl_file):
+  header = read_nl_header(nl_file.name)
+  maxfct = k * 50 * (header.num_vars + header.num_cons + 2) ** 2
+  b.solver_options['g_maxfct'] = maxfct
+  b.solver_options['l_maxfct'] = maxfct
+  b.solver_options['maxnosuc'] = maxfct
+
+for k in [2, 4, 8, 16]:
+  with Benchmark(log='lgo-multistart-k{}.yaml'.format(k), solver='lgo', timeout=TIMEOUT,
+                 solver_options={'opmode': LGO_MULTISTART_MODE}, on_nl_file=update_options) as b:
+    for model in models:
+      print(model)
+      b.run(model)
