@@ -139,6 +139,7 @@ legend = {
   }
 
 for log_filename in sys.argv[1:]:
+  print(log_filename)
   results = read_log(log_filename)
   output_filename = os.path.splitext(log_filename)[0] + '.txt'
   obj_tolerance = 0.0001
