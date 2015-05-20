@@ -51,6 +51,21 @@ def temp_nl_file(ampl_filename):
     check_call(['ampl', '-ob' + os.path.splitext(f.name)[0], filename], cwd=dirname)
     yield f
 
+class NLHeader:
+  def __init__(self):
+    self.num_vars = 0
+    self.num_cons = 0
+
+def read_nl_header(nl_filename):
+  "Read the NL header from the *nl_filename* file."
+  header = NLHeader()
+  with open(nl_filename, 'r') as f:
+    f.readline()
+    items = f.readline().split()
+    header.num_vars = int(items[0])
+    header.num_cons = int(items[1])
+  return header
+
 class Solution:
   def __init__(self):
     self.obj = float('nan')

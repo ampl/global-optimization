@@ -35,6 +35,17 @@ def test_temp_nl_file():
       assert(os.path.exists(nl_filename))
     assert(not os.path.exists(nl_filename))
 
+def test_read_nl_header():
+  with tempfile.NamedTemporaryFile() as nl_file:
+    nl_file.write(
+      '''g3 1 1 0       # problem bqp1var
+          11 22 1 0 0     # vars, constraints, objectives, ranges, eqns
+      ''')
+    nl_file.flush()
+    header = util.read_nl_header(nl_file.name)
+    assert header.num_vars == 11
+    assert header.num_cons == 22
+
 def test_read_solution():
   with temp_ampl_file() as ampl_file:
     nl_filename = None
