@@ -58,18 +58,18 @@ def read_log(filename):
         result['num_cons'] = int(line[len(sncons):])
   return results
 
-def print_header(authors, legend, columns):
-  print(authors)
-  print()
-  print('Legend')
+def write_header(file, authors, legend, columns):
+  file.write(authors)
+  file.write('\n\n')
+  file.write('Legend\n')
   for c in columns:
     if legend[c]:
-      print(c + '  ' + legend[c])
-  print()
+      file.write('{}  {}\n'.format(c , legend[c]))
+  file.write('\n')
 
 columns = ['MN', 'NV', 'NC', 'OV', 'OS', 'CV', 'FE', 'RT', ' ']
 
-def print_results(results, obj_tolerance):
+def write_results(file, results, obj_tolerance):
   df = pd.DataFrame({
     # Model Name
     'MN': [model_name(r) for r in results],
@@ -91,12 +91,12 @@ def print_results(results, obj_tolerance):
     }, columns=columns)
   for col in ['OV', 'OS']:
     df[col] = df[col].map('{:g}'.format)
-  print(df.to_string())
+  file.write(df.to_string())
+  file.write('\n')
 
-def print_summary(results, obj_tolerance):
-  print()
-  print('Summary of results')
-  print('Number of test problems: {}'.format(len(results)))
+def write_summary(file, results, obj_tolerance):
+  file.write('\nSummary of results\n')
+  file.write('Number of test problems: {}\n'.format(len(results)))
   opmode = results[0]['solver_options']['opmode']
   total_time = 0
   normalized_func_evals = 0
@@ -114,15 +114,15 @@ def print_summary(results, obj_tolerance):
     if solved:
         total_rel_error += rel_error
         num_solved += 1
-  print('LGO operational mode: {}'.format(opmode))
-  print('Relative error tolerance for successful solution: {}'.format(obj_tolerance))
-  print('Number of successful solutions: {} of {}'.format(num_solved, len(results)))
-  print('Average relative error of solutions found: {:.2}'.format(total_rel_error / num_solved))
-  print('Average normalized number of function evaluations (FE/modc): {}'.
-        format(normalized_func_evals / len(results)))
-  print('where modc is the estimated model complexity')
-  print('modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1')
-  print('Total LGO solver runtime (seconds): {:.2f}'.format(total_time))
+  file.write('LGO operational mode: {}\n'.format(opmode))
+  file.write('Relative error tolerance for successful solution: {}\n'.format(obj_tolerance))
+  file.write('Number of successful solutions: {} of {}\n'.format(num_solved, len(results)))
+  file.write('Average relative error of solutions found: {:.2}\n'.format(total_rel_error / num_solved))
+  file.write('Average normalized number of function evaluations (FE/modc): {}\n'.
+             format(normalized_func_evals / len(results)))
+  file.write('where modc is the estimated model complexity\n')
+  file.write('modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1\n')
+  file.write('Total LGO solver runtime (seconds): {:.2f}\n'.format(total_time))
 
 legend = {
   'MN': 'Model Name',
@@ -138,8 +138,11 @@ legend = {
   ' ' : None
   }
 
-print_header('János D. Pintér and Victor Zverovich', legend, columns)
-results = read_log(sys.argv[1])
-obj_tolerance = 0.0001
-print_results(results, obj_tolerance)
-print_summary(results, obj_tolerance)
+for log_filename in sys.argv[1:]:
+  results = read_log(log_filename)
+  output_filename = os.path.splitext(log_filename)[0] + '.txt'
+  obj_tolerance = 0.0001
+  with open(output_filename, 'w') as f:
+    write_header(f, 'János D. Pintér and Victor Zverovich', legend, columns)
+    write_results(f, results, obj_tolerance)
+    write_summary(f, results, obj_tolerance)
