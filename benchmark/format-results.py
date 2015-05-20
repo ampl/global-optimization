@@ -40,7 +40,15 @@ def check_obj(result, obj_tolerance):
   obj = result['obj']
   best_obj = index[model_name(result)]['best_obj']
   rel_error = abs(obj - best_obj) / (1 + abs(best_obj))
-  solved = result['solve_result'].startswith('solved') and rel_error <= obj_tolerance
+  solve_result = result['solve_result']
+  solved = False
+  if rel_error <= obj_tolerance:
+    if solve_result.startswith('solved'):
+      solved = True
+    elif solve_result == 'limit':
+      max_viol = max_con_violations(result)
+      if max_viol == '-' or float(max_viol) <= 1e-8:
+        solved = True
   return (solved, rel_error)
 
 # Read the log and get the number of variables and constraints
