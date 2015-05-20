@@ -20,6 +20,13 @@ def model_name(result):
   "Extracts the model name from a benchmark result."
   return os.path.splitext(os.path.split(result['model'])[1])[0]
 
+def printed_model_name(result):
+  "Returns model name with '*' if it is a maximization problem."
+  name = model_name(result)
+  if result['obj_kind'] == 'maximize':
+    name += '*'
+  return name
+
 def max_con_violations(result):
   m = re.search(r'Maximum constraint violation (.+)', result['solve_message'])
   return m.group(1) if m else '-'
@@ -47,6 +54,8 @@ def read_log(filename):
       ampl.eval('model {};'.format(ampl_filename))
       result['num_vars'] = ampl.eval_expr('_snvars')
       result['num_cons'] = ampl.eval_expr('_sncons')
+      objname = ampl.eval_expr('_objname[1]')
+      result['obj_kind'] = ampl.eval('show {};'.format(objname))[0][1].split()[0]
   return results
 
 def write_header(file, authors, legend, columns):
@@ -63,7 +72,7 @@ columns = ['MN', 'NV', 'NC', 'OV', 'OS', 'CV', 'FE', 'RT', ' ']
 def write_results(file, results, obj_tolerance):
   df = pd.DataFrame({
     # Model Name
-    'MN': [model_name(r) for r in results],
+    'MN': [printed_model_name(r) for r in results],
     # Number of variables
     'NV': [r['num_vars'] for r in results],
     # Number of constraints
