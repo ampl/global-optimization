@@ -164,3 +164,13 @@ def test_ampl():
   with util.AMPL() as ampl:
     assert ampl.eval('print 42;') == [('print', '42\n')]
     assert ampl.eval_expr(42) == 42
+
+def test_ampl_cwd():
+  ampl = util.AMPL()
+  assert ampl.cwd is None
+  dirname = tempfile.mkdtemp()
+  try:
+    with util.AMPL(dirname) as ampl:
+      print(dirname in ampl.eval('cd;')[0][1])
+  finally:
+    os.rmdir(dirname)

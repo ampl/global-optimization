@@ -223,8 +223,12 @@ class Benchmark:
     self.log.flush()
 
 class AMPL:
+  def __init__(self, cwd=None):
+    self.cwd = cwd
+
   def __enter__(self):
-    self.process = Popen(['ampl', '-b'], stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+    self.process = Popen(['ampl', '-b'],
+                         stdin=PIPE, stdout=PIPE, stderr=STDOUT, cwd=self.cwd)
     self.eval()
     return self
 
