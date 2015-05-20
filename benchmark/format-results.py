@@ -4,7 +4,7 @@
 from __future__ import print_function
 import os, re, sys, yaml
 import pandas as pd
-from subprocess import Popen, PIPE, STDOUT
+from util import AMPL
 
 repo_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
@@ -43,19 +43,10 @@ def read_log(filename):
   for result in results:
     ampl_filename = os.path.join(repo_dir, result['model'])
     dirname, filename = os.path.split(ampl_filename)
-    p = Popen('ampl', cwd=dirname, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
-    output = p.communicate('''
-      model "{}";
-      display _snvars;
-      display _sncons;
-      '''.format(ampl_filename))[0]
-    snvars = '_snvars = '
-    sncons = '_sncons = '
-    for line in output.split('\n'):
-      if line.startswith(snvars):
-        result['num_vars'] = int(line[len(snvars):])
-      elif line.startswith(sncons):
-        result['num_cons'] = int(line[len(sncons):])
+    with AMPL(dirname) as ampl:
+      ampl.eval('model {};'.format(ampl_filename))
+      result['num_vars'] = ampl.eval_expr('_snvars')
+      result['num_cons'] = ampl.eval_expr('_sncons')
   return results
 
 def write_header(file, authors, legend, columns):
