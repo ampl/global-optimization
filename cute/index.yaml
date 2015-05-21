@@ -1009,6 +1009,7 @@ minsurf:
 mistake:
   best_obj: -1.0
 model:
+  best_obj: 5742.16334895
 morebv:
   best_obj: 0.0
 mosarqp1:
