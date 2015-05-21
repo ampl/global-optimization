@@ -1,0 +1,1475 @@
+3pk:
+  best_obj: 1.72011857
+aircrfta:
+  best_obj: 0.0
+aircrftb:
+  best_obj: 0.0
+airport:
+  best_obj: 47952.70167983
+aljazzaf:
+  best_obj: 75.005
+allinit:
+  best_obj: 16.70596843
+allinitc:
+  best_obj: 30.49587305
+allinitu:
+  best_obj: 5.74438491
+alsotame:
+  best_obj: 0.082085
+argauss:
+  best_obj: 0.0
+arglina:
+  best_obj: 100.0
+arglinb:
+  best_obj: 4.63414634
+arglinc:
+  best_obj: 6.13513514
+argtrig:
+  best_obj: 0.0
+artif:
+  best_obj: 0.0
+arwhead:
+  best_obj: 0.0
+aug2d:
+  best_obj: 1687411.75289695
+aug2dc:
+  best_obj: 1818392.65899209
+aug2dcqp:
+  best_obj: 6.020974
+aug2dqp:
+  best_obj: 5.9023045
+aug3d:
+  best_obj: 554.06772579
+aug3dc:
+  best_obj: 771.26243869
+aug3dcqp:
+  best_obj: 959.82466247
+aug3dqp:
+  best_obj: 916.81096205
+avgasa:
+  best_obj: -4.41217171
+avgasb:
+  best_obj: -4.13281938
+avion2:
+  best_obj: 94680129.579033
+bard:
+  best_obj: 0.00821488
+batch:
+  best_obj: 259180.35068605
+bdexp:
+  best_obj: 1.509e-05
+bdqrtic:
+  best_obj: 3983.81795058
+bdvalue:
+  best_obj: 0.0
+beale:
+  best_obj: 0.0
+bigbank:
+  best_obj: -4142908.0551369
+biggs3:
+  best_obj: 0.0
+biggs5:
+  best_obj: 0.0
+biggs6:
+  best_obj: 0.0
+biggsb1:
+  best_obj: 0.015
+biggsc4:
+  best_obj: -24.5
+blockqp1:
+  best_obj: -996.4999999
+blockqp2:
+  best_obj: -996.1011979
+blockqp3:
+  best_obj: -497.4999999
+blockqp4:
+  best_obj: -498.0982009
+blockqp5:
+  best_obj: -497.4999999
+bloweya:
+  best_obj: -1.1700472
+bloweyb:
+  best_obj: 0.0
+bloweyc:
+  best_obj: -3.2e-05
+booth:
+  best_obj: 0.0
+box2:
+  best_obj: 0.0
+box3:
+  best_obj: 0.0
+bqp1var:
+  best_obj: 0.0
+bqpgabim:
+  best_obj: -30.5418526
+bqpgasim:
+  best_obj: -30.5418526
+brainpc0:
+  best_obj: 0.01009968
+brainpc1:
+  best_obj: 8.23e-06
+brainpc2:
+  best_obj: 0.0
+brainpc3:
+  best_obj: 1.033e-05
+brainpc4:
+  best_obj: 1.156e-05
+brainpc5:
+  best_obj: 1.154e-05
+brainpc6:
+  best_obj: 9.97e-06
+brainpc7:
+  best_obj: 9.97e-06
+brainpc8:
+  best_obj: 9.82e-06
+brainpc9:
+  best_obj: 1.446e-05
+bratu1d:
+  best_obj: -8.519e-05
+bratu2d:
+  best_obj: 0.0
+bratu2dt:
+  best_obj: 0.0
+bratu3d:
+  best_obj: 0.0
+britgas:
+  best_obj: 0.0
+brkmcc:
+  best_obj: 0.16904268
+brownal:
+  best_obj: 0.0
+brownbs:
+  best_obj: 0.0
+brownden:
+  best_obj: 85822.20162636
+broydn3d:
+  best_obj: 0.0
+broydn7d:
+  best_obj: 365.96887349
+broydnbd:
+  best_obj: 0.0
+brybnd:
+  best_obj: 0.0
+bt1:
+  best_obj: -100.0
+bt10:
+  best_obj: -1.0
+bt11:
+  best_obj: 0.82489178
+bt12:
+  best_obj: 6.18811881
+bt13:
+  best_obj: 0.0
+bt2:
+  best_obj: 0.03256823
+bt3:
+  best_obj: 4.09302326
+bt4:
+  best_obj: -45.51055074
+bt5:
+  best_obj: 961.71517213
+bt6:
+  best_obj: 0.27704479
+bt7:
+  best_obj: 306.49999988
+bt8:
+  best_obj: 1.0
+bt9:
+  best_obj: -1.0
+byrdsphr:
+  best_obj: -3.0
+camel6:
+  best_obj: -1.03162845
+cantilvr:
+  best_obj: 1.33995636
+catena:
+  best_obj: -23077.74627772
+catenary:
+  best_obj: -182453.74698053
+cb2:
+  best_obj: 1.95222449
+cb3:
+  best_obj: 2.0
+cbratu2d:
+  best_obj: 0.0
+cbratu3d:
+  best_obj: 0.0
+chaconn1:
+  best_obj: 1.95222449
+chaconn2:
+  best_obj: 2.0
+chainwoo:
+  best_obj: 1.0
+chandheq:
+  best_obj: 0.0
+chebyqad:
+  best_obj: 0.00538632
+chemrcta:
+  best_obj: 0.0
+chemrctb:
+  best_obj: 0.0
+chenhark:
+  best_obj: -1.99999967
+chnrosnb:
+  best_obj: 0.0
+cliff:
+  best_obj: 0.19978662
+clnlbeam:
+  best_obj: 349.88595484
+clplatea:
+  best_obj: -0.01259209
+clplateb:
+  best_obj: -6.70770869
+clplatec:
+  best_obj: -0.00502072
+cluster:
+  best_obj: 0.0
+concon:
+  best_obj: -6230.79556199
+congigmz:
+  best_obj: 28.0
+coolhans:
+  best_obj: 0.0
+core1:
+  best_obj: 91.05624
+core2:
+  best_obj: 72.9
+corkscrw:
+  best_obj: 95.02106901
+coshfun:
+  best_obj: -0.77326659
+cosine:
+  best_obj: -9999.0
+cragglvy:
+  best_obj: 1688.21530971
+cresc100:
+  best_obj: 1e-08
+cresc132:
+  best_obj: 1e-08
+cresc4:
+  best_obj: 0.87189755
+cresc50:
+  best_obj: 1e-08
+csfi1:
+  best_obj: -49.07520001
+csfi2:
+  best_obj: 55.01760562
+cube:
+  best_obj: 0.0
+curly10:
+  best_obj: -1003162.90241331
+curly20:
+  best_obj: -1003162.90241331
+curly30:
+  best_obj: -1003162.90241331
+cvxbqp1:
+  best_obj: 2.250225
+cvxqp1:
+  best_obj: 1.08751157
+cvxqp2:
+  best_obj: 0.82015543
+cvxqp3:
+  best_obj: 159682.12675201
+dallasl:
+  best_obj: 159682.12675201
+dallasm:
+  best_obj: -48198.18878841
+dallass:
+  best_obj: -32393.22573806
+deconvb:
+  best_obj: 0.0
+deconvc:
+  best_obj: 0.0
+deconvu:
+  best_obj: 0.0
+degenlpa:
+  best_obj: 3.06035283
+degenlpb:
+  best_obj: -30.73124597
+demymalo:
+  best_obj: -3.0
+denschna:
+  best_obj: 0.0
+denschnb:
+  best_obj: 0.0
+denschnc:
+  best_obj: 0.0
+denschnd:
+  best_obj: 0.0
+denschne:
+  best_obj: 0.0
+denschnf:
+  best_obj: 0.78124201
+dipigri:
+  best_obj: 680.63005737
+disc2:
+  best_obj: 1.5625
+discs:
+  best_obj: 12.0
+dittert:
+  best_obj: -1.99759674
+dixchlng:
+  best_obj: 2471.89781092
+dixchlnv:
+  best_obj: 0.0
+dixmaana:
+  best_obj: 1.0
+dixmaanb:
+  best_obj: 1.0
+dixmaanc:
+  best_obj: 1.0
+dixmaand:
+  best_obj: 1.0
+dixmaane:
+  best_obj: 1.0
+dixmaanf:
+  best_obj: 1.0
+dixmaang:
+  best_obj: 1.0
+dixmaanh:
+  best_obj: 1.0
+dixmaani:
+  best_obj: 1.0
+dixmaanj:
+  best_obj: 1.0
+dixmaank:
+  best_obj: 1.0
+dixmaanl:
+  best_obj: 1.0
+dixon3dq:
+  best_obj: 0.0
+djtl:
+  best_obj: -8.47610659
+dnieper:
+  best_obj: 17134.45330186
+dqdrtic:
+  best_obj: 0.0
+dqrtic:
+  best_obj: 4e-08
+drcav1lq:
+  best_obj: 0.0
+drcav2lq:
+  best_obj: 0.0
+drcav3lq:
+  best_obj: 0.0
+drcavty1:
+  best_obj: 0.00179397
+drcavty2:
+  best_obj: 0.00021484
+drcavty3:
+  best_obj: 0.00041806
+dtoc1l:
+  best_obj: 125.33812974
+dtoc1na:
+  best_obj: 12.70202991
+dtoc1nb:
+  best_obj: 15.93777765
+dtoc1nc:
+  best_obj: 24.96981277
+dtoc1nd:
+  best_obj: 12.52771466
+dtoc2:
+  best_obj: 0.51301021
+dtoc3:
+  best_obj: 235.26248104
+dtoc4:
+  best_obj: 2.86853821
+dtoc5:
+  best_obj: 2.64741883
+dtoc6:
+  best_obj: 134.85061628
+dual1:
+  best_obj: 0.03501297
+dual2:
+  best_obj: 0.03373367
+dual3:
+  best_obj: 0.13575583
+dual4:
+  best_obj: 0.74609065
+dualc1:
+  best_obj: 6155.25168586
+dualc2:
+  best_obj: 3551.30637578
+dualc5:
+  best_obj: 427.23256778
+dualc8:
+  best_obj: 18309.36123535
+edensch:
+  best_obj: 12003.28459202
+eg1:
+  best_obj: -1.13280078
+eg2:
+  best_obj: -998.9473933
+eg3:
+  best_obj: 0.0
+eigena:
+  best_obj: 0.0
+eigena2:
+  best_obj: 0.0
+eigenaco:
+  best_obj: 0.0
+eigenals:
+  best_obj: 0.0
+eigenb:
+  best_obj: 0.0
+eigenb2:
+  best_obj: 18.0
+eigenbco:
+  best_obj: 9.0
+eigenbls:
+  best_obj: 0.0
+eigenc2:
+  best_obj: 0.0
+eigencco:
+  best_obj: 0.0
+eigmaxa:
+  best_obj: -1.0
+eigmaxb:
+  best_obj: -0.27315659
+eigmaxc:
+  best_obj: -1.0
+eigmina:
+  best_obj: 1.0
+eigminb:
+  best_obj: 0.27315659
+eigminc:
+  best_obj: 1.0
+engval1:
+  best_obj: 5548.66841942
+engval2:
+  best_obj: 0.0
+errinros:
+  best_obj: 39.90415392
+expfit:
+  best_obj: 0.24051059
+expfita:
+  best_obj: 0.00113661
+expfitb:
+  best_obj: 0.00501937
+expfitc:
+  best_obj: 0.02330257
+explin:
+  best_obj: -723756.26549257
+explin2:
+  best_obj: -724459.14295809
+expquad:
+  best_obj: -3624599.88828056
+extrasim:
+  best_obj: 1.0
+extrosnb:
+  best_obj: 0.0
+fccu:
+  best_obj: 11.14910914
+fletcbv2:
+  best_obj: -0.51400679
+fletcbv3:
+  best_obj: -5282.62826176
+fletchbv:
+  best_obj: -5282.62826177
+fletchcr:
+  best_obj: 0.0
+fletcher:
+  best_obj: 11.65685425
+flosp2hh:
+  best_obj: 38.8864918
+flosp2hl:
+  best_obj: 38.87182557
+flosp2hm:
+  best_obj: 3.887e-05
+flosp2th:
+  best_obj: 0.01922788
+flosp2tl:
+  best_obj: 10.09850659
+flosp2tm:
+  best_obj: 18.26806962
+fminsrf2:
+  best_obj: 1.0
+fminsurf:
+  best_obj: 1.0
+freuroth:
+  best_obj: 608159.18904633
+gausselm:
+  best_obj: -11.08622282
+genhs28:
+  best_obj: 0.92717369
+genhumps:
+  best_obj: 0.0
+genrose:
+  best_obj: 396.86185775
+gigomez1:
+  best_obj: -3.0
+gilbert:
+  best_obj: 482.02726341
+goffin:
+  best_obj: 0.0
+gottfr:
+  best_obj: 0.0
+gouldqp2:
+  best_obj: 0.000188
+gouldqp3:
+  best_obj: 2.06515544
+gpp:
+  best_obj: 14400.92714698
+gridneta:
+  best_obj: 304.98295596
+gridnetb:
+  best_obj: 143.32330177
+gridnetc:
+  best_obj: 164.07589584
+gridnetd:
+  best_obj: 566.44437222
+gridnete:
+  best_obj: 206.55469241
+gridnetf:
+  best_obj: 243.90725823
+gridnetg:
+  best_obj: 73.31702604
+gridneth:
+  best_obj: 39.62626862
+gridneti:
+  best_obj: 40.24746474
+grouping:
+  best_obj: 13.8504
+growth:
+  best_obj: 1.00404058
+growthls:
+  best_obj: 1.00404058
+gulf:
+  best_obj: 0.0
+hadamals:
+  best_obj: 25.31641596
+hadamard:
+  best_obj: 1.0
+hager1:
+  best_obj: 1.3114547
+hager2:
+  best_obj: 0.61855108
+hager3:
+  best_obj: 0.45192193
+hager4:
+  best_obj: 2.79403088
+haifam:
+  best_obj: -45.00036047
+haifas:
+  best_obj: -0.45
+hairy:
+  best_obj: 20.0
+haldmads:
+  best_obj: 0.00012237
+hanging:
+  best_obj: -620.17604738
+harkerp2:
+  best_obj: -0.5
+hart6:
+  best_obj: -3.32288689
+hatflda:
+  best_obj: 0.0
+hatfldb:
+  best_obj: 0.00557281
+hatfldc:
+  best_obj: 0.0
+hatfldd:
+  best_obj: 7e-08
+hatflde:
+  best_obj: 4.4e-07
+hatfldf:
+  best_obj: 0.0
+hatfldg:
+  best_obj: 0.0
+hatfldh:
+  best_obj: -24.5
+heart6:
+  best_obj: 0.0
+heart6ls:
+  best_obj: 0.0
+heart8:
+  best_obj: 0.0
+heart8ls:
+  best_obj: 0.0
+helix:
+  best_obj: 0.0
+hilberta:
+  best_obj: 0.0
+hilbertb:
+  best_obj: 0.0
+himmelba:
+  best_obj: 0.0
+himmelbb:
+  best_obj: 0.0
+himmelbc:
+  best_obj: 0.0
+himmelbd:
+  best_obj: 0.0
+himmelbe:
+  best_obj: 0.0
+himmelbf:
+  best_obj: 318.57174879
+himmelbg:
+  best_obj: 0.0
+himmelbh:
+  best_obj: -1.0
+himmelbi:
+  best_obj: -1754.99999999
+himmelbj:
+  best_obj: -1912.3769908
+himmelbk:
+  best_obj: 0.05181434
+himmelp1:
+  best_obj: -51.73784632
+himmelp2:
+  best_obj: -62.05386938
+himmelp3:
+  best_obj: -59.01312351
+himmelp4:
+  best_obj: -59.01312351
+himmelp5:
+  best_obj: -59.01312351
+himmelp6:
+  best_obj: -59.01312351
+hong:
+  best_obj: 1.3473066
+hs001:
+  best_obj: 0.0
+hs002:
+  best_obj: 0.0
+hs003:
+  best_obj: 0.0
+hs004:
+  best_obj: 2.66666667
+hs005:
+  best_obj: -1.91322295
+hs006:
+  best_obj: 0.0
+hs007:
+  best_obj: -1.73205081
+hs008:
+  best_obj: -1.0
+hs009:
+  best_obj: -0.5
+hs010:
+  best_obj: -1.00000001
+hs011:
+  best_obj: -8.49846422
+hs012:
+  best_obj: -30.0
+hs013:
+  best_obj: 0.99863453
+hs014:
+  best_obj: 1.39346498
+hs015:
+  best_obj: 360.37976717
+hs016:
+  best_obj: 0.25
+hs017:
+  best_obj: 1.0
+hs018:
+  best_obj: 5.0
+hs019:
+  best_obj: -6961.81387558
+hs020:
+  best_obj: 38.19872981
+hs021:
+  best_obj: -99.96
+hs022:
+  best_obj: 1.0
+hs023:
+  best_obj: 2.0
+hs024:
+  best_obj: -1.0
+hs025:
+  best_obj: 32.835
+hs026:
+  best_obj: 0.0
+hs027:
+  best_obj: 0.04
+hs028:
+  best_obj: 0.0
+hs029:
+  best_obj: -22.627417
+hs030:
+  best_obj: 1.0
+hs031:
+  best_obj: 6.0
+hs032:
+  best_obj: 1.0
+hs033:
+  best_obj: -4.0
+hs034:
+  best_obj: -0.83403245
+hs035:
+  best_obj: 0.11111111
+hs036:
+  best_obj: -3300.0
+hs037:
+  best_obj: -3456.0
+hs038:
+  best_obj: 0.0
+hs039:
+  best_obj: -1.0
+hs040:
+  best_obj: -0.25
+hs041:
+  best_obj: 1.92592593
+hs042:
+  best_obj: 13.85786438
+hs043:
+  best_obj: -44.0
+hs044:
+  best_obj: -15.0
+hs045:
+  best_obj: 2.0
+hs046:
+  best_obj: 0.02108893
+hs047:
+  best_obj: 0.0
+hs048:
+  best_obj: 0.0
+hs049:
+  best_obj: 0.0
+hs050:
+  best_obj: 0.0
+hs051:
+  best_obj: 0.0
+hs052:
+  best_obj: 5.32664756
+hs053:
+  best_obj: 4.09302326
+hs054:
+  best_obj: 0.19285714
+hs055:
+  best_obj: nan
+hs056:
+  best_obj: -3.456
+hs057:
+  best_obj: 0.02845967
+hs059:
+  best_obj: -7.80278947
+hs060:
+  best_obj: 0.0325682
+hs061:
+  best_obj: -60.5
+hs062:
+  best_obj: -26272.51448732
+hs063:
+  best_obj: 961.71517213
+hs064:
+  best_obj: 6299.84243714
+hs065:
+  best_obj: 0.95352886
+hs066:
+  best_obj: 0.51816327
+hs067:
+  best_obj: -1162.02698006
+hs068:
+  best_obj: -0.98523134
+hs069:
+  best_obj: -995.52127447
+hs070:
+  best_obj: 0.17440505
+hs071:
+  best_obj: 17.01401729
+hs072:
+  best_obj: 727.67937458
+hs073:
+  best_obj: 29.89437816
+hs074:
+  best_obj: 5126.4981096
+hs075:
+  best_obj: 5174.41269538
+hs076:
+  best_obj: -4.68181818
+hs077:
+  best_obj: 0.24150513
+hs078:
+  best_obj: -2.91970041
+hs079:
+  best_obj: 0.07877682
+hs080:
+  best_obj: 0.05394985
+hs081:
+  best_obj: 0.05394985
+hs083:
+  best_obj: -30665.53867178
+hs084:
+  best_obj: -5280335.13321475
+hs085:
+  best_obj: -1.90515526
+hs086:
+  best_obj: -32.34867897
+hs087:
+  best_obj: 8927.5977355
+hs088:
+  best_obj: 1.36265684
+hs089:
+  best_obj: 1.36265684
+hs090:
+  best_obj: 1.36265682
+hs091:
+  best_obj: 1.36265688
+hs092:
+  best_obj: 1.36265681
+hs093:
+  best_obj: 135.07596283
+hs095:
+  best_obj: 0.01561953
+hs096:
+  best_obj: 0.01561953
+hs097:
+  best_obj: 3.13580912
+hs098:
+  best_obj: 3.13580912
+hs099:
+  best_obj: -831079891.510107
+hs100:
+  best_obj: 680.63005737
+hs100lnp:
+  best_obj: 680.63005737
+hs100mod:
+  best_obj: 678.75472739
+hs101:
+  best_obj: 1809.76476468
+hs102:
+  best_obj: 911.88057143
+hs103:
+  best_obj: 543.66795864
+hs104:
+  best_obj: 4.28675801
+hs105:
+  best_obj: 1142.24210182
+hs106:
+  best_obj: 7049.2480151
+hs107:
+  best_obj: 5055.01180354
+hs108:
+  best_obj: -0.67498144
+hs109:
+  best_obj: 5326.85133009
+hs110:
+  best_obj: -45.77846971
+hs111:
+  best_obj: -47.76109086
+hs111lnp:
+  best_obj: -47.76109086
+hs112:
+  best_obj: -47.76149515
+hs113:
+  best_obj: 24.30620907
+hs114:
+  best_obj: -1768.80696372
+hs116:
+  best_obj: 97.59103466
+hs117:
+  best_obj: 32.34867897
+hs118:
+  best_obj: 664.82045
+hs119:
+  best_obj: 244.89969752
+hs21mod:
+  best_obj: -95.96
+hs268:
+  best_obj: 0.0
+hs35mod:
+  best_obj: 0.25
+hs3mod:
+  best_obj: 0.0
+hs44new:
+  best_obj: -15.0
+hs99exp:
+  best_obj: -1008062500.0
+hubfit:
+  best_obj: 0.0
+hues-mod:
+  best_obj: 6.54516874
+huestis:
+  best_obj: 6.5451648
+humps:
+  best_obj: 0.0
+hvycrash:
+  best_obj: -0.2135
+hypcir:
+  best_obj: 0.0
+indef:
+  best_obj: -495.85940935
+integreq:
+  best_obj: 0.0
+jensmp:
+  best_obj: 124.36218236
+kissing:
+  best_obj: 0.84797122
+kiwcresc:
+  best_obj: 0.0
+kowosb:
+  best_obj: 0.00030751
+ksip:
+  best_obj: 0.57579792
+lakes:
+  best_obj: 350.52479376
+launch:
+  best_obj: 3.97e-06
+lch:
+  best_obj: -4.31828879
+lewispol:
+  best_obj: 3.12501832
+liarwhd:
+  best_obj: 0.0
+linspanh:
+  best_obj: -77.0
+liswet1:
+  best_obj: 36.12061717
+liswet10:
+  best_obj: 49.48412489
+liswet11:
+  best_obj: 49.52303911
+liswet12:
+  best_obj: -3314.38085886
+liswet2:
+  best_obj: 24.99996959
+liswet3:
+  best_obj: 25.01140833
+liswet4:
+  best_obj: 25.01195767
+liswet5:
+  best_obj: 25.01151331
+liswet6:
+  best_obj: 25.00781043
+liswet7:
+  best_obj: 498.7922
+liswet8:
+  best_obj: 714.49215128
+liswet9:
+  best_obj: 1963.30533635
+lminsurf:
+  best_obj: 1.00000001
+loadbal:
+  best_obj: 0.45285104
+loghairy:
+  best_obj: 13.40400518
+logros:
+  best_obj: 0.0
+lootsma:
+  best_obj: 2.0
+lotschd:
+  best_obj: 2398.41583853
+lsnnodoc:
+  best_obj: 123.11244879
+lsqfit:
+  best_obj: 0.03378699
+madsen:
+  best_obj: 0.61643244
+madsschj:
+  best_obj: -797.28370288
+makela1:
+  best_obj: -1.41421356
+makela2:
+  best_obj: 7.2
+makela3:
+  best_obj: 0.0
+makela4:
+  best_obj: 0.0
+mancino:
+  best_obj: 0.0
+manne:
+  best_obj: -0.97457259
+maratos:
+  best_obj: -1.0
+maratosb:
+  best_obj: -1.00000006
+matrix2:
+  best_obj: 0.0
+maxlika:
+  best_obj: 1136.67977518
+mccormck:
+  best_obj: -45661.61352695
+mconcon:
+  best_obj: -6230.79556199
+mdhole:
+  best_obj: 0.0
+methanb8:
+  best_obj: 0.0
+methanl8:
+  best_obj: 0.0
+mexhat:
+  best_obj: -0.0401
+meyer3:
+  best_obj: 87.94585517
+mifflin1:
+  best_obj: -1.0
+mifflin2:
+  best_obj: -1.0
+minc44:
+  best_obj: 0.00257303
+minmaxbd:
+  best_obj: 115.70637209
+minmaxrb:
+  best_obj: 0.0
+minperm:
+  best_obj: 0.00036288
+minsurf:
+  best_obj: 1.0
+mistake:
+  best_obj: -1.0
+model:
+morebv:
+  best_obj: 0.0
+mosarqp1:
+  best_obj: -952.87543832
+mosarqp2:
+  best_obj: -1597.48224589
+msqrta:
+  best_obj: 0.0
+msqrtals:
+  best_obj: 0.00026944
+msqrtb:
+  best_obj: 0.0
+msqrtbls:
+  best_obj: 0.00015746
+mwright:
+  best_obj: 24.97880953
+nasty:
+  best_obj: 0.0
+ncvxbqp1:
+  best_obj: -19855.43845659
+ncvxbqp2:
+  best_obj: -13327.80640105
+ncvxbqp3:
+  best_obj: -6462.73803603
+ncvxqp1:
+  best_obj: -7159889.25748499
+ncvxqp2:
+  best_obj: -5777071.94413631
+ncvxqp3:
+  best_obj: -3091307.78732744
+ncvxqp4:
+  best_obj: -93.94320178
+ncvxqp5:
+  best_obj: -66.33644821
+ncvxqp6:
+  best_obj: -34.76836473
+ncvxqp7:
+  best_obj: -43.38136002
+ncvxqp8:
+  best_obj: -30.46699273
+ncvxqp9:
+  best_obj: -21.56018175
+ngone:
+  best_obj: -0.60910197
+noncvxu2:
+  best_obj: 0.00231789
+noncvxun:
+  best_obj: 0.00231681
+nondia:
+  best_obj: 0.0
+nondquar:
+  best_obj: 4.51e-06
+nonmsqrt:
+  best_obj: 0.75180042
+nonscomp:
+  best_obj: 0.0
+nuffield:
+  best_obj: -2.79909865
+nuffield2:
+  best_obj: -2.84745209
+nuffield2_trap:
+  best_obj: -0.58717377
+nuffield_continuum:
+  best_obj: -2.54941477
+obstclal:
+  best_obj: 1.39789756
+obstclbl:
+  best_obj: 2.87503823
+obstclbu:
+  best_obj: 2.87503823
+odfits:
+  best_obj: -2369.64731155
+oet1:
+  best_obj: 0.53872692
+oet2:
+  best_obj: 0.08651078
+oet3:
+  best_obj: 0.00450017
+oet7:
+  best_obj: 4.372e-05
+optcdeg2:
+  best_obj: 229.57341736
+optcdeg3:
+  best_obj: 46.14566899
+optcntrl:
+  best_obj: 549.99999999
+optctrl3:
+  best_obj: 2048.01654175
+optctrl6:
+  best_obj: 2048.01653722
+optmass:
+  best_obj: -0.1895425
+optprloc:
+  best_obj: -16.41977383
+orthrdm2:
+  best_obj: 57.48831064
+orthrds2:
+  best_obj: 37.41153983
+orthrega:
+  best_obj: 1641.16087871
+orthregb:
+  best_obj: 0.0
+orthregc:
+  best_obj: 13305617.4268661
+orthregd:
+  best_obj: 0.0
+orthrege:
+  best_obj: 0.00234636
+orthrgdm:
+  best_obj: 31622776.6016838
+orthrgds:
+  best_obj: 31622776.6016838
+osbornea:
+  best_obj: 5.465e-05
+osborneb:
+  best_obj: 0.04013774
+oslbqp:
+  best_obj: 6.25
+palmer1:
+  best_obj: 11754.60254535
+palmer1a:
+  best_obj: 0.08988363
+palmer1b:
+  best_obj: 3.44735462
+palmer1c:
+  best_obj: 0.09759799
+palmer1d:
+  best_obj: 0.65268259
+palmer1e:
+  best_obj: 0.00083527
+palmer2:
+  best_obj: 3651.08950042
+palmer2a:
+  best_obj: 0.01716074
+palmer2b:
+  best_obj: 0.62339465
+palmer2c:
+  best_obj: 0.01442139
+palmer2e:
+  best_obj: 0.00021535
+palmer3:
+  best_obj: 2416.98032085
+palmer3a:
+  best_obj: 0.02043142
+palmer3b:
+  best_obj: 4.22764725
+palmer3c:
+  best_obj: 0.01953764
+palmer3e:
+  best_obj: 5.074e-05
+palmer4:
+  best_obj: 2424.01641555
+palmer4a:
+  best_obj: 0.04060614
+palmer4b:
+  best_obj: 6.8351386
+palmer4c:
+  best_obj: 0.0503107
+palmer4e:
+  best_obj: 0.000148
+palmer5a:
+  best_obj: 0.02853565
+palmer5b:
+  best_obj: 0.00975249
+palmer5c:
+  best_obj: 2.12808667
+palmer5d:
+  best_obj: 87.33939953
+palmer5e:
+  best_obj: 0.02071373
+palmer6a:
+  best_obj: 0.05594884
+palmer6c:
+  best_obj: 0.01638742
+palmer6e:
+  best_obj: 0.00022396
+palmer7a:
+  best_obj: 10.33485566
+palmer7c:
+  best_obj: 0.60198567
+palmer7e:
+  best_obj: 10.15389863
+palmer8a:
+  best_obj: 0.0740097
+palmer8c:
+  best_obj: 0.15976806
+palmer8e:
+  best_obj: 0.00633932
+penalty1:
+  best_obj: 0.00968618
+penalty2:
+  best_obj: 97096.08395469
+pentagon:
+  best_obj: 0.00013652
+pentdi:
+  best_obj: -0.75
+pfit1:
+  best_obj: 1.3e-07
+pfit1ls:
+  best_obj: 1.3e-07
+pfit2:
+  best_obj: 2e-08
+pfit2ls:
+  best_obj: 2e-08
+pfit3:
+  best_obj: 8e-08
+pfit3ls:
+  best_obj: 8e-08
+pfit4:
+  best_obj: 7e-08
+pfit4ls:
+  best_obj: 1e-08
+polak1:
+  best_obj: 2.71828183
+polak2:
+  best_obj: 54.59815003
+polak3:
+  best_obj: 5.93300335
+polak4:
+  best_obj: -1.187e-05
+polak5:
+  best_obj: 50.0
+polak6:
+  best_obj: -44.0
+porous1:
+  best_obj: 0.0
+porous2:
+  best_obj: 0.0
+portfl1:
+  best_obj: 0.02048627
+portfl2:
+  best_obj: 0.02968924
+portfl3:
+  best_obj: 0.03274971
+portfl4:
+  best_obj: 0.02630695
+portfl6:
+  best_obj: 0.0257918
+powell20:
+  best_obj: 52145.78124996
+powellbs:
+  best_obj: 0.0
+powellsq:
+  best_obj: 0.0
+power:
+  best_obj: 0.0
+probpenl:
+  best_obj: 2e-07
+prodpl0:
+  best_obj: 60.91923648
+prodpl1:
+  best_obj: 53.03701506
+pspdoc:
+  best_obj: 2.41421356
+pt:
+  best_obj: 0.25
+qpcboei1:
+  best_obj: 14433867.2791538
+qpcboei2:
+  best_obj: 8293665.50770527
+qpcstair:
+  best_obj: 6204391.69632051
+qpnboei1:
+  best_obj: 8517806.05919725
+qpnboei2:
+  best_obj: 1271825.87292062
+qpnstair:
+  best_obj: 5146033.053143
+qr3d:
+  best_obj: 0.0
+qr3dbd:
+  best_obj: 0.0
+qr3dls:
+  best_obj: 0.0
+qrtquad:
+  best_obj: -3648088.3639831
+quartc:
+  best_obj: 325421.4664374
+qudlin:
+  best_obj: -7200.0
+reading1:
+  best_obj: -0.16048024
+reading2:
+  best_obj: -0.00996705
+reading3:
+  best_obj: 0.0
+recipe:
+  best_obj: 0.0
+res:
+  best_obj: 0.0
+rk23:
+  best_obj: 0.08333333
+robot:
+  best_obj: 27.09523403
+rosenbr:
+  best_obj: 0.0
+rosenmmx:
+  best_obj: -44.0
+s332:
+  best_obj: 29.92435035
+s365mod:
+  best_obj: 52.13990434
+s368:
+  best_obj: 0.0
+sawpath:
+  best_obj: 181.57299282
+scon1dls:
+  best_obj: 2.89278401
+scosine:
+  best_obj: -0.00145774
+scurly10:
+  best_obj: 5460967.2483778
+scurly20:
+  best_obj: 5460968.30725332
+scurly30:
+  best_obj: 5460973.65613969
+semicon1:
+  best_obj: 0.0
+semicon2:
+  best_obj: 0.0
+sensors:
+  best_obj: -51333.89411363
+sim2bqp:
+  best_obj: 0.0
+simbqp:
+  best_obj: 0.0
+simpllpa:
+  best_obj: 1.0
+simpllpb:
+  best_obj: 1.1
+sineali:
+  best_obj: -1865.34943455
+sineval:
+  best_obj: 0.0
+sinquad:
+  best_obj: 6.427e-05
+sinrosnb:
+  best_obj: -99901.0
+sipow1:
+  best_obj: -1.00000001
+sipow1m:
+  best_obj: -1.00000005
+sipow2:
+  best_obj: -1.00000003
+sipow2m:
+  best_obj: -1.0000002
+sipow3:
+  best_obj: 0.76379526
+sipow4:
+  best_obj: 0.2728283
+sisser:
+  best_obj: 0.0
+smbank:
+  best_obj: -7129292.0
+smmpsf:
+  best_obj: 1046985.68736515
+snake:
+  best_obj: 0.0
+sosqp1:
+  best_obj: 0.0
+sosqp2:
+  best_obj: -4996.53033666
+spanhyd:
+  best_obj: 239.73800066
+spiral:
+  best_obj: 0.0
+sreadin3:
+  best_obj: -0.0344186
+srosenbr:
+  best_obj: 0.0
+sseblin:
+  best_obj: 16170600.0
+ssebnln:
+  best_obj: 16170600.0
+ssnlbeam:
+  best_obj: 337.77247076
+stancmin:
+  best_obj: 4.25
+static3:
+  best_obj: 0.0
+steenbra:
+  best_obj: 16957.67466438
+steenbrb:
+  best_obj: 9.42585362
+steenbrc:
+  best_obj: 0.0204582
+steenbrd:
+  best_obj: 0.00923926
+steenbre:
+  best_obj: 0.28775233
+steenbrf:
+  best_obj: 282.67955682
+steenbrg:
+  best_obj: 0.29019492
+supersim:
+  best_obj: 0.66666667
+svanberg:
+  best_obj: 0.66666667
+swopf:
+  best_obj: 0.06786018
+synthes1:
+  best_obj: 0.75928439
+tame:
+  best_obj: 0.0
+tfi2:
+  best_obj: 0.65395902
+tointqor:
+  best_obj: 1175.47222215
+trainf:
+  best_obj: 0.68954798
+trainh:
+  best_obj: 0.0
+tridia:
+  best_obj: 0.0
+trimloss:
+  best_obj: 9.06
+try-b:
+  best_obj: 0.0
+twirism1:
+  best_obj: -1.00573
+twobars:
+  best_obj: 1.50865242
+ubh1:
+  best_obj: 14.98048932
+ubh5:
+  best_obj: 14.98048932
+vanderm1:
+  best_obj: 0.0
+vanderm2:
+  best_obj: 0.0
+vanderm3:
+  best_obj: 0.0
+vanderm4:
+  best_obj: 0.0
+vardim:
+  best_obj: 0.0
+watson:
+  best_obj: 0.0
+weeds:
+  best_obj: 2.5872774
+womflet:
+  best_obj: 0.0
+woods:
+  best_obj: 0.0
+yao:
+  best_obj: 197.70461557
+yfit:
+  best_obj: 0.23603409
+yfitu:
+  best_obj: 0.23603409
+zangwil2:
+  best_obj: -18.2
+zangwil3:
+  best_obj: 0.0
+zecevic2:
+  best_obj: -4.125
+zecevic3:
+  best_obj: 97.30945014
+zecevic4:
+  best_obj: 7.55750777
+zigzag:
+  best_obj: 3.16173495
+zy2:
+  best_obj: 2.0
