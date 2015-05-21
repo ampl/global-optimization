@@ -14,7 +14,7 @@ def load_index(*args):
     index.update(yaml.load(open(os.path.join(repo_dir, dirname, 'index.yaml'))))
   return index
 
-index = load_index('nlmodels', 'jdp')
+index = load_index('cute', 'jdp', 'nlmodels')
 
 def model_name(result):
   "Extracts the model name from a benchmark result."
@@ -58,6 +58,7 @@ def check_obj(result, obj_tolerance):
 def read_log(filename):
   results = yaml.load(file(filename, 'r'))
   for result in results:
+    print(result['model'])
     ampl_filename = os.path.join(repo_dir, result['model'])
     dirname, filename = os.path.split(ampl_filename)
     with AMPL(dirname) as ampl:
