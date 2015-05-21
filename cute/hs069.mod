@@ -1,4 +1,4 @@
-function myerf;
+function gsl_sf_erf;
 
 param l {1..4};
 param u {1..4};
@@ -10,13 +10,13 @@ param b := 1000;
 param d := 1;
 param n := 4;
 
-minimize obj: 
+minimize obj:
   ( a*n - (b*(exp(x[1])-1) - x[3])*x[4]/(exp(x[1]) - 1 + x[4]) )/x[1] ;
 
-subject to constr1: 
-    x[3] - 2*myerf(-x[2]) = 0;
-subject to constr2: 
-    x[4] = myerf(-x[2] + d*sqrt(n)) + myerf(-x[2] - d*sqrt(n));
+subject to constr1:
+    x[3] - 2*gsl_sf_erf(-x[2]) = 0;
+subject to constr2:
+    x[4] = gsl_sf_erf(-x[2] + d*sqrt(n)) + gsl_sf_erf(-x[2] - d*sqrt(n));
 
 data;
 
