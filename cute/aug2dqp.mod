@@ -38,5 +38,3 @@ subject to bound1{i in 1..nx-1}:
 	x[i,ny] >= 1.0;
 subject to bound2{j in 1..ny-1}:
 	y[nx,j] >= 1.0;
-
-solve;

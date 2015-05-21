@@ -65,18 +65,3 @@ param: a b :=
 43 40 0.39
 44 42 0.39
 ;
-
-/*
-display obj;
-display constr1.lb, constr1.body, constr1.ub;
-display constr2.lb, constr2.body, constr2.ub;
-display constr3.lb, constr3.body, constr3.ub;
-*/
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 0.02845966972;

@@ -25,7 +25,3 @@ minimize f:
 	(x[1]-1.0)^2 + (x[1]-x[2])^2 + (x[2]-x[3])^4;
 subject to cons1:
 	x[1]*(1.0+x[2]^2)+x[3]^4 = 8.2426407;
-
-solve;
-display f;
-display x;

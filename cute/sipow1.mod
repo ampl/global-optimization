@@ -30,7 +30,3 @@ subject to cons{j in 1..m}:
 
 data;
 param xinit:= 1 0.8 2 0.5;
-
-solve;
-display f;
-display x;

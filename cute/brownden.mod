@@ -32,7 +32,3 @@ minimize f:
 
 data;
 param x_init:= 1 25 2 5 3 -5 4 -1;
-
-solve;
-display f;
-display x;

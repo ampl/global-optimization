@@ -24,5 +24,3 @@ minimize f:
 	(x[1]-1)^2 + sum {i in 2..N} (x[i-1]-sqrt(x[i]))^2;
 subject to cons1:
 	x[2] <= 0.8;
-
-solve; display f; display x;

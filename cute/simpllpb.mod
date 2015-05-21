@@ -26,8 +26,3 @@ subject to cons2:
 	x[1]+2*x[2]-1.2 >= 0;
 subject to cons3:
 	2*x[1]+x[2]-1.2 >= 0;
-
-solve;
-display f;
-display x;
-

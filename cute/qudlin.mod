@@ -16,5 +16,3 @@ param M:=6;
 var x{1..N} >= 0.0, <= 10.0;
 minimize f:
 	sum {i in 1..N} -i*10*x[i] + sum {i in 1..M} x[i]*x[i+1];
-
-solve;

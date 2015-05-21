@@ -58,19 +58,3 @@ subject to g8:
 	0 >= 6.4*0.5 * x5 * x5 - 6.4*0.5 * x5 * x11 + 1.6*0.5 * x11 * x11 - z - x10;
 subject to g9:
 	0 >= 10.0*0.5 * x6 * x6 - z - x10;
-
-solve;
-	display z;
-	display x1;
-	display x2;
-	display x3;
-	display x4;
-	display x5;
-	display x6;
-	display x7;
-	display x8;
-	display x9;
-	display x10;
-	display x11;
-	display x12;
-display obj;

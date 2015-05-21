@@ -44,5 +44,3 @@ subject to cons1{i in 1..n}:
 	(n-1)*x[i] - n*x[i-1] - exp(t[i])*u[i] = 0;
 
 fix x[0] := xx0;
-solve; 
-

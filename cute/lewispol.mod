@@ -44,7 +44,3 @@ param a_init:=
 3	0
 4	1
 5	-1;
-
-solve;
-display f;
-display a;

@@ -37,6 +37,3 @@ fix x[0] := 0;
 fix x[N+1] := 0;
 
 #option loqo_options "verbose=2 timing=1 convex";	
-solve;
-display f;
-display x;

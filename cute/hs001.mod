@@ -8,11 +8,3 @@ subject to constr: -1.5 <= x[2];
 
 let x[1] := -2;
 let x[2] :=  1;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 0.0;

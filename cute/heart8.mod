@@ -82,15 +82,3 @@ subject to cons7:
 	(a * t * (t^2-(3.0)*v^2) + c * v * (v^2-(3.0)*t^2) + b * u * (u^2-(3.0)*w^2) + d * w * (w^2-(3.0)*u^2) + 12.6) = 0;
 subject to cons8:
 	(c * t * (t^2-(3.0)*v^2) - a * v * (v^2-(3.0)*t^2) + d * u * (u^2-(3.0)*w^2) - b * w * (w^2-(3.0)*u^2) - 9.48) = 0;
-
-
-solve;
-	display a;
-	display b;
-	display c;
-	display d;
-	display t;
-	display u;
-	display v;
-	display w;
-display obj;

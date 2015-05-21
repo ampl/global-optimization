@@ -42,7 +42,3 @@ subject to cons3{i in 2..P-1}:
 	x[i,P] = (i-1)*ston+h01;
 subject to cons4{i in 2..P-1}:
 	x[i,1] = (i-1)*ston+h00;
-
-solve;
-display f;
-display x;

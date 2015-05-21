@@ -19,7 +19,3 @@ var x{i in 1..n} := i/(n+1);
 minimize f:
 	sum {i in 1..n} (x[i]) +
 	sum {i in 2..n-1} alpha*cos(2*x[i]-x[n]-x[1]);
-
-solve;
-display f;
-display x;

@@ -25,5 +25,3 @@ subject to cons3{j in 1..p+1}:
 	x[j,1] = 1.0;	
 subject to cons4{j in 1..p+1}:
 	x[j,p+1] = 1.0;	
-
-solve; display f; display x;

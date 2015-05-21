@@ -13,13 +13,3 @@ let x[2] := sqrt(2);
 let x[3] := -1;
 let x[4] := 2-sqrt(2);
 let x[5] := 1/2;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 0;

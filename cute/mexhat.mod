@@ -28,8 +28,3 @@ minimize f:
 	- 2*(x1-1)^2
 	+ p*(-0.02 + (x2-x1^2)^2/p + (x1-1)^2)^2
 ;
-
-solve;
-display f;
-display x1, x2;
-

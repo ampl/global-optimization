@@ -35,7 +35,3 @@ subject to cons2:
 	-1D+10 <= x[3] <= 1;
 subject to cons3:
 	x[4] = 2;
-
-solve;
-display f;
-display x;

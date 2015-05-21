@@ -61,28 +61,3 @@ subject to cons13:
 	TO-TOLIM <= 0;
 subject to cons14:
 	TOB-TOBLIM <= 0;
-
-solve;
-display f;
-display 
-    L0
-,    N
-,    F
-,    K
-,    LB
-,    L
-,    DE
-,    DI
-,    TO
-,    TOB
-,    NU
-,    D
-,    P
-,    E
-,    P0
-,    G
-,    DM
-,    FR
-,    TOLIM
-,    TOBLIM
-;

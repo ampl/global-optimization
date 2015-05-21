@@ -24,5 +24,3 @@ var x{1..N} := 2.0;
 
 minimize f:
 	sum {i in 1..N} (x[i]-i)^4;
-
-solve; display f; display x;

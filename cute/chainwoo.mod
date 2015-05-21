@@ -39,7 +39,3 @@ let x[1] := -3.0;
 let x[2] := -1.0;
 let x[3] := -3.0;
 let x[4] := -1.0;
-
-solve;
-display f;
-display x;

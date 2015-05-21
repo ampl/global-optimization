@@ -105,33 +105,3 @@ subject to e5:
 subject to e6:
 	h11 * x6 * x6 + 2.0*h12 * x6 * y6 + h22 * y6 * y6 - 2.0*g1 * x6 - 2.0*g2 * y6 + 
 	2.0*h13 * x6 * z6 + 2.0*h23 * y6 * z6 + h33 * z6 * z6 - 2.0*g3 * z6 - 1.0 = 0;
-
-solve;
-	display h11;
-	display h12;
-	display h13;
-	display h22;
-	display h23;
-	display h33;
-	display g1;
-	display g2;
-	display g3;
-	display x1;
-	display y1;
-	display z1;
-	display x2;
-	display y2;
-	display z2;
-	display x3;
-	display y3;
-	display z3;
-	display x4;
-	display y4;
-	display z4;
-	display x5;
-	display y5;
-	display z5;
-	display x6;
-	display y6;
-	display z6;
-display obj;

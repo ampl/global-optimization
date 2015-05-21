@@ -23,5 +23,3 @@ var x{1..2} := 1.0;
 
 minimize f:
 	(x[1]-2.0)^2 + ((x[1]-2.0)*x[2])^2 + (x[2]+1.0)^2;
-
-solve; display f; display x;

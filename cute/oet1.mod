@@ -33,5 +33,3 @@ subject to cons1{i in 0..M}:
 	u-(i*h+lower)*x[1]-exp(i*h+lower)*x[2] - (i*h+lower)^2 >= 0;
 subject to cons2{i in 0..M}:
 	u+(i*h+lower)*x[1]+exp(i*h+lower)*x[2] + (i*h+lower)^2 >= 0;
-	
-solve; display f; display x;

@@ -48,8 +48,3 @@ fix {i in 2..p-1, j in 2..p-1} u[i,j,1] := 0.0;
 fix {i in 2..p-1, j in 2..p-1} u[i,j,p] := 0.0;
 fix {i in 2..p-1, j in 2..p-1} x[i,j,1] := 0.0;
 fix {i in 2..p-1, j in 2..p-1} x[i,j,p] := 0.0;
-
-solve;
-display f;
-display u,x;
-	

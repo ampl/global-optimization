@@ -27,5 +27,3 @@ minimize f:
 	x[1]+0.5*x[2]+x[3]/3;
 subject to cons1{i in 0..M}:
 	-x[1]-i*h*x[2]-(i*h)^2*x[3]+tan(i*h) <= 0;
-
-solve; display f; display x;

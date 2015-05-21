@@ -52,6 +52,3 @@ minimize f:
 	  1D10*(x2)^2 else
 	  -log(x2+1)
 ;
-solve;
-display f;
-display x1, x2;

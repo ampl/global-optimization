@@ -25,7 +25,3 @@ minimize f:
 	+ sum {i in 2..N-1} (sin(x[i]-x[N])-x[1]^2+x[i]^2)^2
 	+ (x[N]^2-x[1]^2)^2
 	;
-
-solve;
-display f;
-display x;

@@ -27,6 +27,3 @@ minimize f:
 	+ sum {i in 2..N} 100*sin(x[i]-x[i-1]^2)
 	;
 option loqo_options "verbose=2 timing=1 inftol=0.000001 sigfig=6";
-solve;
-display f;
-display x;

@@ -53,7 +53,3 @@ minimize f:
 
 fix u[0] := LUA;
 fix u[N+1] := LUB;
-
-solve;
-display f;
-display u;

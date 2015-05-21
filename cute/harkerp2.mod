@@ -26,5 +26,3 @@ minimize f:
 	sum {i in 1..N} -x[i] +
 	( sum {i in 1..N} x[i] )^2 +
 	sum {j in 2..N} 2*(sum {i in j..N} x[i])^2;
-
-solve;

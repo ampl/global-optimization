@@ -15,14 +15,3 @@ let x[3] := 2;
 #let x[1] := 3.512118414;
 #let x[2] := 0.2169881741;
 #let x[3] := 3.552174034;
-
-display obj;
-display constr1.body, constr2.body;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 961.7151721;

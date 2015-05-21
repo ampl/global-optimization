@@ -33,7 +33,3 @@ subject to cons4:
 	x[1]+x[2]+10.0 <= 0;
 subject to cons5:
 	2*x[1]^2-x[2]^2+4.0 <= 0;
-
-solve;
-display f;
-display x;

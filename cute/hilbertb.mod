@@ -25,5 +25,3 @@ var x{1..N} := -3.0;
 
 minimize f:
 	sum {i in 1..N} (sum {j in 1..i-1} x[i]*x[j]/(i+j-1) + (x[i]^2)*(D+1/(4*i-2)));
-
-solve; display f; display x;

@@ -28,5 +28,3 @@ subject to cons1{i in 1..N}:
 	(N-0.5)*x[i] + (-N-0.5)*x[i-1] - u[i] = 0;
 subject to cons2:
 	x[0] = 1.0;
-
-solve; display f; display x;

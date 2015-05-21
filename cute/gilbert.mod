@@ -25,6 +25,3 @@ minimize f:
 	sum {i in 1..n} ((n+1-i)*x[i]/n-1.0)^2/2;
 subject to cons1:
 	(sum {i in 1..n} x[i]^2 - 1.0)/2 = 0.0;
-solve;
-display f;
-display x;

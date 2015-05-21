@@ -24,7 +24,3 @@ var x{1..N} >= -1.5, <= 3.0;
 
 minimize f:
 	sum {i in 1..N-1} (-1.5*x[i]+2.5*x[i+1]+1.0+(x[i]-x[i+1])^2+sin(x[i]+x[i+1]));
-
-solve;
-display f;
-display x;

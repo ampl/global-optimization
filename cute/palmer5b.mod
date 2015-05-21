@@ -64,7 +64,3 @@ param Y:=
 22                 62.822177
 23                 77.719674
 ;
-
-solve;
-
-display A0,A2,A4,A6,A8,A10,B,C;

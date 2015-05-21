@@ -27,4 +27,3 @@ subject to cons1{k in 1..N-1}:
 	x[k+1]-x[k] >= -0.5+(-1)^k*k;
 subject to cons2:
 	x[1]-x[N] >= N-0.5;
-solve;

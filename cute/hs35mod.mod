@@ -27,5 +27,3 @@ subject to cons1:
 	-x[1]-x[2]-2.0*x[3]+3.0 >= 0;
 subject to cons2:
 	x[2] = 0.5;
-
-solve; display f; display x;

@@ -112,7 +112,3 @@ param y:=
 63	0.162
 64	0.098
 65	0.054;
-
-solve;
-display f;
-display x;

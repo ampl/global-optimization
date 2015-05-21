@@ -18,7 +18,3 @@ data;
 var x:=
 1	0.75
 2	0.75;
-
-solve;
-
-display x;

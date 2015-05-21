@@ -26,7 +26,3 @@ var x{1..N} >= -5, <= 5, := 0.5;
 minimize f:
 	sum {i in 1..N-1} (x[i]+x[i+1])*0.0001*exp(-x[i]*x[i+1])/N
 	+ 100*(sum {i in 1..N} x[i] - 1)^2;
-
-solve;
-display f;
-display x;

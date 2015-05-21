@@ -35,6 +35,3 @@ subject to cons{j in 1..n, i in 1..j: i != j}:
          sum {k in 1..n} q[k,i]*q[k,j] = 0.0;
 subject to cons1{j in 1..n}:
          sum {k in 1..n} q[k,j]*q[k,j] = 1.0; 
-
-solve;
-

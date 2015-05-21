@@ -35,6 +35,3 @@ subject to cons1{i in 1..K-1}:
 
 data;
 param K:=350;
-
-solve; display knot, space;
-

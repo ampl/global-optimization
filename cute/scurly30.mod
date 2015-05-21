@@ -25,5 +25,3 @@ var z{i in N-K+1..N} = sum {j in i..N} x[j]*scale[j];
 
 minimize f:
 	sum {i in 1..N-K} (y[i]*(y[i]*(y[i]^2-20)-0.1)) + sum {i in N-K+1..N} (z[i]*(z[i]*(z[i]^2-20)-0.1));
-
-solve; display f; display x;

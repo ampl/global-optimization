@@ -96,38 +96,3 @@ subject to b9:
 	x10 - x9 - 0.2*y9 = 0;
 subject to c9:
 	0.01*y9 * y9 + y10 - y9 + 0.0040*x9 - 0.2*u9 = 0;
-
-solve;
-display x0;
-display y0;
-display x1;
-display y1;
-display x2;
-display y2;
-display x3;
-display y3;
-display x4;
-display y4;
-display x5;
-display y5;
-display x6;
-display y6;
-display x7;
-display y7;
-display x8;
-display y8;
-display x9;
-display y9;
-display x10;
-display y10;
-display u0;
-display u1;
-display u2;
-display u3;
-display u4;
-display u5;
-display u6;
-display u7;
-display u8;
-display u9;
-display obj;

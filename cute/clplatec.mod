@@ -36,7 +36,3 @@ minimize f:
 	) + (wr*x[p,p]+wl*x[p,1]);
 
 fix {j in 1..p} x[1,j] := 0.0;	
-
-solve;
-display f;
-display x;

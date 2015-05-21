@@ -43,11 +43,3 @@ let x[5] := -1;
 #let x[5] := -0.7636450;
 
 data;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 0.0539498478;

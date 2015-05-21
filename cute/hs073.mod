@@ -22,11 +22,3 @@ let x[4] := 1;
 #let x[4] := 0.5177655;
 
 data;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 29.894378;

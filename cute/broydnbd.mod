@@ -31,7 +31,3 @@ var x{1..N} := -1;
 minimize f: 0;
 subject to cons{i in 1..N}:
 	( x[i]*(2+5*x[i]^2) + 1 - sum {j in J[i]} x[j]*(1+x[j]) ) = 0;
-
-solve;
-display f;
-display x;

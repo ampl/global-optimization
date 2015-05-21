@@ -37,6 +37,3 @@ fix x[0] := 0.0;
 fix x[ni] := 0.0;
 fix t[0] := 0.0;
 fix t[ni] := 0.0;
-
-solve;
-display x,t,u;

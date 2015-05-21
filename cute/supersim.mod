@@ -26,7 +26,3 @@ subject to cons1:
 	x+2*y-2 = 0;
 subject to cons2:
 	2*x+y-2 = 0;
-
-solve;
-display f;
-display x,y;

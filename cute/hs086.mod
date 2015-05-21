@@ -138,14 +138,3 @@ let x[5] := 1;
 #let x[3] := 0.4;
 #let x[4] := 0.42831010;
 #let x[5] := 0.22396487;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj+32.34867897;
-

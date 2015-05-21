@@ -111,6 +111,3 @@ param x_init :=
 12	2      0.16700944
 12	3     -0.31647534
 ;
-solve;
-display f;
-display x;

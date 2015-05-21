@@ -543,28 +543,3 @@ subject to e20:
 	q20 * d - q19 + 9.0*q20 - q21 = 0;
 subject to e21:
 	q21 * d - q20 + 10.0*q21 = 0;
-
-solve;
-display d;
-display q1;
-display q2;
-display q3;
-display q4;
-display q5;
-display q6;
-display q7;
-display q8;
-display q9;
-display q10;
-display q11;
-display q12;
-display q13;
-display q14;
-display q15;
-display q16;
-display q17;
-display q18;
-display q19;
-display q20;
-display q21;
-display obj;

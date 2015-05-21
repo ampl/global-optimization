@@ -26,5 +26,3 @@ var x{1..N} := 1.0;
 
 minimize f:
 	sum {i in 1..N} (i*x[i])^2; 
-
-solve; display f; display x;

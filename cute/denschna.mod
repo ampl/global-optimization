@@ -22,5 +22,3 @@
 var x{1..2} := 1.0;
 minimize f:
 	x[1]^4 + (x[1]+x[2])^2 + (-1.0+exp(x[2]))^2;
-
-solve; display f; display x;

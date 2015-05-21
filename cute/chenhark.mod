@@ -36,5 +36,3 @@ minimize f:
 	sum {i in nfree+ndegen+1..n} x[i]*(-6*x_p[i] + 4*x_p[i+1] + 4*x_p[i-1] -
                 x_p[i+2] - x_p[i-2] + 1)
 	;
-
-solve;

@@ -10,11 +10,3 @@ let x[1] := 10;
 let x[2] :=  1;
 
 option loqo_options $loqo_options" convex";
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 0.0;

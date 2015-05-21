@@ -101,5 +101,3 @@ param c:=
 3	300
 4	150
 5	250;
-
-solve; display f; display x;

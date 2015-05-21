@@ -27,5 +27,3 @@ subject to cons2:
 	(x[1]-x[13]+1-x[1]*x[2]) = 0;
 subject to cons3:
 	(x[N]-x[13]+1+x[N-1]*x[N]) = 0;
-
-solve; display f; display x;

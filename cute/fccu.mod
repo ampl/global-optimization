@@ -121,26 +121,3 @@ param m:=
 17 10.8 
 18 6.5 
 19 6.5;
-
-solve;
-display f;
-display 
-    Feed,
-    Effluent,
-    MF_ohd,
-    HCN,
-    LCO,
-    HCO,
-    MF_btms,
-    Decant,
-    Dec_recy,
-    Off_gas,
-    DC4_feed,
-    DC3_feed,
-    DC4_btms,
-    Lean_oil,
-    Propane,
-    Butane,
-    C8spl_fd,
-    LCN,
-    MCN;

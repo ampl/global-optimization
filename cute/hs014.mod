@@ -13,11 +13,3 @@ let x[2] := 2;
 #printf "optimal solution as starting point \n";
 #let x[1] := 0.822876;
 #let x[2] := 0.911438;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 9 + 2.875*sqrt(7);

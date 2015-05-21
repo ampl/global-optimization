@@ -21,5 +21,3 @@ subject to cons1{i in 1..N}:
 	x[i]-y[i] = 1;
 subject to cons2:
 	sum {i in 1..N} (x[i]+y[i]) = N;
-
-solve; display f; display x, y;

@@ -15,9 +15,3 @@ s.t. alessb:  a <= b;
 
 let a:=0.03;
 let b:=0.10;
-
-display foo;
-
-solve;
-
-display a, b, foo;

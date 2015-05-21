@@ -13,11 +13,3 @@ let x[2] := 2;
 #printf "optimal solution as starting point \n";
 #let x[1] := 1;
 #let x[2] := 1;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 1;

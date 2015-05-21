@@ -33,7 +33,3 @@ minimize f:
 	(x[2*i-1])^8 +
 	(x[2*i+2]-1.0)^2
 	);
-
-solve;
-display f;
-display x;

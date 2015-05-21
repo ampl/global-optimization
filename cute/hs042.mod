@@ -17,13 +17,3 @@ let x[4] := 1;
 #let x[2] := 2;
 #let x[3] := 0.848529;
 #let x[4] := 1.13137;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 28 + 10*sqrt(2);

@@ -25,4 +25,3 @@ minimize f:
 	u;
 subject to cons{i in 1..20}:
 	-u+x[i]^2 <= 0;
-solve;

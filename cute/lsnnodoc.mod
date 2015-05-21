@@ -49,7 +49,3 @@ param:
 1	2	4
 2	6	8
 3	0	5;
-
-solve;
-display f;
-display x;

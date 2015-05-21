@@ -64,5 +64,3 @@ fix vz[0] := 0.0;
 fix vx[t] := 0.0;
 fix vy[t] := 0.0;
 fix vz[t] := 0.0;
-
-solve;

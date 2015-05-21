@@ -32,7 +32,3 @@ minimize f:
 
 subject to cons1: x[0] = 0;
 subject to cons2: x[N+1] = 0;
-
-solve;
-display f;
-display x;

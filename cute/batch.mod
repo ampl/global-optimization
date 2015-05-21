@@ -86,7 +86,3 @@ param tvals:
 4	3.2	3.0	3.5	3.3	2.8	3.4
 5	2.1	2.5	4.2	3.6	3.7	2.2
 ;
-
-solve;
-display f;
-display n, v, b, tl, y;

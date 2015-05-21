@@ -24,7 +24,3 @@ param M:=20;
 var x{1..N}:=1.0;
 minimize f:
 	sum {i in 1..M} ( sum {j in 1..N} x[j]*i*j -1.0)^2;
-
-solve;
-display f;
-display x;

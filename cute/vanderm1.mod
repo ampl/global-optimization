@@ -30,7 +30,3 @@ subject to cons2{k in 2..N}:
 	(sum {i in 1..N} x[i]^k - a[k]) = 0;
 subject to cons3{i in 2..N}:
 	x[i]-x[i-1] >= 0;
-
-solve;
-display f;
-display x;

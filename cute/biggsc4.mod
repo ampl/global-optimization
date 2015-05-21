@@ -37,5 +37,3 @@ subject to cons6:
 	0 <= x[3]+x[4] -1.5 <= 5.0;
 subject to cons7:
 	x[1]+x[2]+x[3]+x[4]-5.0 >= 0;
-
-solve; display f; display x;

@@ -122,7 +122,5 @@ let {i in 0..N, j in 0..N} d2vdx2[i,j] := 1;
 # note: setting bndpush=0.01 and inftol=1.0e-3, 
 #       loqo 5.06 converges in 43 iterations.  however, each iteration is
 # 	rather slow.
-solve;
-
 #printf {i in 0..N, j in 0..N}: 
 #    "%10.4f %10.4f %10.4f \n", a+i/N, a+j/N, v[i,j];

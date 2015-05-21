@@ -45,7 +45,3 @@ param x_init:=
 5	0
 6	1
 7	1;
-
-solve;
-display f;
-display x;

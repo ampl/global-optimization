@@ -16,13 +16,3 @@ let x[3] := 0;
 #let x[1] := 5.326770157;
 #let x[2] := -2.118998639;
 #let x[3] := 3.210464239;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 143.6461422;

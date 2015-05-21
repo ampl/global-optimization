@@ -45,7 +45,3 @@ subject to cons5:
 fix elevator := 0.1;
 fix aileron := 0.0;
 fix rudderdf := 0.0;
-
-solve;
-display f;
-display rollrate, pitchrat, yawrate, attckang, sslipang, elevator, aileron, rudderdf;

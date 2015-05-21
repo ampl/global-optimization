@@ -21,9 +21,3 @@ subject to cons1:
 	((x1-x2*x2) * (x1-sin(x2))) = 0;
 subject to cons2:
 	(((cos(x2))-x1) * (x2-cos(x1))) = 0;
-
-
-solve;
-	display x1;
-	display x2;
-display obj;

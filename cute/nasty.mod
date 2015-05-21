@@ -18,9 +18,3 @@
 
 minimize obj:
 	0.5*(1.0e10*x1)*(1.0e10*x1) + 0.5*(x2)*(x2);
-
-
-solve;
-	display x1;
-	display x2;
-display obj;

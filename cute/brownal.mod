@@ -25,8 +25,3 @@ var x{1..N} := 1/2;
 
 minimize f:
 	sum {i in 1..N-1} (x[i]+sum {j in 1..N} x[j] - (N+1) )^2 + (prod {j in 1..N} x[j] - 1)^2;
-
-solve;
-display f;
-display x;
-

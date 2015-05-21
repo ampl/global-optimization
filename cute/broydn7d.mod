@@ -29,7 +29,3 @@ minimize f:
 	sum {i in 2..N-1} abs(1-x[i-1]-2*x[i+1]+(3-2*x[i])*x[i])^(7/3)+
 	abs(-x[N-1]+1 +(3-2*x[N])*x[N])^(7/3) +
 	sum {i in 1..N/2} abs(x[i]+x[i+N/2])^(7/3);
-
-solve;
-display f;
-display x;

@@ -26,5 +26,3 @@ subject to cons2:
 	(x[1]-0.056+x[2]*exp(2*x[3])) = 0;
 subject to cons3:
 	(x[1]-0.099+x[2]*exp(3*x[3])) = 0;
-
-solve; display f; display x;

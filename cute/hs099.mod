@@ -58,11 +58,3 @@ let x[7] := 0.5;
 #let x[5] := 0.4512352;
 #let x[6] := 0.4091878;
 #let x[7] := 0.3527847;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 0.831079892e+9;

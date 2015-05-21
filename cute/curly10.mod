@@ -23,5 +23,3 @@ var Q{i in 1..N} = if (i <= N-K) then (sum {j in i..i+K} x[j]) else (sum {j in i
 
 minimize f:
 	sum {i in 1..N} Q[i]*(Q[i]*(Q[i]^2-20)-0.1);
-
-solve; display f; display x;

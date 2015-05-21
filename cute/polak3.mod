@@ -169,18 +169,3 @@ subject to f10:
 	0.1*(exp((x10-sin(9.0+10.0+10.0))*(x10-sin(9.0+10.0+10.0)))) + 
 	0.09090909090909091*(exp((x11-sin(9.0+11.0+11.0))*(x11-sin(9.0+11.0+11.0)))) - 
 	u;
-
-solve;
-	display x1;
-	display x2;
-	display x3;
-	display x4;
-	display x5;
-	display x6;
-	display x7;
-	display x8;
-	display x9;
-	display x10;
-	display x11;
-	display u;
-display obj;

@@ -25,7 +25,3 @@ subject to cons1{i in 1..n-1}:
 	x[i]+x[i+1] >= 0.0;
 subject to cons2{i in 1..n-1}:
 	exp(x[i])+exp(x[i+1]) <= 20.0;
-
-solve;
-display f;
-display x;

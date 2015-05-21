@@ -32,7 +32,3 @@ subject to cons3:
 
 data;
 param xinit:= 1 100.0 2 -1.0 3 2.5;
-
-solve;
-display f;
-display x;

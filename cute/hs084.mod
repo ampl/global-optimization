@@ -76,11 +76,3 @@ let x[5] := 6.8;
 #let x[3] := 37.5;
 #let x[4] := 9.25;
 #let x[5] := 6.8;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 5280335.133;

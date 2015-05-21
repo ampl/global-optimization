@@ -29,7 +29,3 @@ var x{i in 1..P, j in 1..P} := 0.2*B[i,j];
 minimize f:
 	sum {i in 1..P, j in 1..P} (sum {t in 1..P} x[i,t]*x[t,j]
 	-A[i,j])^2;
-
-solve;
-display f;
-display x;

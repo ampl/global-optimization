@@ -47,7 +47,3 @@ fix {i in 1..M} y[i,M+1] := 0.0;
 fix {i in 1..M} y[i,M+2] := 0.0;
 fix {j in -1..M+2} y[M+1,j] := -H/2;
 fix {j in -1..M+2} y[M+2,j] := H/2;
-
-solve;
-display f;
-display y;

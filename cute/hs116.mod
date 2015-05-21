@@ -72,13 +72,3 @@ param f := 0.00975;
 var x :=
     1 0.5  2 0.8  3 0.9  4 0.1  5 0.14  6 0.5  7 489  8 80  9 650
    10 450  11 150  12 150  13 150;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 97.588409;

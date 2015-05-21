@@ -48,11 +48,3 @@ let x[4] := 0;
 #let x[4] := -0.3962336;
 
 data;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 5126.4981;

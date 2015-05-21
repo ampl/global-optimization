@@ -18,13 +18,3 @@ let x[3] := 2.9;
 #let x[1] := 0.83403;
 #let x[2] := 2.30258;
 #let x[3] := 10;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + log(log(10));

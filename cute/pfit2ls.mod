@@ -23,7 +23,3 @@ minimize f:
 	(-0.5*(a*(a+1)*r*h^2)+a*r*h-r*(1-(1+h)^-a)-cf)^2 +
 	(-a*(a+1)*r*h^2+a*r*h*(1-(1+h)^-(a+1))-cg)^2 +
 	(-a*(a+1)*r*h^2*(1-(1+h)^-(a+2))-ch)^2;
-
-solve;
-display f;
-display a, r, h;

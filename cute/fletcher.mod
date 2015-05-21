@@ -33,7 +33,3 @@ subject to cons4:
 	x[3]-x[4] >= 0;
 subject to cons5:
 	x[4] >= 1;
-
-solve;
-display f;
-display x;

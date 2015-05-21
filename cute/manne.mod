@@ -48,5 +48,3 @@ subject to cons3:
 	grow*kk[t] - ii[t] <= 0;
 
 fix kk[1] := 3.05;
-solve;
-	

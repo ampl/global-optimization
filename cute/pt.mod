@@ -30,5 +30,3 @@ minimize f:
 	u;
 subject to cons1{i in 0..M}:
 	-(i*h+lower)+(i*h+lower)^2+u+ ( (i*h+lower)-3*(i*h+lower)^2 + 1)*x >= 0;
-
-solve; display f; display x;

@@ -26,5 +26,3 @@ subject to cons1{i in 1..n}:
 subject to cons2:
 	(x[0] - x[n])*n = 0;
 fix x[0] := 0.25;
-solve;
-

@@ -52,7 +52,3 @@ subject to cons5:
 	(u[n]-u[n-1]) = 0;
 subject to cons6:
 	(t[n]-t[n-1]) = 0;
-
-solve;
-display f;
-display t, u;

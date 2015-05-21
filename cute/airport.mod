@@ -163,8 +163,3 @@ param cy:=
 40                -6.4
 41                -5.1
 42                0.0;
-
-
-solve;
-display f;
-display x, y;

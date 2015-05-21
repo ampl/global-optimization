@@ -17,7 +17,3 @@ var x {j in 1..n} := j;
 minimize obj: 
   sum {j in 1..n} ( (x[j] + x[((3*j-2) mod n)+1] + x[((7*j-3) mod n)+1])^2 +
 	       4*cos(x[j] + x[((3*j-2) mod n)+1] + x[((7*j-3) mod n)+1])   );
-
-solve;
-display x;
-display obj;

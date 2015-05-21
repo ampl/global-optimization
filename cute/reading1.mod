@@ -32,5 +32,3 @@ subject to cons1{i in 1..n}:
 	x[i]*u[i]/(2*a) + x[i-1]*u[i-1]/(2*a) + x[i]*n - x[i-1]*n + u[i]*cos(2*pi*i/n)/(-2*a) + u[i-1]*cos(2*pi*(i-1)/n)/(-2*a) = 0;
 
 fix x[0] := 0.25;
-solve;
-

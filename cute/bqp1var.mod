@@ -20,7 +20,3 @@ minimize f:
 	x1+x1^2;
 subject to cons1:
 	0.0 <= x1 <= 0.5;
-
-solve;
-display f;
-display x1;

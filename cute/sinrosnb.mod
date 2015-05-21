@@ -30,7 +30,3 @@ subject to cons1{i in 2..N}:
 subject to cons2:
 	-pi <= x[1] <= pi;
 ;
-
-solve;
-display f;
-display x;

@@ -25,7 +25,3 @@ var x{1..N};
 
 minimize f:
 	sum {i in 1..N-1} sin(x[1] + x[i]^2 - 1.0) + 0.5*sin(x[N]^2);
-
-solve;
-display f;
-display x;

@@ -28,7 +28,3 @@ minimize f:
 	sum {i in 1..NGS} sqrt(x[i]^2+(x[i+1]-x[i+2])^2+1) ;
 subject to cons1:
 	x[1] <= -1;
-
-solve;
-display f;
-display x;

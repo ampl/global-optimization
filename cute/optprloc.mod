@@ -499,36 +499,3 @@ subject to lin4:
 	0 >= 0.157*x1 + 0.05*x2 - 1.5;
 subject to lin5:
 	0 <= 0.25*x2 + 1.05*x4 - 0.3*x5 - 4.5;
-
-solve;
-	display x1;
-	display x2;
-	display x3;
-	display x4;
-	display x5;
-	display y1;
-	display y2;
-	display y3;
-	display y4;
-	display y5;
-	display y6;
-	display y7;
-	display y8;
-	display y9;
-	display y10;
-	display y11;
-	display y12;
-	display y13;
-	display y14;
-	display y15;
-	display y16;
-	display y17;
-	display y18;
-	display y19;
-	display y20;
-	display y21;
-	display y22;
-	display y23;
-	display y24;
-	display y25;
-display obj;

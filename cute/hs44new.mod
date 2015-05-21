@@ -36,5 +36,3 @@ subject to cons5:
 	-x[3]-2*x[4]+8 >= 0;
 subject to cons6:
 	-x[3]-x[4]+5 >= 0;
-
-solve; display f; display x;

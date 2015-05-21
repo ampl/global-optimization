@@ -55,5 +55,3 @@ subject to cons14:
 	0.00841*x[12]-0.08406*x[13]-0.20667*x[14]+20.658*x[16]+1.07*x[18]-10.5*x[19] = 0;
 subject to cons15:
 	-x[1]+300*x[2]+0.09*x[3]+0.03*x[4] = 0;
-
-solve; display f; display x;

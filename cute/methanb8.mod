@@ -239,38 +239,3 @@ minimize obj:
 	(v5*x5_2*-1.0*8.620689655172415e-4*exp(18.3443+(-3841.2203/(t5+228.0)))) * 
 	(10834.67+8.74*t5+0.0*t5*t5) + -1.0 * x7_2 * (-442.13 + v6 ) 
 	*(0.0+18.1*t7+0.0*t7*t7))/100000.0))^2;
-
-
-solve;
-	display t0;
-	display x0_1;
-	display x0_2;
-	display t1;
-	display x1_1;
-	display x1_2;
-	display t2;
-	display x2_1;
-	display x2_2;
-	display t3;
-	display x3_1;
-	display x3_2;
-	display t4;
-	display x4_1;
-	display x4_2;
-	display t5;
-	display x5_1;
-	display x5_2;
-	display t6;
-	display x6_1;
-	display x6_2;
-	display t7;
-	display x7_1;
-	display x7_2;
-	display v0;
-	display v1;
-	display v2;
-	display v3;
-	display v4;
-	display v5;
-	display v6;
-display obj;

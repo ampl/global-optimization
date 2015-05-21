@@ -22,8 +22,3 @@ minimize f:
 subject to cons1{i in 1..M}:
 	x[i]+2*x[((4*i-1) mod N)+1] + 3*x[((5*i-1)
 	mod N)+1] - 6.0 = 0;
-
-solve;
-display f;
-display x;
-

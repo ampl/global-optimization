@@ -26,7 +26,3 @@ minimize f:
 	(2*(x1+x2)^2+(x1-x2)^2-8)^2	
 	+ (5*x1^2+(x2-3)^2-9)^2
 ;
-
-solve;
-display f;
-display x1, x2;

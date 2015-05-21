@@ -34,4 +34,3 @@ subject to cons3{t in 1..n-1}:
         sum {k in 0..ny*nx-1} c[(k div nx)+1,k-nx*(k div nx)+1]*y[t,(k div nx)+1]*x[t,k-nx*(k div nx)+1]+0.5*y[t,ny] - 0.25*y[t,ny-1] - y[t+1,ny] + sum {i in 1..nx} b[ny,i]*x[t,i] = 0;
 
 fix {i in 1..ny} y[1,i] := 0.0;
-solve;

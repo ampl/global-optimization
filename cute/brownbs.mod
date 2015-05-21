@@ -28,5 +28,3 @@ minimize f:
 	sum {i in 1..N-1} (x[i]*x[i+1] - 2.0)^2;
 data;
 param N:=2;
-
-solve; display x;

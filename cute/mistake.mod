@@ -56,15 +56,3 @@ subject to c12:
 	0 <= x1 * x4 - x2 * x3;
 subject to c13:
 	0 >= -x5 * x9;
-
-solve;
-	display x1;
-	display x2;
-	display x3;
-	display x4;
-	display x5;
-	display x6;
-	display x7;
-	display x8;
-	display x9;
-display obj;

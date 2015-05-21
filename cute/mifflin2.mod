@@ -26,9 +26,3 @@ subject to cons1:
 	-u-x[1]-3.75+3.75*(x[1]^2+x[2]^2) <= 0;
 subject to cons2:
 	-u-x[1]-0.25+0.25*(x[1]^2+x[2]^2) <= 0;
-
-solve;
-display f;
-display x;
-display u;
-

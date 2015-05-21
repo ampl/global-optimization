@@ -25,7 +25,3 @@ minimize f:
 	(x-y)^2;
 subject to cons1:
 	x+y-1 = 0;
-
-solve;
-display f;
-display x,y;

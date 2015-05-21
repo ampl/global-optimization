@@ -29,7 +29,3 @@ minimize f:
 
 data;
 param xinit:= 1 0.0 2 2.0;
-
-solve;
-display f;
-display x;

@@ -25,9 +25,3 @@
 
 minimize obj:
 	x1^2 + (x2*x3)^4 + x1*x3 + x2*sin(x1+x3) + x2;
-
-solve;
-	display x1;
-	display x2;
-	display x3;
-display obj;

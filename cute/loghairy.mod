@@ -26,7 +26,3 @@ minimize f:
 	log( (100+sin(7*x1)^2*cos(7*x2)^2*hlength +
 cslope*sqrt(0.01+(x1-x2)^2) + cslope*sqrt(0.01+x1^2))/100)
 ;
-
-solve;
-display f;
-display x1, x2;

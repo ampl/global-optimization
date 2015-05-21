@@ -94,13 +94,3 @@ let x6 := 0.5;
 # let x4 := 420
 # let x5 := 21.30716
 # let x6 := 0.153292
-
-display obj;
-
-solve;
-
-display x1, x2, x3, x4, x5;
-
-display obj;
-
-display obj - 8827.5977;

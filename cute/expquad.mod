@@ -22,7 +22,3 @@ minimize f:
 	sum {i in 1..n} (-10.0*i*x[i]);
 subject to cons{i in 1..m}:
 	0.0 <= x[i] <= 10.0;
-
-solve;
-
-	

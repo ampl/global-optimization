@@ -24,5 +24,3 @@ var x{1..N} := 3.0;
 
 minimize f:
 	sum {i in 1..N-2} (100*x[i+1]^2+100*x[i+2]^2+x[i]^2);
-
-solve; display f; display x;

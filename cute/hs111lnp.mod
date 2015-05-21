@@ -54,12 +54,3 @@ param c :=
  ;
 
 let {j in 1..10} x[j] := -2.3;
-
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 47.76109026;

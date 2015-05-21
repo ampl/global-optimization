@@ -853,7 +853,3 @@ param R:=
  61                 0.0059157
  62                 -0.012987
 ;
-
-solve;
-display f;
-display s;

@@ -30,8 +30,3 @@ subject to cons1:
 	0 >= 0.124*(sqrt((1.0+x2*x2))) * ((8.0/x1)+1.0/(x1*x2)) - 1.0;
 subject to cons2:
 	0 >= 0.124*(sqrt((1.0+x2*x2))) * ((8.0/x1)-1.0/(x1*x2)) - 1.0;
-
-solve;
-	display x1;
-	display x2;
-display obj;

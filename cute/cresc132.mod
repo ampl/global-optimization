@@ -4013,7 +4013,3 @@ param: x y :=
 1327	0.58258
 0.59561
 ;
-
-solve;
-display f;
-display v1, w1, a, d, r, t;

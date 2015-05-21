@@ -22,5 +22,3 @@ var y:=-506.2;
 
 minimize f:
 	0.05*(x^2+y^2) + (sin(zeta*x)*sin(zeta*y))^2;
-
-solve; display f; display x;

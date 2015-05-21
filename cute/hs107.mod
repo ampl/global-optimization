@@ -37,16 +37,3 @@ let x[5] := 1.0454;
 let x[6] := 1.0454;
 let x[7] := 0;
 let x[8] := 0;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj-5055.011803;
-
-
-

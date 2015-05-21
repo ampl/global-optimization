@@ -80,14 +80,3 @@ let {i in 1..n} x[i] := 0.5 * (-1)^(i+1);
 #printf "optimal solution as starting point \n";
 #let x[1] := 1.074319;
 #let x[1] := -0.4566137;
-
-display obj; 
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 1.36265681;
-

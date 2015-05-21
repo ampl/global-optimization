@@ -21,7 +21,3 @@ minimize f:
 	+ (-x1+x2)^2
 	+ (x1+x2)^2
 	;
-
-solve;
-display f;
-display x1, x2;

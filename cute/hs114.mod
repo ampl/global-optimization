@@ -56,13 +56,3 @@ param :	lb	ub	x0 :=
 9	1.2	4	3.6
 10	145	162	145
 ;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 1768.80696;

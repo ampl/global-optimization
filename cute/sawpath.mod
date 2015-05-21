@@ -248,7 +248,3 @@ param :
 193		490.236 	3.52581  
 194		492.776 	3.5339   
 195		495.316 	3.54199;
-
-solve;
-display f;
-#display p, pprime, pprime2, a;

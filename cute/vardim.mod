@@ -25,5 +25,3 @@ var x{i in 1..N} := 1-i/N;
 
 minimize f:
 	sum {i in 1..N} (x[i]-1)^2 + (sum {i in 1..N} i*x[i] - N*(N+1)/2)^2 + (sum {i in 1..N} i*x[i] - N*(N+1)/2)^4;
-
-solve; display f; display x;

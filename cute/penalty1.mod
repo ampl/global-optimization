@@ -29,7 +29,3 @@ param a := 10^-5;
 
 minimize f:
 	sum {i in 1..N} a*(x[i]-1)^2 + ( sum {j in 1..N} x[j]^2 - 1/4 )^2;
-
-solve;
-display f;
-display x;

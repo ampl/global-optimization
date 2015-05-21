@@ -29,7 +29,3 @@ subject to cons1:
 subject to cons2:
 	exp(1.0D-8*x[1]^2+(x[2]-2)^2+x[3]^2+4*x[4]^2+sum {i in
 	5..10} x[i]^2 ) -u <= 0;
-
-solve;
-display f;
-display x;

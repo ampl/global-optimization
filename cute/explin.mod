@@ -18,6 +18,3 @@ var x{1..n} >= 0, <= 10.0, := 0.0;
 
 minimize f:
 	sum {i in 1..m} exp(0.1*x[i]*x[i+1]) + sum {i in 1..n} (-10.0*i*x[i]);
-
-solve;
-

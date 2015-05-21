@@ -15,13 +15,3 @@ let x[3] := 0.5;
 #let x[1] := 4/3;
 #let x[2] := 7/9;
 #let x[3] := 4/9;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 1/9;

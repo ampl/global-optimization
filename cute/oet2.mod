@@ -34,8 +34,3 @@ subject to cons1{i in 0..M}:
 	u + 1/(1+i*H+LOWER) - x1*exp(x2*(i*H+LOWER))>= 0;
 subject to cons2{i in 0..M}:
 	u - 1/(1+i*H+LOWER) + x1*exp(x2*(i*H+LOWER))>= 0;
-
-solve;
-display f;
-display u,x1,x2;
-

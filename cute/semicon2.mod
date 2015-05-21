@@ -52,7 +52,3 @@ subject to cons2{i in LN+1..N}:
 	(u[i-1]-2*u[i]+u[i+1]+LAMBDA*H^2*CB - LAMBDA*H^2*CB*exp(LB*(u[i]-LUB))) = 0;
 fix u[0] := LUA;
 fix u[N+1] := LUB;
-
-solve;
-display f;
-display u;

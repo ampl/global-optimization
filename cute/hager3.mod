@@ -33,5 +33,3 @@ subject to cons1{i in 1..n}:
 	(n-0.25)*x[i] - (n+0.25)*x[i-1] - u[i] = 0;
 
 fix x[0] := 1.0;
-solve; 
-

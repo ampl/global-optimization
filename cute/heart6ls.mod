@@ -74,13 +74,3 @@ minimize obj:
 	(u^2-(3.0)*w^2) + (-0.017-c) * w * (w^2-(3.0)*u^2) + 14.023)^2 + (c * t * 
 	(t^2-(3.0)*v^2) - a * v * (v^2-(3.0)*t^2) + (-0.017-c) * u * (u^2-(3.0)*w^2) - 
 	(-0.816-a) * w * (w^2-(3.0)*u^2) - 15.467)^2;
-
-
-solve;
-	display a;
-	display c;
-	display t;
-	display u;
-	display v;
-	display w;
-display obj;

@@ -96,6 +96,3 @@ param NS:=
 7	2;
 
 option presolve_eps 0.000001;
-solve;
-display f;
-display X;

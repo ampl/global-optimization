@@ -21,13 +21,3 @@ let x[3] :=  3;
 #let x[1] := ?
 #let x[2] := ?
 #let x[3] := ?
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 0;

@@ -40,5 +40,3 @@ param xinit:=
 3	0.0
 4	15.083
 5	3.7164;
-
-solve; display f; display x;

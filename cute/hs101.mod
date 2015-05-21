@@ -51,11 +51,3 @@ let x[4] := 6;
 let x[5] := 6;
 let x[6] := 6;
 let x[7] := 6;
-
-display obj; 
-
-solve;
-
-display obj;
-
-display obj - 1809.76476;

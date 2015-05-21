@@ -31,11 +31,3 @@ let x[6] := 0.852;
 #let x[4] := 12.08230;
 #let x[5] :=  0.7526074;
 #let x[6] :=  0.87865084;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 135.075961;

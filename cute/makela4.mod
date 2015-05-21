@@ -50,7 +50,3 @@ var x:=
 18	-18
 19	-19
 20	-20;
-
-solve;
-display f;
-display x;

@@ -27,5 +27,3 @@ subject to cons{i in 2..ndp-1}: ( -x[i-1]+2*x[i]-x[i+1]+0.5*h^2*(x[i]+i*h+1)^3 )
 
 fix x[1] := 0.0;
 fix x[ndp] := 0.0;
-
-solve; display f; display x;

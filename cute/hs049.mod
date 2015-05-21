@@ -12,13 +12,3 @@ let x[2] :=  7;
 let x[3] :=  2;
 let x[4] := -3;
 let x[5] := 0.8;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 0;

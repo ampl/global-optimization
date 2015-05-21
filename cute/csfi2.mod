@@ -42,7 +42,3 @@ subject to cons3:
 	wid/thick <= maxaspr;
 subject to cons4:
 	0.0 <= thick*wid - minarea <= maxarea-minarea;
-
-solve;
-display f;
-display thick, wid, len, tph, ipm;

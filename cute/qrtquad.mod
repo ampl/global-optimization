@@ -21,7 +21,3 @@ minimize f:
 	+ sum {i in M+1..N-1} (4*x[i]^2+2*x[N]^2+x[i]*x[N]-10*i*x[i]);
 subject to cons{i in 1..M}:
 	0.0 <= x[i] <= 10.0;
-
-solve;
-display f;
-display x;

@@ -37,6 +37,3 @@ subject to cons3:
 	x[4] = 2;
 subject to cons4:
 	x[1]^2+x[2]^2 -1 <= 0;
-solve;
-display f;
-display x;

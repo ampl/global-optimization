@@ -34,7 +34,3 @@ var alpha{i in 1..N} = 1400*x[i] + (i-50)^3 +
 
 minimize f:
 sum {i in 1..N} alpha[i]^2;
-
-solve;
-display f;
-display x;

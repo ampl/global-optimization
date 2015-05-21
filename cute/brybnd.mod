@@ -31,7 +31,3 @@ var x{1..N} := -1;
 
 minimize f:
 	sum {i in 1..N} ( x[i]*(2+5*x[i]^2) + 1 - sum {j in J[i]} x[j]*(1+x[j]) )^2;
-
-solve;
-display f;
-display x;

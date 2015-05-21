@@ -17,13 +17,3 @@ let x[3] := 10;
 #let x[1] := 20;
 #let x[2] := 11;
 #let x[3] := 15;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 3300;

@@ -25,5 +25,3 @@ subject to cons1:
 	sum {i in 1..n} (x[i] + y[i]) + sum {j in 1..b} z[j] >= b+1;
 subject to cons2{i in 1..n}:
 	x[i] - y[i] + sum {j in 1..b} z[j] = b;
-
-solve;

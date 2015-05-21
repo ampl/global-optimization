@@ -52,7 +52,3 @@ param z :=
 8 0.8721
 9 0.8221
 10 0.7748 ;
-
-solve;
-display x;
-display obj;

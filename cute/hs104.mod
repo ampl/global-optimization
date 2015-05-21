@@ -20,28 +20,3 @@ let x[5] := 6  ;
 let x[6] := 6  ;
 let x[7] := 1  ;
 let x[8] :=  .5;
-
-display obj; 
- 
-solve;
-
-display x;
-
-display obj;
-
-display obj-3.9511634396;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

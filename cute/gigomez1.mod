@@ -28,9 +28,3 @@ subject to cons2:
 	z-4*x[2]-x[1]^2-x[2]^2 >= 0;
 subject to cons3:
 	z-5*x[1]-x[2] >= 0;
-
-solve;
-display f;
-display x;
-display z;
-

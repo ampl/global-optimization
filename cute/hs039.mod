@@ -17,13 +17,3 @@ let x[4] := 2;
 #let x[2] := 1;
 #let x[3] := 0;
 #let x[4] := 0;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 1;

@@ -40,6 +40,3 @@ fix x[1,0] := 0.0;
 fix x[2,0] := 0.0;
 fix v[1,0] := speed;
 fix v[2,0] := 0.0;
-solve;
-
-

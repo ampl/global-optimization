@@ -44,7 +44,3 @@ var y :=
 1 0
 2 -1
 3 1;
-
-solve;
-display f;
-display x,y;

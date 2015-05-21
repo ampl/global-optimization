@@ -13,13 +13,3 @@ let x[2] := -31;
 let x[3] :=  11;
 let x[4] :=   5;
 let x[5] :=  -5;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 0;

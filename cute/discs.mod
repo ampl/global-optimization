@@ -56,7 +56,3 @@ param a:=
 11	10	1
 12	10	1
 12	11	1;
-
-solve;
-display f;
-display x,y,r;

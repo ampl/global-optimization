@@ -43,7 +43,3 @@ param K:=
 2	0
 3	0
 4	2;
-
-solve;
-display f;
-display x;

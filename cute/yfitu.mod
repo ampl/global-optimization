@@ -74,10 +74,3 @@ minimize obj:
 	(tan(alpha*(1.0-(15.0/16.0))+beta*(15.0/16.0))) + 32.042552) + (dist * 
 	(tan(alpha*(1.0-(16.0/16.0))+beta*(16.0/16.0))) + 35.747869)*(dist * 
 	(tan(alpha*(1.0-(16.0/16.0))+beta*(16.0/16.0))) + 35.747869);
-
-
-solve;
-	display alpha;
-	display beta;
-	display dist;
-display obj;

@@ -32,7 +32,3 @@ data;
 var x:=
 1	-4
 2	-2;
-
-solve;
-display f;
-display x;

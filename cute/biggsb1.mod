@@ -27,5 +27,3 @@ minimize f:
 
 subject to cons1{i in 1..N-1}:
 	0.0 <= x[i] <= 0.9;
-
-solve;

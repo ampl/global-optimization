@@ -50,5 +50,3 @@ subject to cons7:
 	0 <= x[7];
 subject to cons8:
 	0 <= x[8] <= 4.3;
-
-solve; display f; display x;

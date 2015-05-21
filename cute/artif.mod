@@ -29,6 +29,3 @@ subject to cons{i in 1..N}:
 
 fix x[0] := 0.0;
 fix x[N+1] := 0.0;
-
-solve; display x;
-

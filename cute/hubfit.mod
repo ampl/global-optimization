@@ -44,5 +44,3 @@ param y:=
 3	0.625
 4	0.701
 5	1.0;
-
-solve; display f; display x;

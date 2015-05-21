@@ -52,7 +52,3 @@ param y:=
 14	3820
 15	3307
 16	2872;
-
-solve;
-display f;
-display x;

@@ -24,7 +24,3 @@ var theta{i in 1..N} := i/N;
 minimize f:
 	sum {i in 1..N, j in 1..N}
 -(sin(theta[i])*sin(theta[j])*sin(theta[i]-theta[j]))^2;
-
-solve;
-display f;
-display theta;

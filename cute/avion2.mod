@@ -111,6 +111,3 @@ subject to cons24:
 subject to cons25:
 	MZ - IMPTRAIN + IMPNMOT + IMPPET + IMPPIL + IMPCAN + IMPSNA
 	+ 290=0;
-
-solve;
-display f;

@@ -21,5 +21,3 @@ var y:=10.0;
 
 minimize f:
 	((-y+sin(x))^2)/0.01 + x;
-
-solve; display f; display x;

@@ -24,5 +24,3 @@ var x{i in 1..N} := if (i mod 2 = 0) then -1 else 1;
 
 minimize f:
 	sum {i in 1..N-2} (x[i]+x[i+1]+x[N])^4 + (x[1]-x[2])^2 + (x[N-1]+x[N])^2;
-
-solve; display f; display x; 

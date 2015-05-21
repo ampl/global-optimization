@@ -56,6 +56,3 @@ param c:=
 5	9.0
 6	20.0
 7	126.1;
-
-solve; display f; 
-display t,u;

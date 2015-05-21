@@ -25,5 +25,3 @@ subject to cons1:
 	3*x[1]+4*x[2]+x[3]-2 <= 0;
 subject to cons2:
 	x[1]+4*x[2]+x[3]-1 <= 0; 
-
-solve; display f; display x;

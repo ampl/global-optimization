@@ -14,13 +14,3 @@ let x[3] :=  1;
 #let x[1] :=  4;
 #let x[2] :=  2.82843;
 #let x[3] :=  2;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 16*sqrt(2);

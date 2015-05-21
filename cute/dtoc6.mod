@@ -21,4 +21,3 @@ minimize f:
 subject to cons1{t in 1..n-1}:
 	y[t] - y[t+1] + exp(x[t]) = 0;
 fix y[1] := 0.0;
-solve;	

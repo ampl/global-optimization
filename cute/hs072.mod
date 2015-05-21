@@ -32,13 +32,3 @@ param b :=
     1 0.0401
     2 0.010085
     ;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 727.67937;

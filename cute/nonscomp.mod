@@ -26,7 +26,3 @@ minimize f:
 	(x[1] - 1)^2
 	+ sum {i in 2..N} 4*(x[i]-x[i-1]^2)^2
 ;
-
-solve;
-display f;
-display x;

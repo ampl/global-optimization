@@ -154,12 +154,5 @@ let x[8] :=   15.8;
 #let x[8] :=   20.74682;
 
 #display obj;
-
-solve;
-
-display x;
-
-display obj;
-
 #display obj - 1138.416240;  # this is answer given by HS, but is seems wrong
-display obj - 1136.36;  # this seems to be correct (MINOS=LOQO)
+# this seems to be correct (MINOS=LOQO)

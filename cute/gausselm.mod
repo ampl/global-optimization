@@ -38,5 +38,3 @@ subject to var_bnd_diag{k in 1..n}:
 	x[k,k,k] >= 0.0;
 
 fix x[1,1,1] := 1.0;
-solve;
-

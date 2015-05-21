@@ -24,7 +24,3 @@ var x{i in 1..N} := if (i mod 2 == 1) then -1.2 else 1;
 
 minimize f:
 	sum {i in 1..N/2} ( 100*(x[2*i]-x[2*i-1]^2)^2 + (x[2*i-1]-1)^2 );
-
-solve;
-display f;
-display x;

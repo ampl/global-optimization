@@ -34,8 +34,3 @@ subject to cons4:
 
 data;
 param xinit:= 1 -1.2 2 1.0;
-
-solve;
-display f;
-display x;
-display u;

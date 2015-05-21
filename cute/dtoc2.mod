@@ -24,5 +24,3 @@ minimize f:
 subject to cons1{t in 1..n-1,j in 1..ny}:
 	sin(y[t,j]) + sum {i in 1..nx} c[j,i]*(sin(x[t,i])) -y[t+1,j] = 0;
 fix{i in 1..ny} y[1,i] := i/(2*ny);
-solve;
-

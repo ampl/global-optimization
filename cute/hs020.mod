@@ -15,11 +15,3 @@ let x[2] :=  1;
 #printf "optimal solution as starting point \n";
 #let x[1] := 1/2;
 #let x[2] := 1/(2*sqrt(3));
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 81.5 + 25*sqrt(3);

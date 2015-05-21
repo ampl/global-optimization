@@ -24,8 +24,3 @@ var alpha;
 var beta;
 minimize f:
 	sum {i in 1..p} (alpha*exp(i*h*beta)-i*h)^2;
-
-solve;
-display f;
-display alpha, beta;
-

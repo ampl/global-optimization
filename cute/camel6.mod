@@ -26,5 +26,3 @@ subject to cons1:
 	-3 <= x[1] <= 3;
 subject to cons2:
 	-1.5 <= x[2] <= 1.5;
-
-solve; display f; display x;

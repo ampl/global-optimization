@@ -22,5 +22,3 @@ minimize f:
 
 subject to cons1:
 	T[1]+T[2]+T[3]+T[4]-1.0 = 0;
-
-solve; display f; display T;

@@ -37,7 +37,3 @@ fix {i in 2..P-1, k in 1..P} u[i,P,k] := 0;
 fix {i in 2..P-1, k in 1..P} u[i,1,k] := 0;
 fix {i in 2..P-1, j in 2..P-1} u[i,j,1] := 0;
 fix {i in 2..P-1, j in 2..P-1} u[i,j,P] := 0;
-
-solve;
-display f;
-display u;

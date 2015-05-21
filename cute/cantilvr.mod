@@ -31,9 +31,3 @@ param num:=
 3	19.0
 4	7.0
 5	1.0;
-
-solve;
-display f;
-display x;
-
-

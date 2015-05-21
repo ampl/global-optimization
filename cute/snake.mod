@@ -26,5 +26,3 @@ subject to cons1:
 	-y+sin(x) <= 0;
 subject to cons2:
 	-y+tip*x+sin(x) >= 0;
-
-solve; display f; display x; display y;

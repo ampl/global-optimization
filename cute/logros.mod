@@ -21,5 +21,3 @@ var y:=1.0, >= 0;
 
 minimize f:
 	log(1+10000*(y-x^2)^2+(1-x)^2);
-
-solve; display f; display x;

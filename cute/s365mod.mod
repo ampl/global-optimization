@@ -63,7 +63,3 @@ var x:=
 5	1.5
 6	5
 7	0;
-
-solve;
-display f;
-display x;

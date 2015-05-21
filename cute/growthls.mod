@@ -35,10 +35,3 @@ minimize obj:
 	24.25)*(u1 * (20.0^(u2+(log(20.0))*u3)) - 24.25) + (u1 * 
 	(25.0^(u2+(log(25.0))*u3)) - 32.9863)*(u1 * (25.0^(u2+(log(25.0))*u3)) - 
 	32.9863);
-
-
-solve;
-	display u1;
-	display u2;
-	display u3;
-display obj;

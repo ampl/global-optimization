@@ -19,5 +19,3 @@ var x{1..N} <= 10.0, >= 0.1, := 0.5;
 minimize f:
 	sum {i in 1..Nplus} 0.5*i*(x[i]+x[ ((2*i-1) mod N) + 1] + x[ ((3*i-1) mod N) +1 ] )^2 -
 	sum {i in Nplus+1..N} 0.5*i*(x[i]+x[ ((2*i-1) mod N) + 1] + x[ ((3*i-1) mod N) +1 ] )^2 ;
-
-solve; display f; display x;

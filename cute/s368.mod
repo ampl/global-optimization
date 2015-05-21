@@ -27,5 +27,3 @@ var x{1..n} <= 1.0, >= 0.0;
 minimize f:
 	sum {i in 1..n, j in 1..n} (-x[i]^2*x[j]^4) +
 	sum {i in 1..n, j in 1..n} (x[i]^3*x[j]^3);
-
-solve;

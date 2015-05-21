@@ -30,7 +30,3 @@ var h{i in 1..n} := 1.0, >= 0.0;
 minimize f: 0;
 subject to cons{i in 1..n}:
 	sum {j in 1..n} -0.5*c*w[j]*x[i]/(x[i]+x[j])*h[i]*h[j] + h[i] = 1.0;
-
-solve;
-display f;
-display h;

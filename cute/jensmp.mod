@@ -23,7 +23,3 @@ var x2 := 0.4;
 
 minimize f:
 	sum {i in 1..10} (2+2*i-(exp(i*x1)+exp(i*x2)))^2;
-
-solve;
-display f;
-display x1, x2;

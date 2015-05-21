@@ -134,8 +134,3 @@ let {i in 0..N, j in 0..i} v_sym[i,j] := (i^2+j^2)/(4*N^2);
 #let {i in 0..N, j in 0..i: i+j<=N*0.0985434}
 #		v_sym[i,j] := 0;
 #display integral/2;
-
-solve;
-
-printf {i in 0..N, j in 0..N}: 
-    "%10.4f %10.4f %10.4f \n", a+i/N, a+j/N, v[i,j];

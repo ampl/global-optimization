@@ -32,7 +32,3 @@ minimize f:
 	sum {i in 1..N+K} 0.5*x[i]^2;
 subject to cons1{j in 1..N}:
 	sum {i in 0..K} C[i]*x[j+K-i] >= 0;
-
-solve;
-display f;
-display x;

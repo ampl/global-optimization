@@ -192,37 +192,3 @@ subject to n10:
 	x8_10 - x10_8 - b10 + 19.0 = 0;
 subject to n11:
 	x8_11 - x11_8 - b11 + 19.0 = 0;
-
-solve;
-	display x4_1;
-	display x1_4;
-	display x4_2;
-	display x2_4;
-	display x4_3;
-	display x3_4;
-	display x4_5;
-	display x5_4;
-	display x5_6;
-	display x6_5;
-	display x5_7;
-	display x7_5;
-	display x5_8;
-	display x8_5;
-	display x8_9;
-	display x9_8;
-	display x8_10;
-	display x10_8;
-	display x8_11;
-	display x11_8;
-	display b1;
-	display b2;
-	display b3;
-	display b4;
-	display b5;
-	display b6;
-	display b7;
-	display b8;
-	display b9;
-	display b10;
-	display b11;
-display obj;

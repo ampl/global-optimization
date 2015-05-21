@@ -37,5 +37,3 @@ subject to cons6:
 	x[6] <= 0;
 subject to cons7:
 	0 <= x[7];
-
-solve; display f; display x;

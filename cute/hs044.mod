@@ -21,13 +21,3 @@ let x[4] := 0;
 #let x[2] := 3;
 #let x[3] := 0;
 #let x[4] := 4;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 15;

@@ -76,7 +76,3 @@ param alpha:=
 48 1.40
 49 0.60
 50 1.50;
-
-solve;
-display f;
-display x;

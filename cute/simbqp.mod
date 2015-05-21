@@ -25,8 +25,3 @@ subject to cons1:
 
 data;
 param xinit:= 1 10 2 1;
-
-solve;
-display f;
-display x;
-	

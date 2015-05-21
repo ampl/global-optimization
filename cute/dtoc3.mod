@@ -26,4 +26,3 @@ subject to cons2{t in 1..n-1}:
 
 fix y[1,1] := 15.0;
 fix y[1,2] := 5.0;
-solve;

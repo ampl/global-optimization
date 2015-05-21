@@ -25,5 +25,3 @@ minimize f:
 
 subject to cons1{i in 2..n by 2}:
 	sum {j in 1..i} log(x[j]) = 0;
-
-solve;

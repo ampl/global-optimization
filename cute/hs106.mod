@@ -64,13 +64,3 @@ var x :=
 #    7  286.4162
 #    8  395.5979
 #   ;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 7049.330923;

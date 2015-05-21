@@ -682,15 +682,3 @@ subject to c214:
 subject to c215:
 	0 <= -10.0*x1 + 12.0*x2 + 12.0*x3 + 43.0*x4 + 89.0*x5 + 91.0*x6 + 133.0*x7 + 
 	568.0*x8 - 156.0*x9;
-
-solve;
-	display x1;
-	display x2;
-	display x3;
-	display x4;
-	display x5;
-	display x6;
-	display x7;
-	display x8;
-	display x9;
-display obj;

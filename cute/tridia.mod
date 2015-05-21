@@ -39,5 +39,3 @@ param beta:=1.0;
 param gamma:=1.0;
 param delta:=1.0;
 
-solve; display x;
-

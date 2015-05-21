@@ -42,6 +42,3 @@ subject to cons2{i in 0..t-1}:
 fix x[0] := 10.0;
 fix y[0] := 0.0;
 fix y[t] := 0.0;
-solve;
-display f;
-display x,y,u;

@@ -41,7 +41,3 @@ subject to cons2{i in 1..R}:
 
 data;
 param pinit:= 0 1 1 1 2 6;
-
-solve;
-display f;
-display P,Q;

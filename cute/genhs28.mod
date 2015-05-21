@@ -28,7 +28,3 @@ minimize f:
 
 subject to cons{i in 1..N-2}:
 	-1.0+x[i]+2*x[i+1]+3*x[i+2] = 0;
-
-solve;
-display f;
-display x;

@@ -24,7 +24,3 @@ var x{1..N} := 1.0;
 
 minimize f:
 	sum {i in 1..N-4} (-4*x[i]+3.0)^2 + sum {i in 1..N-4} (x[i]^2+2*x[i+1]^2+3*x[i+2]^2+4*x[i+3]^2+5*x[N]^2)^2;
-
-solve;
-display f;
-display x;

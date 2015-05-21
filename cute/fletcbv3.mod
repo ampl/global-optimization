@@ -34,8 +34,3 @@ minimize f:
 	0.5*p*(x[n])^2 +
 	sum {i in 1..n} (p*(-1-2/h^2)*x[i]) +
 	sum {i in 1..n} (-kappa*p*cos(x[i])/h^2);
-
-solve;
-display f;
-display x;
-

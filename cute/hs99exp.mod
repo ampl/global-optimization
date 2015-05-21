@@ -128,37 +128,3 @@ subject to qdef8:
 	405000.0*(sin(x7)) - q8 + q7 + 90.0*s7 - 100000.0 = 0;
 subject to sdef8:
 	9000.0*(sin(x7)) - s8 + s7 - 1000.0 = 0;
-
-solve;
-	display x1;
-	display r1;
-	display q1;
-	display s1;
-	display x2;
-	display r2;
-	display q2;
-	display s2;
-	display x3;
-	display r3;
-	display q3;
-	display s3;
-	display x4;
-	display r4;
-	display q4;
-	display s4;
-	display x5;
-	display r5;
-	display q5;
-	display s5;
-	display x6;
-	display r6;
-	display q6;
-	display s6;
-	display x7;
-	display r7;
-	display q7;
-	display s7;
-	display r8;
-	display q8;
-	display s8;
-display obj;

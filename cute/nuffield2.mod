@@ -120,7 +120,5 @@ let {i in 1..N-1, j in 1..N-1} d2vdx2[i,j] := 1;
 #option loqo_options $loqo_options" honor_bnds=1 honor_bnds_init=1";
 
 # note: setting bndpush small (0.001) speeds convergence
-solve;
-
 #printf {i in 0..N, j in 0..N}: 
 #    "%10.4f %10.4f %10.4f \n", a+i/N, a+j/N, v[i,j];

@@ -41,7 +41,3 @@ subject to cons2{i in 2..n-1}:
 	(d*(b+1-t[i])*exp(gamma-gamma/t[i])+cti1*t[i-1]+cti*t[i]+t[i+1]/(h^2*pe)) = 0;
 subject to cons3:
 	(t[n]-t[n-1]) = 0;
-
-solve;
-display f;
-display t;

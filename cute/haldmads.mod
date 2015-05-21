@@ -30,7 +30,3 @@ subject to cons1{i in 1..21}:
 	(x[1]+y[i]*x[2])/(1.0+x[3]*y[i]+x[4]*y[i]^2+x[5]*y[i]^3)-u <= ey[i];
 subject to cons2{i in 1..21}:
 	-(x[1]+y[i]*x[2])/(1.0+x[3]*y[i]+x[4]*y[i]^2+x[5]*y[i]^3)-u <= -ey[i];
-
-solve;
-display f;
-display x;

@@ -163,13 +163,3 @@ let x[16] := 10;
 #let x[14] := 0;
 #let x[15] := 0.6742559;
 #let x[16] := 0;
-
-display obj; 
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 244.899698;

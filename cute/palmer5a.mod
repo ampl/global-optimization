@@ -68,8 +68,3 @@ param Y:=
 22                 62.822177
 23                 77.719674
 ;
-
-display palmer;
-solve;
-
-display A0,A2,A4,A6,B,C;

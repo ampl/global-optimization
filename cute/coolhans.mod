@@ -66,8 +66,3 @@ param C :=
 1 3 0
 2 3 0
 3 3 0;
-
-
-solve;
-
-display X;

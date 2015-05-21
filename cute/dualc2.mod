@@ -600,13 +600,3 @@ subject to c228:
 	0 >= 3.0*x1 - 2.0*x2 - 52.0*x3 + 86.0*x4 + 168.0*x5 + 414.0*x6 - 85.0*x7;
 subject to c229:
 	0 <= 106.0*x1 + 106.0*x2 + 156.0*x3 + 156.0*x4 + 156.0*x5 + 417.0*x6 - 101.0*x7;
-
-solve;
-	display x1;
-	display x2;
-	display x3;
-	display x4;
-	display x5;
-	display x6;
-	display x7;
-display obj;

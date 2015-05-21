@@ -33,8 +33,3 @@ subject to cons1{i in 0..m}:
 	-(x[1]*exp(x[4]*(i*h+lower)) + x[2]*exp(x[5]*(i*h+lower)) + x[3]*exp(x[6]*(i*h+lower))) + u >= -1/(1+i*h+lower);
 subject to cons2{i in 0..m}:
 	(x[1]*exp(x[4]*(i*h+lower)) + x[2]*exp(x[5]*(i*h+lower)) + x[3]*exp(x[6]*(i*h+lower))) + u >= 1/(1+i*h+lower);
-
-solve;
-display f;
-display x,u;
-

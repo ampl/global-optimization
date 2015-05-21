@@ -23,7 +23,3 @@ var x{i in 1..N} := if (i==1) then -506.0 else 506.2;
 
 minimize f:
 	sum {i in 1..N-1} ( sin (zeta*x[i])^2*sin(zeta*x[i+1])^2+0.05*(x[i]^2+x[i+1]^2) );
-
-solve;
-display f;
-display x;

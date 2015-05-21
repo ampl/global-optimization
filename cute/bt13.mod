@@ -47,6 +47,3 @@ param x_init:=
 3	3.0
 4	3.0
 5	228.0;
-
-solve;
-display x;

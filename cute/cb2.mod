@@ -29,5 +29,3 @@ subject to cons2:
 	u-(2.0-x[1])^2-(2.0-x[2])^2 >= 0;
 subject to cons3:
 	u-2*exp(x[2]-x[1]) >= 0;
-
-solve; display f; display x;

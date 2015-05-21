@@ -34,7 +34,3 @@ minimize f:
 	) + (wght*x[p,p]);
 
 fix {j in 1..p} x[1,j] := 0.0;	
-
-solve;
-display f;
-display x;

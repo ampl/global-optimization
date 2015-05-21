@@ -55,21 +55,3 @@ subject to mbal6:
 	q4 + f2 = 0;
 subject to mbal7:
 	-q4 - f4 = 0;
-
-solve;
-	display p1;
-	display p2;
-	display p3;
-	display p4;
-	display p5;
-	display p6;
-	display p7;
-	display q1;
-	display f1;
-	display q2;
-	display f2;
-	display q3;
-	display f3;
-	display q4;
-	display f4;
-display obj;

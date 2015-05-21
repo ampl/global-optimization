@@ -78,7 +78,3 @@ param:
 10	17.7	17.7
 11	0.85	0.85
 12	0.64	0.64;
-
-solve;
-display f;
-display x;

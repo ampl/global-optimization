@@ -26,7 +26,3 @@ var x{1..N} := 1.0;
 minimize f:
 sum {i in 1..N} ((sum{j in 1..i-1} -2*x[j]/M) + x[i]*(1-2/M) + (sum {j in i+1..N} -2*x[j]/M) - 1)^2 +
 sum {i in N+1..M} (sum{j in 1..N} -2*x[j]/M - 1)^2;
-
-solve;
-display f;
-display x;

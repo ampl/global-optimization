@@ -25,5 +25,3 @@ var x{1..N} := 2.0;
 
 minimize f:
 	sum {i in 1..N-1} (x[i]^2+x[i+1]^2)^2 + sum {i in 1..N-1} (-4*x[i]+3.0);
-
-solve; display f; display x;

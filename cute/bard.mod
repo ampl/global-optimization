@@ -49,7 +49,3 @@ param y:=
 13	1.34
 14	2.10
 15	4.39;
-
-solve;
-display f;
-display x;

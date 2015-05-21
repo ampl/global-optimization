@@ -69,13 +69,4 @@ let y[6] := 5.0e+7;
 #let y[6] := 1.0e+8;
 
 let {j in 1..6} y[j] := (y[j] - mu[j])/sigma[j];
-
-display -exp(-obj/2);
-
 option loqo_options $loqo_options" convex";
-
-solve;
-
-display -exp(-obj/2);
-
-display -exp(-obj/2) + exp(-27/280);

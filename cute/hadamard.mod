@@ -39,7 +39,3 @@ subject to abs_max_val{i in N, j in N}:
 
 subject to ones{i in N,j in N}:
 	abs(Q[i,j]) <= 1;
-
-solve;  
-
-display Q;

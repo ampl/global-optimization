@@ -38,5 +38,3 @@ subject to cons3:
 	x1[0] = 0.0;
 subject to cons4:
 	x2[0] = 0.0;
-
-solve; display f; display x1, x2, u;

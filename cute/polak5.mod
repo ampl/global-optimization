@@ -27,7 +27,3 @@ subject to cons1:
 	-u+3*x[1]^2+50*(x[1]-x[2]^4-1)^2 <= 0;
 subject to cons2:
 	-u+3*x[1]^2+50*(x[1]-x[2]^4+1)^2 <= 0;
-
-solve;
-display f;
-display x;

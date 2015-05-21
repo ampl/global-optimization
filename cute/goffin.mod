@@ -27,8 +27,3 @@ var u;
 minimize obj: u;
 
 subject to f {i in 1..50}: u >= 50*x[i] - sum {j in 1..50} x[j];
-
-solve;
-display x;
-display u;
-display obj;

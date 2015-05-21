@@ -52,7 +52,3 @@ subject to cons12:
 	P[7] <= 914.73;
 subject to cons13:
 	F[4] <= 400;
-
-solve;
-display f;
-display P,Q,F;

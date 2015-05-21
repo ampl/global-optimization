@@ -23,11 +23,3 @@ let x[5] := 2;
 #let x[5] := 0.6109203;
 
 data;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 0.24150513;

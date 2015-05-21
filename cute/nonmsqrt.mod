@@ -29,6 +29,3 @@ minimize f:
 	-A[i,j])^2;
 
 option loqo_options "verbose=2 timing=1 iterlim=400 sigfig=5 inftol=0.00001";
-solve;
-display f;
-display x;

@@ -53,7 +53,3 @@ subject to cons2{i in LN+1..N}:
 
 fix u[0] := LUA;
 fix u[N+1] := LUB;
-
-solve;
-display f;
-display u;

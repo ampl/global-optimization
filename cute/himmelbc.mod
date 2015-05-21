@@ -26,7 +26,3 @@ subject to cons1:
 	(x[2]-11+x[1]^2) = 0;
 subject to cons2:
 	(x[1]-7+x[2]^2) = 0;
-
-solve;
-display f;
-display x;

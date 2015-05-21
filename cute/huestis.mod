@@ -28,7 +28,3 @@ subject to cons1:
 	sum {i in 1..K} ((i^3)-((i-1)^3))*(deltax^3)*M[i]/3 - 1835.2 = 0;
 subject to cons2:
 	sum {i in 1..K} ((i^5)-((i-1)^5))*(deltax^5)*M[i]/5 - 909.8 = 0;
-
-solve;
-display f;
-display M;

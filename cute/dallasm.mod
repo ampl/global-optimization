@@ -1202,7 +1202,3 @@ param x0 :=
 195 84.838
 196 42.919
 ;
-
-solve;
-display x;
-display obj;

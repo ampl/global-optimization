@@ -35,13 +35,3 @@ let x[6] := 2;
 #let x[4] := 1;
 #let x[5] := 2/3;
 #let x[6] := 1/3;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 19/3;

@@ -43,8 +43,3 @@ fix {i in 2..p-1} u[i,p] := 0.0;
 fix {i in 2..p-1} u[i,1] := 0.0;
 fix {i in 2..p-1} x[i,p] := 0.0;
 fix {i in 2..p-1} x[i,1] := 0.0;
-
-solve;
-display f;
-display u,x;
-	

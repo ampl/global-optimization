@@ -24,4 +24,3 @@ minimize f:
 	(x[1]-1)^2 + sum {i in 2..N-1} (x[i+1]-x[i]^2)^2 + (x[N]-1)^2;
 subject to cons1{i in 1..N-1}:
 	0.0 <= x[i] <= 10.0;
-solve; display f; display x;

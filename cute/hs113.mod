@@ -26,13 +26,3 @@ let x[7]  :=  7;
 let x[8]  :=  3;
 let x[9]  :=  6;
 let x[10] := 10;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj-24.3062091;

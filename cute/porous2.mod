@@ -40,7 +40,3 @@ fix {i in 2..P-1}
 	u[i,P] := 1.0;
 fix {i in 2..P-1}
 	u[i,1] := 0.0;
-
-solve;
-display f;
-display u;

@@ -14,11 +14,3 @@ let x[2] := 1/2;
 #printf "optimal solution as starting point \n";
 #let x[1] := 3;
 #let x[2] := 1.73205;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 1;

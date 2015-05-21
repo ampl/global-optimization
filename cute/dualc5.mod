@@ -865,14 +865,3 @@ subject to c277:
 subject to c278:
 	0 <= 225.0*x1 + 225.0*x2 + 225.0*x3 + 215.0*x4 + 246.0*x5 + 225.0*x6 + 228.0*x7 
 	+ 225.0*x8;
-
-solve;
-	display x1;
-	display x2;
-	display x3;
-	display x4;
-	display x5;
-	display x6;
-	display x7;
-	display x8;
-display obj;

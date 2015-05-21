@@ -23,4 +23,3 @@ minimize f:
 subject to cons1{t in 1..n-1}:
 	h*y[t]^2 + y[t] - y[t+1] - h*x[t] = 0;
 fix y[1] := 1.0;
-solve;

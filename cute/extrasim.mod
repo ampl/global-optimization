@@ -24,7 +24,3 @@ minimize f:
 	x+1;
 subject to cons1:
 	x+2*y-2.0 = 0;
-
-solve;
-display f;
-display x,y;

@@ -45,15 +45,4 @@ let x[4] := 1;
 #let x[2] := 3.6461717;
 #let x[3] := 0.00026617;
 #let x[4] := 0.8948622;
-
-display obj;
-
 option pl_linearize 0;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 0.920425026;

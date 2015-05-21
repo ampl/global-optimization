@@ -31,5 +31,3 @@ subject to cons2{i in 2..N-1}:
 	(-x[i-1]-2*x[i+1]+kappa2+(3-kappa1*x[i])*x[i]) = 0;
 subject to cons3:
 	(-x[N-1]+kappa2+(3-kappa1*x[N])*x[N]) = 0;
-
-solve; display f; display x;

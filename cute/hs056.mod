@@ -30,13 +30,3 @@ let x[7] := b;
 #let x[5] := d;
 #let x[6] := d;
 #let x[7] := 3.14159/2;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 3.456;

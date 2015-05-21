@@ -21,5 +21,3 @@ var x{1..N} := 1.0;
 
 minimize f:
 	sum {i in 1..N-1} cos(-0.5*x[i+1]+x[i]^2);
-
-solve; display f; display x;

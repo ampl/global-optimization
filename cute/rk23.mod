@@ -60,25 +60,3 @@ subject to cons10:
 	TP2-TM2-1+8*BB3*C3*A32*C2 = 0;
 subject to cons11:
 	TP3-TM3-1+12*BB3*A32*C2^2 = 0;
-
-solve;
-display f;
-display 
-    C2 
-,    A21
-,    C3 
-,    A31
-,    A32
-,    B1
-,    B2
-,    B3
-,    BB1
-,    BB2
-,    BB3
-,    TP1
-,    TM1
-,    TP2
-,    TM2
-,    TP3
-,    TM3
-;

@@ -30,7 +30,3 @@ subject to cons1:
 	x[4]*x[1]^2 + sin(x[4]-x[5]) = 2*sqrt(2.0);
 subject to cons2:
 	x[3]^4*x[2]^2 + x[2] = 8+sqrt(2.0);
-
-solve;
-display f;
-display x;

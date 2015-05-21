@@ -391,7 +391,3 @@ param x0 :=
 96 2000.0
 97 252.0
 ;
-
-solve;
-display x;
-display obj;

@@ -26,8 +26,3 @@ subject to cons1:
 	(12*x[2]-1.0+x[1]^2) = 0;
 subject to cons2:
 	(84*x[1]+2324*x[2]-681.0+49*x[1]^2+49*x[2]^2) = 0;
-
-solve;
-display f;
-display x;
-

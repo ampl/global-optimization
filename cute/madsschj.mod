@@ -40,7 +40,3 @@ subject to cons5{k in 4..M-1 by 2}:
 	(k+2)/2+1..N} x[i] +1-2*x[(k+2)/2]^2>= 0;
 subject to cons6:
 	z-sum {i in 1..N-1} x[i] +1 - x[N]^2>= 0;
-
-solve;
-display f;
-display x; display z;

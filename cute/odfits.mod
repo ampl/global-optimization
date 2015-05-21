@@ -73,7 +73,3 @@ param:
 
 param GAMMA := 1.5;
 param ENTROP := 0.2;
-
-solve;
-display f;
-display T, F;

@@ -70,15 +70,4 @@ let x[15] := 20;
 #let x[13] := 5;
 #let x[14] := 77;
 #let x[15] := 18;
-
-display obj; 
-
 option loqo_options $loqo_options" convex";
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 664.8204500;

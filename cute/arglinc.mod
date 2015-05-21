@@ -25,8 +25,3 @@ var x{1..N} := 1.0;
 
 minimize f:
 	2 + sum {i in 2..M-1} (sum {j in 2..N-1} x[j]*j*(i-1) - 1.0)^2;
-
-solve;
-display f;
-display x;
-

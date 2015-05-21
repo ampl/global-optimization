@@ -24,5 +24,3 @@ var x{i in 1..N} := 1.0/scale[i];
 minimize f:
 	sum {i in 1..N-1}
 cos(-0.5*scale[i+1]*x[i+1]+scale[i]^2*x[i]^2);
-
-solve; display f; display x;

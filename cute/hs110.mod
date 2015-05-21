@@ -7,11 +7,3 @@ minimize obj:
   ;
 
 let {j in 1..10} x[j] := 9;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 45.77846971;

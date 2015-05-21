@@ -37,7 +37,3 @@ subject to cons5:
 	u-cos(x2) >= 0;
 subject to cons6:
 	u+cos(x2) >= 0;
-
-solve;
-display f;
-display x1,x2,u;

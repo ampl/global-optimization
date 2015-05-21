@@ -27,7 +27,3 @@ minimize f:
 	1.0 +
 	sum {i in 2..n} 100*(x[i]-x[i-1]^2)^2 +
 	sum {i in 2..n} (x[i]-1.0)^2;
-
-solve;
-display f;
-display x;

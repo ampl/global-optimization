@@ -33,8 +33,3 @@ minimize f:
 
 subject to cons1:
 	-B[1]*x[1]+B[1]+sum {i in 2..N1} B[i]*(x[i]-0.0)^2+sum {i in N1+1..N} B[i]*(x[i]-1.0)^2 = 0;
-
-display A, B, F, F2, f;
-solve;
-display f;
-display x;

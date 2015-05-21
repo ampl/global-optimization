@@ -54,7 +54,3 @@ subject to cons7{j in -1..M+2}:
 	y[M+1,j] = -H/2;
 subject to cons8{j in -1..M+2}:
 	y[M+2,j] = H/2;
-
-solve;
-display f;
-display y;

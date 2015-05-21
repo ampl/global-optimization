@@ -18,8 +18,3 @@ minimize f:
 	(x-1)^2;
 subject to cons1:
 	-1+(x-1)^2+(y-10)^2 = 0;
-
-solve;
-display f;
-display x;
-display y;

@@ -34,5 +34,3 @@ subject to v4{j in 2..ny-1}:
 	y[0,j] + (y[1,j] - y[1,j-1]) + x[1,j] - 1 = 0; 
 subject to v5{j in 2..ny-1}:            
         y[nx+1,j] + (y[nx,j] - y[nx,j-1]) - x[nx-1,j] - 1 = 0;
-
-solve;

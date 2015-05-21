@@ -23,5 +23,3 @@ var x{1..N} := 0.0;
 
 minimize f:
 	sum {i in 1..N-1} 100*(x[i+1]-x[i]+1-x[i]^2)^2;
-
-solve; display f; display x;

@@ -51,12 +51,3 @@ let x[7] := 1;
 #let x[5] := -0.6244870;
 #let x[6] := 1.038131;
 #let x[7] := 1.594227;
-
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 680.6300573;

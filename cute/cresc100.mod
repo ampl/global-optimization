@@ -133,7 +133,3 @@ param: x y :=
 99                 0.558 0.005
 100                0.830 0.526
 ;
-
-solve;
-display f;
-display v1, w1, a, d, r, t;

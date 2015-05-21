@@ -25,5 +25,3 @@ subject to cons2{t in 1..n-1}:
 	y[t,2] - y[t+1,2] + 5*h*y[t,1] = 0;
 fix y[1,1] := 0.0;
 fix y[1,2] := 1.0;
-
-solve;

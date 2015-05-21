@@ -139,31 +139,3 @@ subject to si3b:
 	0 >= tt3 * bt3 - 375.0*pw3;
 subject to glgcon:
 	0 <= -32.0*(tt1 * bt1 * (log(mf1)) ) /pw1 - 32.0*(tt2 * bt2 * (log(mf2)) ) /pw2 - 32.0*(tt3 * bt3 * (log(mf3)) ) /pw3 - 35000.0 <= 15000.0;
-
-solve;
-display aw1;
-display iw1;
-display mf1;
-display tt1;
-display pw1;
-display et1;
-display s1l;
-display aw2;
-display iw2;
-display mf2;
-display tt2;
-display pw2;
-display et2;
-display s2l;
-display aw3;
-display iw3;
-display mf3;
-display tt3;
-display pw3;
-display et3;
-display s3l;
-display inw;
-display bt1;
-display bt2;
-display bt3;
-display obj;

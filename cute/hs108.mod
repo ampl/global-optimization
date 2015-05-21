@@ -39,13 +39,3 @@ let x[9] := 1;
 #let x[7] := 0.03742076;
 #let x[8] := 0.9992996;
 #let x[9] := 0;
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj+.8660254038;

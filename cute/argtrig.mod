@@ -24,5 +24,3 @@ var x{1..N} := 1/N;
 minimize f: 0;
 subject to cons{i in 1..N}:
 	(i*(cos(x[i])+sin(x[i])) + sum {j in 1..N} cos(x[j]) - (N+i) ) = 0;
-
-solve; display f; display x;

@@ -21,5 +21,3 @@ subject to cons1{i in 1..N}:
 	i*x[i]-y[i] = i;
 subject to cons2:
 	sum {i in 1..N} (x[i]+y[i]) = N/2;
-
-solve; display f; display x, y;

@@ -50,7 +50,3 @@ subject to cons3{i in 1..N-1}:
 	2*u[i] - u[i+1] - u[i-1] - 1/N^2*w[i] = 0;
 subject to cons4:
 	u[N] - u[N-1] - 1/N^2*w[N] = 0;
-
-solve;
-display f;
-display u,w;	

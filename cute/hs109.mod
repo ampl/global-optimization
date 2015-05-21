@@ -75,13 +75,3 @@ let {j in 1..9} x[j] := 0;
 #let x[7] := 201.465;
 #let x[8] := 426.661;
 #let x[9] := 368.494;
-
-display obj;
-
-solve;
-
-display x; 
-
-display obj;
-
-display obj - 5362.06928;

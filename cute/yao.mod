@@ -22,5 +22,3 @@ subject to cons2:
 	x[1] >= 0.08;
 subject to cons3{i in p+1..p+k}:
 	x[i] = 0.0;
-
-solve; display f; display x;

@@ -148,15 +148,3 @@ let x[12] :=   .001;
 let x[13] :=   .001;
 let x[14] :=   .001;
 let x[15] :=   .001;
-
-
-display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj-32.34867897;
-

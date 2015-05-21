@@ -13,15 +13,4 @@ let x[2] := 2;
 let x[3] := 2;
 let x[4] := 2;
 let x[5] := 2;
-
-display obj;
-
 option loqo_options $loqo_options" convex";
-
-solve;
-
-display x;
-
-display obj;
-
-display obj - 1859/349;

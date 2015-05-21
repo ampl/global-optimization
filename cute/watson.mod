@@ -27,7 +27,3 @@ param t{i in 1..29} := i/29;
 minimize f:
 	sum {i in 1..29} (sum {j in 2..31} (j-1)*x[j]*t[i]^(j-2) - (sum {j in 1..31} x[j]*t[i]^(j-1))^2 - 1)^2 +
 	x[1]^2 + (x[2]-x[1]^2-1)^2;
-
-solve;
-display f;
-display x;

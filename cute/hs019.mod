@@ -18,11 +18,3 @@ let x[2] :=  5.84;
 #printf "optimal solution as starting point \n";
 #let x[1] := 14.095;
 #let x[2] :=  0.84296079;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj + 6961.81381;

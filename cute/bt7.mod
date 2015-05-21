@@ -40,7 +40,3 @@ param x_init:=
 3	1.0
 4	1.0
 5	1.0;
-
-solve;
-display f;
-display x;

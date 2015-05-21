@@ -29,7 +29,3 @@ minimize f:
 	(x[3]^2 + (x[4]+x[1])^2)^2 +
 	(x[1]-4 + sin(x[4])^2 + x[2]^2*x[3]^2)^2 +
 	sin(x[4])^4;
-
-solve;
-display f;
-display x;

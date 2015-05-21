@@ -68,8 +68,3 @@ var X =
 6 -0.05
 7 0.1
 8 0.0;
-
-
-solve;
-
-display X;

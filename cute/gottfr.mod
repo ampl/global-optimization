@@ -26,5 +26,3 @@ subject to cons:
 	(x[1]-0.1136*(x[1]+3.0*x[2])*(1-x[1])) = 0;
 subject to cons2:
 	(x[2]+7.5*(2.0*x[1]-x[2])*(1-x[2])) = 0;
-
-solve; display f; display x;

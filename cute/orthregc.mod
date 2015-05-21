@@ -51,8 +51,3 @@ minimize f:
 
 subject to cons1{i in 1..npts}:
 	h11*x[i]^2 + 2*h12*x[i]*y[i] + h22*y[i]^2 - 2*g1*x[i] - 2*g2*y[i] = 1.0;
-
-solve;
-display f;
-display h11,h12,h22,g1,g2;
-display x,y;

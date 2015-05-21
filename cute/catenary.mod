@@ -43,7 +43,3 @@ fix x[0] := 0.0;
 fix y[0] := 0.0;
 fix z[0] := 0.0;
 fix x[N+1] := length;
-
-solve;
-display f;
-display x,y,z;

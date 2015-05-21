@@ -32,5 +32,3 @@ subject to conss{i in 1..n}:
 	0.5 >= (sin(x[i]))^2; # >= 0.0;
 subject to eq:
 	(x[1]+x[n])^2 = 1.0;
-
-solve;

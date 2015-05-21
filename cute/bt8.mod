@@ -29,5 +29,3 @@ subject to cons1:
 	x[1]-1-x[4]^2+x[2]^2 = 0;
 subject to cons2:
 	-1+x[1]^2+x[2]^2-x[5]^2 = 0;
-
-solve; display f; display x;

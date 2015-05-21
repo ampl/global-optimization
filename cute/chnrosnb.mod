@@ -83,7 +83,3 @@ param alph:=
 49              0.60
 50              1.50
 ;
-
-solve;
-display f;
-display x;

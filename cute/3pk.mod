@@ -230,37 +230,3 @@ minimize obj:
 	0.8*a4_2 + 0.2*a5_2)*(0.2*a0_2 + 0.2*a1_2 + 0.2*a3_2 - 0.8*a4_2 + 
 	0.2*a5_2))/0.5) + (((0.2*a0_2 + 0.2*a1_2 + 0.2*a3_2 + 0.2*a4_2 - 
 	0.8*a5_2)*(0.2*a0_2 + 0.2*a1_2 + 0.2*a3_2 + 0.2*a4_2 - 0.8*a5_2))/0.5);
-
-
-solve;
-	display a1_0;
-	display a2_0;
-	display a3_0;
-	display a4_0;
-	display a5_0;
-	display a0_1;
-	display a2_1;
-	display a3_1;
-	display a4_1;
-	display a5_1;
-	display a0_2;
-	display a1_2;
-	display a3_2;
-	display a4_2;
-	display a5_2;
-	display t0_3;
-	display t1_3;
-	display t2_3;
-	display t4_3;
-	display t5_3;
-	display t0_4;
-	display t1_4;
-	display t2_4;
-	display t3_4;
-	display t5_4;
-	display t0_5;
-	display t1_5;
-	display t2_5;
-	display t3_5;
-	display t4_5;
-display obj;

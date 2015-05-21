@@ -40,6 +40,3 @@ subject to cons3{i in 1..7}:
 	THI[i] = THIN[i];
 
 option loqo_options "verbose=2 timing=1 iterlim=5000";
-solve;
-display f;
-display TH, THI;

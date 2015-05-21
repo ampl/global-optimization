@@ -144,13 +144,3 @@ let x[5] := 27;
 #let x[5] := 37.5850413;
 
 #display obj;
-
-solve;
-
-display x;
-
-display obj;
-
-display obj+1.90513375;
-
-

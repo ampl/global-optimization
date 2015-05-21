@@ -27,7 +27,3 @@ var x{1..N} := -1;
 minimize f:
 	(x[1]-1)^2
 	+ sum {i in 2..N} 100*(x[1]-x[i-1]^2)^2;
-
-solve;
-display f;
-display x;

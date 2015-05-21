@@ -30,5 +30,3 @@ subject to cons2:
 	x[3]+x[4]-2*x[5] = 0;
 subject to cons3:
 	x[2]-x[5] = 0;
-
-solve; display f; display x;

@@ -25,7 +25,3 @@ var x {1..n} := -1.0;
 
 # rvdb comment: the sum should start at 1.
 minimize obj: (x[1]-1.0)^2 + sum {j in 2..n-1} (x[j]-x[j+1])^2 + (x[n]-1.0)^2;
-
-solve;
-display x;
-display obj;

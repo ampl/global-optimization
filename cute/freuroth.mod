@@ -31,7 +31,3 @@ minimize f:
 let x[1] := 0.5;
 let x[2] := -2.0;
 let {i in 1..n: i>2} x[i] := 0.0;
-
-solve;
-display f;
-display x;

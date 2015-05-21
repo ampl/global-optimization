@@ -125,35 +125,3 @@ subject to b5111:
 	(u1-u5) * (-alpha5) + u11 - u5 = 0;
 subject to c5111:
 	(v1-v5) * (-alpha5) + v11 - v5 = 0;
-
-solve;
-display epsilon;
-display u1;
-display v1;
-display u2;
-display v2;
-display u3;
-display v3;
-display u4;
-display v4;
-display u5;
-display v5;
-display u6;
-display v6;
-display u7;
-display v7;
-display u8;
-display v8;
-display u9;
-display v9;
-display u10;
-display v10;
-display u11;
-display v11;
-display alpha1;
-display alpha2;
-display alpha3;
-display alpha4;
-display alpha5;
-display alpha6;
-display obj;

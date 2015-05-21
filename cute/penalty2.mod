@@ -30,7 +30,3 @@ param y{i in 1..M} := exp(i/10)  + exp( (i-1)/10 );
 minimize f:
 	(x[1]-0.2)^2 + sum {i in 2..N} a*(exp(x[i]/10)+exp(x[i-1]/10)-y[i])^2 + sum {i in N+1..2*N-1}
 	a*(exp(x[i-N+1]/10)-exp(-1/10))^2 + ( sum {j in 1..N} (N-j+1)*x[j]^2 - 1)^2;
-
-solve;
-display f;
-display x;

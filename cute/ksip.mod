@@ -38,7 +38,3 @@ var x {1..n} := 2;
 minimize obj: sum {j in 1..n} ( x[j]^2/(2*j) + x[j]/j);
 
 subject to c{i in 0..m}: sum {j in 1..n} (i/m)^(j-1)*x[j] >= sin(i/m);
-
-solve;
-display x;
-display obj;

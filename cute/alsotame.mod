@@ -30,7 +30,3 @@ subject to cons2:
 	-2 <= x <= 2;
 subject to cons3:
 	-1.5 <= y <= 1.5;
-
-solve;
-display f;
-display x, y;
