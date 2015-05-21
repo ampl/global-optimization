@@ -126,6 +126,16 @@ def test_solver_options():
                     solver_options={'foo': 42, 'bar': 'baz'}) as result:
       assert result.output.endswith("'-AMPL', 'foo=42', 'bar=baz']\n")
 
+def test_solve_env():
+  with temp_ampl_file() as ampl_file:
+    with util.solve(ampl_file.name, solver='./mock-solver',
+                    solver_options={'print_env': 1}) as result:
+      assert result.output == str(os.environ) + '\n'
+    env = {'foo': 'bar'}
+    with util.solve(ampl_file.name, solver='./mock-solver',
+                    solver_options={'print_env': 1}, env=env) as result:
+      assert result.output == str(env) + '\n'
+
 def test_benchmark():
   b = util.Benchmark()
   assert b.solver == None
@@ -159,6 +169,16 @@ def test_benchmark():
       assert entry['solve_result']
       assert entry['solve_message']
       assert entry['output'].endswith("'-AMPL', 'answer=42']\n")
+
+def test_benchmark_env():
+  with temp_ampl_file() as ampl_file:
+    with tempfile.NamedTemporaryFile() as log_file:
+      with util.Benchmark(solver='./mock-solver', solver_options={'print_env': 1},
+                          log=log_file.name) as b:
+        b.run(ampl_file.name)
+      log = yaml.load(log_file.read())
+      assert log[0]['output'] == \
+        str({'PATH': os.environ['PATH'], 'AMPLFUNC': util.amplgsl_path()}) + '\n'
 
 def test_ampl():
   with util.AMPL() as ampl:

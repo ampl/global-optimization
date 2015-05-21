@@ -4,7 +4,10 @@
 from __future__ import print_function
 import os, sys
 
-print(sys.argv)
+if 'print_env=1' in sys.argv:
+  print(os.environ)
+else:
+  print(sys.argv)
 filename = os.path.splitext(sys.argv[1])[0] + '.sol'
 with open(filename, 'w') as f:
   f.write('test')

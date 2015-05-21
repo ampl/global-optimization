@@ -39,6 +39,14 @@ def sha1_file(filename):
       buf = f.read(blocksize)
     return hasher.hexdigest()
 
+def amplgsl_path():
+  # Find amplgsl.
+  for path in os.environ['PATH'].split(os.pathsep):
+    amplgsl_path = os.path.join(path, 'amplgsl.dll')
+    if os.path.exists(path):
+      return amplgsl_path
+  return ''
+
 @contextmanager
 def temp_nl_file(ampl_filename):
   """
@@ -116,7 +124,8 @@ def solve(ampl_filename, **kwargs):
   Solves the AMPL problem given in *ampl_filename*.
   Example:
     with solve('test.ampl', solver='lgo', solver_options={'opmode': 3},
-               timeout=100, on_nl_file=update_options) as result:
+               env={'AMPLFUNC': 'path/to/amplgsl.dll'}, timeout=100,
+               on_nl_file=update_options) as result:
       print(result.output)
   """
   with temp_nl_file(ampl_filename) as nl_file:
@@ -138,7 +147,7 @@ def solve(ampl_filename, **kwargs):
     # Invoke the solver.
     start_time = time.time()
     try:
-      process = Popen(command, stdout=PIPE, stderr=STDOUT)
+      process = Popen(command, stdout=PIPE, stderr=STDOUT, env=kwargs.get('env'))
       thread.start()
       output = process.communicate()[0]
       solution_time = time.time() - start_time
@@ -169,6 +178,11 @@ class Benchmark:
     self.log_filename = kwargs.get('log', 'benchmark-log.yaml')
     # Callback called after .nl file is written
     self.on_nl_file = kwargs.get('on_nl_file')
+    # Only pass PATH to the solver to avoid environment variables
+    # interference with solver options.
+    self.env = {}
+    self.env['PATH'] = os.environ['PATH']
+    self.env['AMPLFUNC'] = amplgsl_path()
 
   def __enter__(self):
     self.log = open(self.log_filename, 'w')
@@ -186,7 +200,7 @@ class Benchmark:
     ampl_filename = os.path.join(repo_dir, model)
     start = datetime.now()
     with solve(ampl_filename, solver=self.solver, solver_options=self.solver_options,
-                    timeout=self.timeout, on_nl_file=self.on_nl_file) as result:
+               env=self.env, timeout=self.timeout, on_nl_file=self.on_nl_file) as result:
       sol = read_solution(ampl_filename, result.sol_filename)
       self.write_log(model=model, sha=sha1_file(ampl_filename), start=start,
                      time=result.solution_time, output=result.output, solution=sol)
