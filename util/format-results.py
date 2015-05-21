@@ -59,6 +59,8 @@ def read_log(filename):
   results = yaml.load(file(filename, 'r'))
   for result in results:
     print(result['model'])
+    if not result['solve_message']:
+      result['solve_message'] = ''
     ampl_filename = os.path.join(repo_dir, result['model'])
     dirname, filename = os.path.split(ampl_filename)
     with AMPL(dirname) as ampl:
