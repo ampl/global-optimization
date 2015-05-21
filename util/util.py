@@ -217,7 +217,10 @@ class Benchmark:
     self.log.write('  timeout: {}\n'.format(time >= self.timeout))
     sol = kwargs.get('solution')
     self.log.write('  obj: {}\n'.format(sol.obj))
-    self.log.write('  solve_result: {}\n'.format(sol.solve_result))
+    solve_result = sol.solve_result
+    if solve_result == '?':
+      solve_result = "'" + solve_result + "'" 
+    self.log.write('  solve_result: {}\n'.format(solve_result))
     self.write_log_multiline('solve_message', sol.solve_message)
     self.write_log_multiline('output', kwargs.get('output'))
     self.log.write('\n')
