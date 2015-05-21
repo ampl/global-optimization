@@ -32,3 +32,5 @@ subject to cons3:
 
 data;
 param xinit:= 1 -1.2 2 2.0 3 2.0;
+
+option presolve 0;

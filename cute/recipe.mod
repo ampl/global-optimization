@@ -35,3 +35,5 @@ param xinit:=
 1	2
 2	5
 3	1;
+
+option presolve 0;
