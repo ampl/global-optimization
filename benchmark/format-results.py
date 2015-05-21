@@ -27,7 +27,7 @@ def printed_model_name(result):
     name += '*'
   return name
 
-def max_con_violations(result):
+def max_con_violation(result):
   m = re.search(r'Maximum constraint violation (.+)', result['solve_message'])
   return m.group(1) if m else '-'
 
@@ -45,8 +45,10 @@ def check_obj(result, obj_tolerance):
   if rel_error <= obj_tolerance:
     if solve_result.startswith('solved'):
       solved = True
-    elif solve_result == 'limit':
-      max_viol = max_con_violations(result)
+    elif solve_result == 'limit' or solve_result == 'failure':
+      # LGO returns solve_result = 'failure' on SIGINT so check if
+      # max constraint violation is within tolerance.
+      max_viol = max_con_violation(result)
       if max_viol == '-' or float(max_viol) <= 1e-8:
         solved = True
   return (solved, rel_error)
@@ -90,7 +92,7 @@ def write_results(file, results, obj_tolerance):
     # Objective value returned by the solver
     'OS': [r['obj'] for r in results],
     # Maximal constraint violation
-    'CV': [max_con_violations(r) for r in results],
+    'CV': [max_con_violation(r) for r in results],
     # Number of function evaluations
     'FE': [num_func_evals(r) for r in results],
     # Solver runtime
