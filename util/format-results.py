@@ -12,6 +12,9 @@ def load_index(*args):
   index = {}
   for dirname in args:
     index.update(yaml.load(open(os.path.join(repo_dir, dirname, 'index.yaml'))))
+  for k, v in index.iteritems():
+    # Convert values such as 1e-8 to float since YAML doesn't do it.
+    v['best_obj'] = float(v['best_obj'])
   return index
 
 index = load_index('cute', 'jdp', 'nlmodels')
@@ -61,6 +64,8 @@ def read_log(filename):
     print(result['model'])
     if not result['solve_message']:
       result['solve_message'] = ''
+    # Convert values such as 1e-8 to float since YAML doesn't do it.
+    result['obj'] = float(result['obj'])
     ampl_filename = os.path.join(repo_dir, result['model'])
     dirname, filename = os.path.split(ampl_filename)
     with AMPL(dirname) as ampl:
