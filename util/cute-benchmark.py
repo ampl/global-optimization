@@ -11,6 +11,7 @@ LGO_LOCAL_SEARCH_MODE = 0
 LGO_MULTISTART_MODE   = 3
 
 models = sorted(glob.glob(os.path.join(repo_dir, 'cute', '*.mod')))
+models = [os.path.relpath(m, repo_dir) for m in models]
 
 with Benchmark(log='cute-lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
                solver_options={'opmode': LGO_LOCAL_SEARCH_MODE}) as b:

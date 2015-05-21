@@ -183,7 +183,6 @@ class Benchmark:
     Runs the benchmark by translating the AMPL *model* into NL format,
     passing it to solver, reading the solution and writing it to log.
     """
-    model = os.path.relpath(model, repo_dir)
     ampl_filename = os.path.join(repo_dir, model)
     start = datetime.now()
     with solve(ampl_filename, solver=self.solver, solver_options=self.solver_options,
