@@ -12,7 +12,7 @@ LGO_MULTISTART_MODE   = 3
 
 models = []
 for subdir in ['cute', 'jdp', 'nlmodels']:
-  models += glob.glob(os.path.join(repo_dir, subdir, '*.mod')))
+  models += glob.glob(os.path.join(repo_dir, subdir, '*.mod'))
 models = sorted([os.path.relpath(m, repo_dir) for m in models])
 
 with Benchmark(log='large-lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
