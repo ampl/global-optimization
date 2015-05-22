@@ -37,7 +37,7 @@ def max_con_violation(result):
 def num_func_evals(result):
   m = re.search(r'(\d+) function (and constraint )?evaluations',
                 result['solve_message'])
-  return int(m.group(1)) if m else None
+  return int(m.group(1)) if m else 0
 
 def check_obj(result, obj_tolerance):
   obj = result['obj']
