@@ -82,7 +82,7 @@ def update_options(nl_file):
 
 # Run benchmarks with multistart search effort set to 2.
 for k in [2]:
-  with Benchmark(log='lgo-multistart-k{}.yaml'.format(k), solver='lgo', timeout=TIMEOUT,
+  with Benchmark(log='small-lgo-multistart-k{}.yaml'.format(k), solver='lgo', timeout=TIMEOUT,
                  solver_options={'opmode': LGO_MULTISTART_MODE}, on_nl_file=update_options) as b:
     for model in models:
       print(model)
