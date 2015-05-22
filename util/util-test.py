@@ -203,3 +203,11 @@ def test_benchmark_env():
       log = yaml.load(log_file.read())
       assert log[0]['output'] == \
         str({'PATH': os.environ['PATH'], 'AMPLFUNC': util.amplgsl_path()}) + '\n'
+
+def test_benchmark_removes_backspace():
+  with tempfile.NamedTemporaryFile() as log_file:
+    with util.Benchmark(log=log_file.name) as b:
+      b.write_log(output='a\b', solution=util.Solution())
+    log = yaml.load(log_file.read())
+    entry = log[0]
+    assert entry['output'] == 'a\n'

@@ -275,6 +275,6 @@ class Benchmark:
       solve_result = "'" + solve_result + "'"
     self.log.write('  solve_result: {}\n'.format(solve_result))
     self.write_log_multiline('solve_message', sol.solve_message)
-    self.write_log_multiline('output', kwargs.get('output'))
+    self.write_log_multiline('output', kwargs.get('output').replace('\b', ''))
     self.log.write('\n')
     self.log.flush()
