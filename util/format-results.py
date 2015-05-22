@@ -115,14 +115,16 @@ def write_results(file, results, obj_tolerance):
 def write_summary(file, results, obj_tolerance):
   file.write('\nSummary of results\n')
   file.write('Number of test problems: {}\n'.format(len(results)))
-  opmode = results[0]['solver_options']['opmode']
+  solver = results[0]['solver']
+  if solver == 'lgo':
+    opmode = results[0]['solver_options']['opmode']
   total_time = 0
   normalized_func_evals = 0
   num_solved = 0
   total_rel_error = 0
   for r in results:
     total_time += r['time']
-    if r['solver_options']['opmode'] != opmode:
+    if solver == 'lgo' and r['solver_options']['opmode'] != opmode:
       raise Exception('Inconsistent opmode')
     nvars = r['num_vars']
     ncons = r['num_cons']
@@ -132,16 +134,18 @@ def write_summary(file, results, obj_tolerance):
     if solved:
         total_rel_error += rel_error
         num_solved += 1
-  file.write('LGO operational mode: {}\n'.format(opmode))
-  file.write('Relative error tolerance for successful solution: {}\n'.format(obj_tolerance))
+  if solver == 'lgo':
+    file.write('LGO operational mode: {}\n'.format(opmode))
+    file.write('Relative error tolerance for successful solution: {}\n'.format(obj_tolerance))
   file.write('Number of successful solutions: {} of {}\n'.format(num_solved, len(results)))
   avg_rel_error = '{:.2}'.format(total_rel_error / num_solved) if num_solved != 0 else '-'
   file.write('Average relative error of solutions found: {}\n'.format(avg_rel_error))
-  file.write('Average normalized number of function evaluations (FE/modc): {}\n'.
-             format(normalized_func_evals / len(results)))
-  file.write('where modc is the estimated model complexity\n')
-  file.write('modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1\n')
-  file.write('Total LGO solver runtime (seconds): {:.2f}\n'.format(total_time))
+  if solver == 'lgo':
+    file.write('Average normalized number of function evaluations (FE/modc): {}\n'.
+              format(normalized_func_evals / len(results)))
+    file.write('where modc is the estimated model complexity\n')
+    file.write('modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1\n')
+    file.write('Total LGO solver runtime (seconds): {:.2f}\n'.format(total_time))
 
 legend = {
   'MN': 'Model Name',
