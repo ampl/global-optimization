@@ -5,7 +5,7 @@ import glob, os
 from util import Benchmark, read_nl_header, repo_dir
 
 # Timeout in seconds
-TIMEOUT = 1
+TIMEOUT = 300
 
 LGO_LOCAL_SEARCH_MODE = 0
 LGO_MULTISTART_MODE   = 3
