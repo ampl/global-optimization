@@ -15,16 +15,33 @@ for subdir in ['cute', 'jdp', 'nlmodels']:
   models += glob.glob(os.path.join(repo_dir, subdir, '*.mod'))
 models = sorted([os.path.relpath(m, repo_dir) for m in models])
 
-with Benchmark(log='large-lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
-               solver_options={'opmode': LGO_LOCAL_SEARCH_MODE}) as b:
+with Benchmark(log='large-knitro.yaml', timeout=TIMEOUT,
+               solver='knitro', solver_options={'feastol': 1e-8}) as b:
   for model in models:
     print(model)
     b.run(model)
 
-exit(0)
+with Benchmark(log='large-baron.yaml', timeout=TIMEOUT, solver='baron') as b:
+  for model in models:
+    print(model)
+    b.run(model)
 
-with Benchmark(log='large-lgo-multistart.yaml', solver='lgo', timeout=TIMEOUT,
-                solver_options={'opmode': LGO_MULTISTART_MODE}, on_nl_file=update_options) as b:
+with Benchmark(log='large-lgo-local-search.yaml', timeout=TIMEOUT,
+               solver='lgo', solver_options={'opmode': LGO_LOCAL_SEARCH_MODE}) as b:
+  for model in models:
+    print(model)
+    b.run(model)
+
+def update_options(nl_file):
+  header = read_nl_header(nl_file.name)
+  maxfct = k * 50 * (header.num_vars + header.num_cons + 2) ** 2
+  b.solver_options['g_maxfct'] = maxfct
+  b.solver_options['l_maxfct'] = maxfct
+  b.solver_options['maxnosuc'] = maxfct
+
+with Benchmark(log='large-lgo-multistart.yaml', timeout=TIMEOUT,
+               solver='lgo', solver_options={'opmode': LGO_MULTISTART_MODE},
+               on_nl_file=update_options) as b:
   for model in models:
     print(model)
     b.run(model)
