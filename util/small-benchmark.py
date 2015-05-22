@@ -57,13 +57,18 @@ models += files('jdp', '''
   ''')
 
 # Timeout in seconds
-TIMEOUT = 60
+TIMEOUT = 300
 
 LGO_LOCAL_SEARCH_MODE = 0
 LGO_MULTISTART_MODE   = 3
 
-with Benchmark(log='lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
-               solver_options={'opmode': LGO_LOCAL_SEARCH_MODE}) as b:
+with Benchmark(log='small-lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
+                solver_options={'opmode': LGO_LOCAL_SEARCH_MODE}) as b:
+  for model in models:
+    print(model)
+    b.run(model)
+
+with Benchmark(log='small-minos.yaml', solver='minos', timeout=TIMEOUT) as b:
   for model in models:
     print(model)
     b.run(model)
@@ -75,8 +80,8 @@ def update_options(nl_file):
   b.solver_options['l_maxfct'] = maxfct
   b.solver_options['maxnosuc'] = maxfct
 
-# Run benchmarks with increasing multistart search effort.
-for k in [2, 4, 8, 16]:
+# Run benchmarks with multistart search effort set to 2.
+for k in [2]:
   with Benchmark(log='lgo-multistart-k{}.yaml'.format(k), solver='lgo', timeout=TIMEOUT,
                  solver_options={'opmode': LGO_MULTISTART_MODE}, on_nl_file=update_options) as b:
     for model in models:
