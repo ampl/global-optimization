@@ -47,6 +47,43 @@ def amplgsl_path():
       return amplgsl_path
   return ''
 
+class AMPL:
+  def __init__(self, cwd=None):
+    self.cwd = cwd
+
+  def __enter__(self):
+    self.process = Popen(['ampl', '-b'],
+                         stdin=PIPE, stdout=PIPE, stderr=STDOUT, cwd=self.cwd)
+    self.eval()
+    return self
+
+  def __exit__(self, exc_type, exc_value, traceback):
+    self.process.stdin.close();
+    self.process.wait()
+
+  def eval(self, ampl_code=None):
+    if ampl_code:
+      self.process.stdin.write('{} {}\n'.format(len(ampl_code) + 1, ampl_code))
+    stdout = self.process.stdout
+    results = []
+    while True:
+      header = stdout.readline()
+      sep = header.index(' ')
+      size = int(header[:sep])
+      kind = header[sep + 1:].strip()
+      output = stdout.read(size - len(header) + sep + 1)
+      if kind.startswith('prompt'):
+        return results
+      results.append((kind, output))
+
+  def eval_expr(self, ampl_expr):
+    kind, output = self.eval('print {};'.format(ampl_expr))[0]
+    output = output[:-1]
+    try:
+      return float(output)
+    except ValueError:
+      return output
+
 @contextmanager
 def temp_nl_file(ampl_filename):
   """
@@ -86,27 +123,14 @@ def read_solution(ampl_filename, sol_filename):
   Read the solution of the model *ampl_filename* from *sol_filename*
   and returns the objective value.
   """
-  dirname, filename = os.path.split(ampl_filename)
-  p = Popen('ampl', cwd=dirname, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
-  output = p.communicate('''
-    model "{}";
-    solution "{}";
-    display _obj[1];
-    display solve_result;
-    print solve_message;
-    '''.format(ampl_filename, sol_filename))[0]
-  obj = '_obj[1] = '
-  solve_result = 'solve_result = '
   sol = Solution()
-  for line in output.splitlines():
-    if sol.solve_message is not None:
-      if line:
-        sol.solve_message += line + '\n'
-    elif line.startswith(obj):
-      sol.obj = float(line[len(obj):])
-    elif line.startswith(solve_result):
-      sol.solve_result = line[len(solve_result):].strip("'")
-      sol.solve_message = ''
+  dirname, filename = os.path.split(ampl_filename)
+  with AMPL(dirname) as ampl:
+    ampl.eval('model "{}";'.format(ampl_filename))
+    ampl.eval('solution "{}";'.format(sol_filename))
+    sol.obj = float(ampl.eval_expr('_obj[1]'))
+    sol.solve_result = ampl.eval_expr('solve_result')
+    sol.solve_message = ampl.eval_expr('solve_message')
   return sol
 
 class SolveResult:
@@ -238,40 +262,3 @@ class Benchmark:
     self.write_log_multiline('output', kwargs.get('output'))
     self.log.write('\n')
     self.log.flush()
-
-class AMPL:
-  def __init__(self, cwd=None):
-    self.cwd = cwd
-
-  def __enter__(self):
-    self.process = Popen(['ampl', '-b'],
-                         stdin=PIPE, stdout=PIPE, stderr=STDOUT, cwd=self.cwd)
-    self.eval()
-    return self
-
-  def __exit__(self, exc_type, exc_value, traceback):
-    self.process.stdin.close();
-    self.process.wait()
-
-  def eval(self, ampl_code=None):
-    if ampl_code:
-      self.process.stdin.write('{} {}\n'.format(len(ampl_code) + 1, ampl_code))
-    stdout = self.process.stdout
-    results = []
-    while True:
-      header = stdout.readline()
-      sep = header.index(' ')
-      size = int(header[:sep])
-      kind = header[sep + 1:].strip()
-      output = stdout.read(size - len(header) + sep + 1)
-      if kind.startswith('prompt'):
-        return results
-      results.append((kind, output))
-
-  def eval_expr(self, ampl_expr):
-    kind, output = self.eval('print {};'.format(ampl_expr))[0]
-    output = output[:-1]
-    try:
-      return float(output)
-    except ValueError:
-      return output

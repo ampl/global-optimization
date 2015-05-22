@@ -165,7 +165,7 @@ def test_benchmark():
       assert entry['start']
       assert float(entry['time']) > 0
       assert not entry['timeout']
-      assert float(entry['obj'])
+      assert type(entry['obj']) is float
       assert entry['solve_result']
       assert entry['solve_message']
       assert entry['output'].endswith("'-AMPL', 'answer=42']\n")
