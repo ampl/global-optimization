@@ -5,7 +5,7 @@ import glob, os
 from util import Benchmark, read_nl_header, repo_dir
 
 # Timeout in seconds
-TIMEOUT = 300
+TIMEOUT = 1
 
 LGO_LOCAL_SEARCH_MODE = 0
 LGO_MULTISTART_MODE   = 3
@@ -39,6 +39,7 @@ def update_options(nl_file):
   b.solver_options['l_maxfct'] = maxfct
   b.solver_options['maxnosuc'] = maxfct
 
+k = 2
 with Benchmark(log='large-lgo-multistart.yaml', timeout=TIMEOUT,
                solver='lgo', solver_options={'opmode': LGO_MULTISTART_MODE},
                on_nl_file=update_options) as b:
