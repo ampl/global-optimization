@@ -35,9 +35,20 @@ def max_con_violation(result):
   return m.group(1) if m else '-'
 
 def num_func_evals(result):
-  m = re.search(r'(\d+) function (and constraint )?evaluations',
-                result['solve_message'])
-  return int(m.group(1)) if m else 0
+  solver = result['solver']
+  num_evals = '-'
+  if solver == 'lgo':
+    m = re.search(r'(\d+) function (and constraint )?evaluations',
+                  result['solve_message'])
+    if m:
+      num_evals = int(m.group(1))
+  elif solver == 'minos':
+    m = re.search(r'Nonlin evals: (.*)\.', result['solve_message'])
+    if m:
+      num_evals = 0
+      for entry in m.group(1).split(','):
+        num_evals += int(entry.split('=')[1])
+  return num_evals
 
 def check_obj(result, obj_tolerance):
   obj = result['obj']
@@ -129,7 +140,9 @@ def write_summary(file, results, obj_tolerance):
     nvars = r['num_vars']
     ncons = r['num_cons']
     modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1
-    normalized_func_evals += num_func_evals(r) / modc
+    nfe = num_func_evals(r)
+    if nfe != '-':
+      normalized_func_evals += nfe / modc
     solved, rel_error = check_obj(r, obj_tolerance)
     if solved:
         total_rel_error += rel_error
