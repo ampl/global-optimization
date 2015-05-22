@@ -179,6 +179,10 @@ def solve(ampl_filename, **kwargs):
     def kill_on_timeout():
       if not done.wait(timeout):
         process.send_signal(signal.SIGINT)
+      # Wait for additional 10 seconds for the solver to stop and kill it
+      # if it doesn't.
+      if not done.wait(10):
+        process.kill()
     thread = threading.Thread(target=kill_on_timeout)
     # Invoke the solver.
     start_time = time.time()
