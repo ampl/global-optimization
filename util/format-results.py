@@ -33,6 +33,7 @@ def printed_model_name(result):
 def max_con_violation(result):
   solver = result['solver']
   solve_message = result['solve_message']
+  m = None
   if solver == 'lgo':
     m = re.search(r'Maximum constraint violation (.+)', solve_message)
   elif solver == 'knitro':
