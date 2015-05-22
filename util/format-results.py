@@ -135,7 +135,8 @@ def write_summary(file, results, obj_tolerance):
   file.write('LGO operational mode: {}\n'.format(opmode))
   file.write('Relative error tolerance for successful solution: {}\n'.format(obj_tolerance))
   file.write('Number of successful solutions: {} of {}\n'.format(num_solved, len(results)))
-  file.write('Average relative error of solutions found: {:.2}\n'.format(total_rel_error / num_solved))
+  avg_rel_error = '{:.2}'.format(total_rel_error / num_solved) if num_solved != 0 else '-'
+  file.write('Average relative error of solutions found: {}\n'.format(avg_rel_error))
   file.write('Average normalized number of function evaluations (FE/modc): {}\n'.
              format(normalized_func_evals / len(results)))
   file.write('where modc is the estimated model complexity\n')
