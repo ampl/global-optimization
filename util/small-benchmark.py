@@ -62,13 +62,14 @@ TIMEOUT = 300
 LGO_LOCAL_SEARCH_MODE = 0
 LGO_MULTISTART_MODE   = 3
 
-with Benchmark(log='small-lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
-                solver_options={'opmode': LGO_LOCAL_SEARCH_MODE}) as b:
+with Benchmark(log='small-knitro.yaml', solver='knitro', timeout=TIMEOUT,
+               solver_options={'feastol': 1e-8}) as b:
   for model in models:
     print(model)
     b.run(model)
 
-with Benchmark(log='small-minos.yaml', solver='minos', timeout=TIMEOUT) as b:
+with Benchmark(log='small-lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
+                solver_options={'opmode': LGO_LOCAL_SEARCH_MODE}) as b:
   for model in models:
     print(model)
     b.run(model)
