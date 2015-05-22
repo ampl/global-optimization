@@ -185,10 +185,12 @@ def solve(ampl_filename, **kwargs):
     try:
       process = Popen(command, stdout=PIPE, stderr=STDOUT, env=kwargs.get('env'))
       thread.start()
-      output = process.communicate()[0]
-      solution_time = time.time() - start_time
-      # Stop the timeout thread.
-      done.set()
+      try:
+        output = process.communicate()[0]
+        solution_time = time.time() - start_time
+      finally:
+        # Stop the timeout thread.
+        done.set()
       thread.join()
       yield SolveResult(sol_filename, output, solution_time)
     finally:
