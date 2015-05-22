@@ -37,7 +37,7 @@ def test_ampl_cwd():
   dirname = tempfile.mkdtemp()
   try:
     with util.AMPL(dirname) as ampl:
-      print(dirname in ampl.eval('cd;')[0][1])
+      assert dirname in ampl.eval('cd;')[0][1]
   finally:
     os.rmdir(dirname)
 
