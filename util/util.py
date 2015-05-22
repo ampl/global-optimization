@@ -47,6 +47,10 @@ def amplgsl_path():
       return amplgsl_path
   return ''
 
+class AMPLError(Exception):
+  def __init__(self, message):
+    super(AMPLError, self).__init__(message)
+
 class AMPL:
   def __init__(self, cwd=None):
     self.cwd = cwd
@@ -78,6 +82,9 @@ class AMPL:
 
   def eval_expr(self, ampl_expr):
     kind, output = self.eval('print {};'.format(ampl_expr))[0]
+    if kind != 'print':
+      raise AMPLError(output)
+    # Remove trailing newline added by print.
     output = output[:-1]
     try:
       return float(output)
@@ -115,6 +122,7 @@ def read_nl_header(nl_filename):
 class Solution:
   def __init__(self):
     self.obj = float('nan')
+    self.obj_error = None
     self.solve_result = None
     self.solve_message = None
 
@@ -128,7 +136,11 @@ def read_solution(ampl_filename, sol_filename):
   with AMPL(dirname) as ampl:
     ampl.eval('model "{}";'.format(ampl_filename))
     ampl.eval('solution "{}";'.format(sol_filename))
-    sol.obj = float(ampl.eval_expr('_obj[1]'))
+    try:
+      sol.obj = float(ampl.eval_expr('_obj[1]'))
+    except AMPLError as e:
+      sol.obj = 'nan'
+      sol.obj_error = str(e)
     sol.solve_result = ampl.eval_expr('solve_result')
     sol.solve_message = ampl.eval_expr('solve_message')
   return sol
@@ -254,9 +266,11 @@ class Benchmark:
     self.log.write('  timeout: {}\n'.format(time >= self.timeout))
     sol = kwargs.get('solution')
     self.log.write('  obj: {}\n'.format(sol.obj))
+    if sol.obj_error:
+      self.write_log_multiline('obj_error', sol.obj_error)
     solve_result = sol.solve_result
     if solve_result == '?':
-      solve_result = "'" + solve_result + "'" 
+      solve_result = "'" + solve_result + "'"
     self.log.write('  solve_result: {}\n'.format(solve_result))
     self.write_log_multiline('solve_message', sol.solve_message)
     self.write_log_multiline('output', kwargs.get('output'))

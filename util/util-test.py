@@ -26,6 +26,30 @@ def temp_ampl_file(content='var x >= 42; minimize o: x;'):
     ampl_file.flush()
     yield ampl_file
 
+def test_ampl():
+  with util.AMPL() as ampl:
+    assert ampl.eval('print 42;') == [('print', '42\n')]
+    assert ampl.eval_expr(42) == 42
+
+def test_ampl_cwd():
+  ampl = util.AMPL()
+  assert ampl.cwd is None
+  dirname = tempfile.mkdtemp()
+  try:
+    with util.AMPL(dirname) as ampl:
+      print(dirname in ampl.eval('cd;')[0][1])
+  finally:
+    os.rmdir(dirname)
+
+def test_ampl_eval_error():
+  with util.AMPL() as ampl:
+    error = None
+    try:
+      ampl.eval_expr('1000 ^ 1000')
+    except util.AMPLError as e:
+      error = e
+    assert 'Numerical result out of range' in str(error)
+
 def test_temp_nl_file():
   with temp_ampl_file() as ampl_file:
     nl_filename = None
@@ -179,18 +203,3 @@ def test_benchmark_env():
       log = yaml.load(log_file.read())
       assert log[0]['output'] == \
         str({'PATH': os.environ['PATH'], 'AMPLFUNC': util.amplgsl_path()}) + '\n'
-
-def test_ampl():
-  with util.AMPL() as ampl:
-    assert ampl.eval('print 42;') == [('print', '42\n')]
-    assert ampl.eval_expr(42) == 42
-
-def test_ampl_cwd():
-  ampl = util.AMPL()
-  assert ampl.cwd is None
-  dirname = tempfile.mkdtemp()
-  try:
-    with util.AMPL(dirname) as ampl:
-      print(dirname in ampl.eval('cd;')[0][1])
-  finally:
-    os.rmdir(dirname)
