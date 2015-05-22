@@ -31,7 +31,12 @@ def printed_model_name(result):
   return name
 
 def max_con_violation(result):
-  m = re.search(r'Maximum constraint violation (.+)', result['solve_message'])
+  solver = result['solver']
+  solve_message = result['solve_message']
+  if solver == 'lgo':
+    m = re.search(r'Maximum constraint violation (.+)', solve_message)
+  elif solver == 'knitro':
+    m = re.search(r'feasibility error (.+)', solve_message)
   return m.group(1) if m else '-'
 
 def num_func_evals(result):
@@ -48,6 +53,10 @@ def num_func_evals(result):
       num_evals = 0
       for entry in m.group(1).split(','):
         num_evals += int(entry.split('=')[1])
+  elif solver == 'knitro':
+    m = re.search(r'(\d+) function evaluations', result['solve_message'])
+    if m:
+      num_evals = int(m.group(1))
   return num_evals
 
 def check_obj(result, obj_tolerance):
