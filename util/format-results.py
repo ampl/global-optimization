@@ -193,7 +193,6 @@ legend = {
   }
 
 args = docopt.docopt(__doc__)
-print(args)
 
 for log_filename in args['FILE']:
   print(log_filename)
