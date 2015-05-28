@@ -1,0 +1,82 @@
+casado01:
+  # The exact optimal value is exp(-27/2 * pi) - 1.
+  best_obj: -1
+casado02:
+  best_obj: -1
+casado03:
+  best_obj: 0
+casado04:
+  best_obj: -17.582872
+casado05:
+  best_obj: -0.020903
+casado06:
+  best_obj: -0.952897
+casado07:
+  best_obj: -6.262872
+casado08:
+  best_obj: -0.077590
+casado09:
+  best_obj: 0.211315
+casado10:
+  best_obj: -0.478362
+casado11:
+  best_obj: -5.815675
+casado12:
+  best_obj: -7.047444
+casado13:
+  best_obj: -4.601308
+casado14:
+  best_obj: -0.141100
+casado15:
+  best_obj: -0.870885
+casado16:
+  best_obj: -9.031249
+casado17:
+  best_obj: 0.475689
+casado18:
+  best_obj: 0
+casado19:
+  best_obj: -1
+casado20:
+  best_obj: 1
+casado21:
+  best_obj: 1
+casado22:
+  best_obj: -0.918397
+casado23:
+  best_obj: -0.824239
+casado24:
+  best_obj: -0.027864
+casado25:
+  best_obj: 3.5
+casado26:
+  best_obj: 0.367879
+casado27:
+  best_obj: -0.451388
+casado28:
+  best_obj: -1
+casado29:
+  best_obj: -0.410315
+casado30:
+  best_obj: -0.718282
+casado31:
+  best_obj: -14.592652
+casado32:
+  best_obj: -1
+casado33:
+  best_obj: -12.031249
+casado34:
+  best_obj: -0.535534
+casado35:
+  best_obj: -13.922345
+casado36:
+  best_obj: -0.35
+casado37:
+  best_obj: -32.781261
+casado38:
+  best_obj: 7
+casado39:
+  best_obj: -1
+casado40:
+  # Casado et al. give the best objective value of 1 which is incorrect.
+  best_obj: -89
