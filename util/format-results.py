@@ -1,8 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Format benchmark results.
+
+Usage: format-results.py [--exclude=MODEL]... [FILE]...
+
+Options:
+  -e MODEL, --exclude=MODEL  Exclude model from results.
+"""
+
 from __future__ import print_function
-import os, re, sys, yaml
+import docopt, os, re, sys, yaml
 import pandas as pd
 from util import AMPL
 
@@ -17,7 +25,7 @@ def load_index(*args):
     v['best_obj'] = float(v['best_obj'])
   return index
 
-index = load_index('cute', 'jdp', 'nlmodels')
+index = load_index('casado', 'cute', 'jdp', 'hansen', 'nlmodels')
 
 def model_name(result):
   "Extracts the model name from a benchmark result."
@@ -79,8 +87,8 @@ def check_obj(result, obj_tolerance):
 
 # Read the log and get the number of variables and constraints
 # for each problem.
-def read_log(filename):
-  results = yaml.load(file(filename, 'r'))
+def read_log(filename, excludes):
+  results = [r for r in yaml.load(file(filename, 'r')) if model_name(r) not in excludes]
   for result in results:
     print(result['model'])
     if not result['solve_message']:
@@ -184,9 +192,12 @@ legend = {
   ' ' : None
   }
 
-for log_filename in sys.argv[1:]:
+args = docopt.docopt(__doc__)
+print(args)
+
+for log_filename in args['FILE']:
   print(log_filename)
-  results = read_log(log_filename)
+  results = read_log(log_filename, args['--exclude'])
   output_filename = os.path.splitext(log_filename)[0] + '.txt'
   obj_tolerance = 0.0001
   with open(output_filename, 'w') as f:
