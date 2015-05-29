@@ -29,6 +29,15 @@ class BinaryExpr:
   def __repr__(self):
     return '{} {} {}'.format(self.lhs, self.op, self.rhs)
 
+class SubscriptExpr:
+  "Subscript expression"
+  def __init__(self, name, subscript):
+    self.name = name
+    self.subscript = subscript
+
+  def __repr__(self):
+    return '{}[{}]'.format(self.name, self.subscript)
+
 class Indexing:
   "Indexing expression"
   def __init__(self, index, set_expr):
@@ -194,6 +203,11 @@ def parse(input, name):
       expr = CallExpr(t, arg)
     else:
       expr = t
+      if token == '[':
+        consume_token()
+        subscript = parse_expr()
+        consume_token(']')
+        expr = SubscriptExpr(expr, subscript)
     if token == '^' or token == '**':
       op = consume_token()
       return BinaryExpr(op, expr, parse_unary_expr())
