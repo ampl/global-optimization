@@ -118,7 +118,10 @@ def parse(input, name):
     '/': MULTIPLICATIVE
   }
   
-  funcs = {'atan', 'exp', 'sin', 'cos'}
+  funcs = {
+    'abs', 'acos', 'acosh', 'alias', 'asin', 'asinh', 'atan', 'atan2', 'atanh',
+    'ceil', 'ctime', 'cos', 'exp', 'floor', 'log', 'log10', 'max', 'min',
+    'precision', 'round', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'time', 'trunc'}
 
   def get_bin_op_precedence(op):
     return precedence.get(op, UNKNOWN)
