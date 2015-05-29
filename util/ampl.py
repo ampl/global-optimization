@@ -211,9 +211,9 @@ def parse(input, name):
     if token == 'in':
       consume_token()
       consume_token('[')
-      lb = consume_token()
+      lb = parse_expr()
       consume_token(',')
-      ub = consume_token()
+      ub = parse_expr()
       consume_token(']')
       attrs.append(InAttr(lb, ub))
     consume_token(';')
