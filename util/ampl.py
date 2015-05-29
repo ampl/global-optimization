@@ -105,11 +105,14 @@ class Decl:
       result += ': ' + str(self.body)
     return result + ';'
 
-class DataStmt:
-  "Data statement"
+class IncludeStmt:
+  "Include statement such as include, model or data"
+
+  def __init__(self, kind):
+    self.kind = kind
 
   def __repr__(self):
-    return 'data;'
+    return self.kind + ';'
 
 def parse(input, name):
   "Parse AMPL code (kind of)."
@@ -150,7 +153,7 @@ def parse(input, name):
   # Current position in input.
   pos = 0
   space_re = re.compile(r'[ \t\r]*(#.*)?')
-  token_re = re.compile(r'([a-zA-Z0-9_.]+|.)?')
+  token_re = re.compile(r'([a-zA-Z0-9_.]+|:=|.)?')
   token = None # Next token
   lineno = 1
 
@@ -283,21 +286,50 @@ def parse(input, name):
     consume_token(';')
     return obj
 
-  nodes = []
+  def parse_model(nodes):
+    "Parse AMPL model returning true on EOF or false to switch to the data mode."
+    while True:
+      if not token:
+        return True
+      if token == 'param' or token == 'var':
+        nodes.append(parse_param_or_var())
+      elif token == 'set':
+        nodes.append(parse_set())
+      elif token == 'minimize':
+        nodes.append(parse_obj())
+      elif token == 'data':
+        kind = consume_token()
+        consume_token(';')
+        nodes.append(IncludeStmt(kind))
+        return False
+      else:
+        report_error('unknown token: ' + token)
+
+  def parse_data(nodes):
+    "Parse AMPL data returning true on EOF or false to switch to the model mode."
+    while True:
+      if not token:
+        return True
+      if token == 'param' or token == 'var':
+        kind = consume_token()
+        consume_token(':')
+        set_name = consume_token()
+        consume_token(':')
+        param_names = []
+        while token and token != ':=':
+          param_names.append(consume_token())
+        consume_token()
+        values = []
+        while token and token != ';':
+          values.append(consume_token())
+        consume_token();
+        #nodes.append(DataStmt())
+        #print(set_name, param_names, values)
+      else:
+        return False
+  
   consume_token()
+  nodes = []
   while True:
-    if not token:
-      break
-    elif token == 'param' or token == 'var':
-      nodes.append(parse_param_or_var())
-    elif token == 'set':
-      nodes.append(parse_set())
-    elif token == 'minimize':
-      nodes.append(parse_obj())
-    elif token == 'data':
-      consume_token()
-      consume_token(';')
-      nodes.append(DataStmt())
-    else:
-      report_error('unknown token: ' + token)
-  return nodes
+    if parse_model(nodes) or parse_data(nodes):
+      return nodes
