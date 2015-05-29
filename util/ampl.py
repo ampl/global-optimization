@@ -29,6 +29,17 @@ class BinaryExpr:
   def __repr__(self):
     return '{} {} {}'.format(self.lhs, self.op, self.rhs)
 
+class IfExpr:
+  "If expression"
+  def __init__(self, condition, true_expr, false_expr):
+    self.condition = condition
+    self.true_expr = true_expr
+    self.false_expr = false_expr
+
+  def __repr__(self):
+    return 'if {} then {} else {}'.format(
+      self.condition, self.true_expr, self.false_expr)
+
 class SubscriptExpr:
   "Subscript expression"
   def __init__(self, name, subscript):
@@ -166,10 +177,18 @@ def parse(input, name):
   EXPONENTIATION   = 15 # ^ **
   
   precedence = {
-    '+': ADDITIVE,
-    '-': ADDITIVE,
-    '*': MULTIPLICATIVE,
-    '/': MULTIPLICATIVE
+    '<' : RELATIONAL,
+    '<=': RELATIONAL,
+    '=' : RELATIONAL,
+    '==': RELATIONAL,
+    '<>': RELATIONAL,
+    '!=': RELATIONAL,
+    '<=': RELATIONAL,
+    '>' : RELATIONAL,
+    '+' : ADDITIVE,
+    '-' : ADDITIVE,
+    '*' : MULTIPLICATIVE,
+    '/' : MULTIPLICATIVE
   }
   
   funcs = {
@@ -183,7 +202,7 @@ def parse(input, name):
   # Current position in input.
   pos = 0
   space_re = re.compile(r'[ \t\r]*(#.*)?')
-  token_re = re.compile(r'([a-zA-Z0-9_.]+|:=|.)?')
+  token_re = re.compile(r'([a-zA-Z0-9_.]+|:=|<=|==|<>|!=|>=|.)?')
   token = None # Next token
   lineno = 1
 
@@ -238,6 +257,15 @@ def parse(input, name):
       indexing = parse_indexing()
       arg = parse_expr(ITERATED + 1)
       return SumExpr(indexing, arg)
+    elif t == 'if':
+      condition = parse_expr()
+      consume_token('then')
+      true_expr = parse_expr(CONDITIONAL)
+      false_expr = None
+      if token == 'else':
+        consume_token('else')
+        false_expr = parse_expr(CONDITIONAL)
+      return IfExpr(condition, true_expr, false_expr)
     elif t in funcs:
       consume_token('(')
       arg = parse_expr()
