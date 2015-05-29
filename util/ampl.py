@@ -105,6 +105,12 @@ class Decl:
       result += ': ' + str(self.body)
     return result + ';'
 
+class DataStmt:
+  "Data statement"
+
+  def __repr__(self):
+    return 'data;'
+
 def parse(input, name):
   "Parse AMPL code (kind of)."
 
@@ -274,17 +280,21 @@ def parse(input, name):
     consume_token(';')
     return obj
 
-  decls = []
+  nodes = []
   consume_token()
   while True:
     if not token:
       break
     elif token == 'param' or token == 'var':
-      decls.append(parse_param_or_var())
+      nodes.append(parse_param_or_var())
     elif token == 'set':
-      decls.append(parse_set())
+      nodes.append(parse_set())
     elif token == 'minimize':
-      decls.append(parse_obj())
+      nodes.append(parse_obj())
+    elif token == 'data':
+      consume_token()
+      consume_token(';')
+      nodes.append(DataStmt())
     else:
       report_error('unknown token: ' + token)
-  return decls
+  return nodes
