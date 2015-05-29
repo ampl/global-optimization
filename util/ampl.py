@@ -263,7 +263,7 @@ def parse(input, name):
       consume_token(']')
       attrs.append(InAttr(lb, ub))
     consume_token(';')
-    return Decl(kind, name, attrs)
+    return Decl(kind, name, indexing, attrs)
 
   def parse_set():
     "Parse a set declaration."
