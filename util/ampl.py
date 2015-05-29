@@ -114,6 +114,36 @@ class IncludeStmt:
   def __repr__(self):
     return self.kind + ';'
 
+class DataStmt:
+  "Data statement"
+  
+  def __init__(self, kind, set_name, param_names, values):
+    self.kind = kind
+    self.set_name = set_name
+    self.param_names = param_names
+    self.values = values
+
+  def format_row(self, values, col_widths, first_sep=' '):
+    result = '{:>{}}'.format(values[0], col_widths[0])
+    for i in range(1, len(values)):
+      result += '{}{:>{}}'.format(first_sep, values[i], col_widths[i])
+      first_sep = ' '
+    return result
+
+  def __repr__(self):
+    result = self.kind + ':\n'
+    num_cols = len(self.param_names) + 1
+    col_widths = [len(self.set_name)] + [len(n) for n in self.param_names]
+    num_values = len(self.values)
+    for i in range(num_values):
+      col = i % num_cols
+      col_widths[col] = max(col_widths[col], len(self.values[i]))
+    result += self.format_row([self.set_name] + self.param_names, col_widths, ':')
+    result += ' :=\n'
+    for i in range(0, num_values, num_cols):
+      result += self.format_row(self.values[i:i + num_cols], col_widths) + '\n'
+    return result
+
 def parse(input, name):
   "Parse AMPL code (kind of)."
 
@@ -323,8 +353,7 @@ def parse(input, name):
         while token and token != ';':
           values.append(consume_token())
         consume_token();
-        #nodes.append(DataStmt())
-        #print(set_name, param_names, values)
+        nodes.append(DataStmt(kind, set_name, param_names, values))
       else:
         return False
   
