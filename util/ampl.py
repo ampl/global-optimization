@@ -79,9 +79,10 @@ class InAttr:
 class Decl:
   "AMPL declaration"
 
-  def __init__(self, kind, name, attrs=[]):
+  def __init__(self, kind, name, indexing=None, attrs=[]):
     self.kind = kind
     self.name = name
+    self.indexing = indexing
     self.body = None
     self.attrs = attrs
 
@@ -89,6 +90,8 @@ class Decl:
     result = self.kind + ' ' + self.name
     for attr in self.attrs:
       result += ' ' + str(attr)
+    if self.indexing:
+      result += str(self.indexing)
     if self.body:
       result += ': ' + str(self.body)
     return result + ';'
@@ -222,6 +225,7 @@ def parse(input, name):
     "Parse a parameter or a variable declaration."
     kind = consume_token() # consume keyword
     name = consume_token()
+    indexing = parse_indexing() if token == '{' else None
     attrs = []
     if token == '=':
       consume_token()
