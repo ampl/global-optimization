@@ -235,6 +235,13 @@ def parse(input, name):
     consume_token(';')
     return Decl(kind, name, attrs)
 
+  def parse_set():
+    "Parse a set declaration."
+    kind = consume_token() # consume 'set'
+    name = consume_token()
+    consume_token(';')
+    return Decl(kind, name)
+
   def parse_obj():
     "Parse an objective declaration."
     consume_token() # consume keyword
@@ -253,6 +260,8 @@ def parse(input, name):
       break
     elif token == 'param' or token == 'var':
       decls.append(parse_param_or_var())
+    elif token == 'set':
+      decls.append(parse_set())
     elif token == 'minimize':
       decls.append(parse_obj())
     else:
