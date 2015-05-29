@@ -105,8 +105,11 @@ def parse(input, name):
   
   precedence = {
     '+': ADDITIVE,
+    '-': ADDITIVE,
     '*': MULTIPLICATIVE
   }
+  
+  funcs = {'exp', 'sin', 'cos'}
 
   def get_bin_op_precedence(op):
     return precedence.get(op, UNKNOWN)
@@ -157,21 +160,26 @@ def parse(input, name):
     "Parse a unary numeric expression."
     t = consume_token()
     if t == '-':
-      return UnaryExpr('-', parse_expr())
-    if t == '(':
+      return UnaryExpr('-', parse_unary_expr())
+    elif t == '(':
       arg = parse_expr()
       consume_token(')')
-      return ParenExpr(arg)
-    if t == 'sum':
+      expr = ParenExpr(arg)
+    elif t == 'sum':
       indexing = parse_indexing()
       arg = parse_expr(ITERATED + 1)
       return SumExpr(indexing, arg)
-    if t == 'cos':
+    elif t in funcs:
       consume_token('(')
       arg = parse_expr()
       consume_token(')')
-      return CallExpr(t, arg)
-    return t
+      expr = CallExpr(t, arg)
+    else:
+      expr = t
+    if token == '^' or token == '**':
+      op = consume_token()
+      return BinaryExpr(op, expr, parse_unary_expr())
+    return expr
 
   def parse_rhs_of_binary_expr(lhs, min_prec):
     next_token_prec = get_bin_op_precedence(token)
