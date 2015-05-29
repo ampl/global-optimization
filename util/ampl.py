@@ -36,7 +36,10 @@ class Indexing:
     self.set_expr = set_expr
 
   def __repr__(self):
-    return '{{{} in {}}}'.format(self.index, self.set_expr)
+    result = ''
+    if self.index:
+      result += self.index + ' in '
+    return result + self.set_expr
 
 class SumExpr:
   "Sum expression"
