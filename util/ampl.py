@@ -307,9 +307,9 @@ def parse(input, name):
 
   def parse_obj():
     "Parse an objective declaration."
-    consume_token() # consume keyword
+    kind = consume_token() # consume keyword
     name = consume_token()
-    obj = Decl('minimize', name)
+    obj = Decl(kind, name)
     token = consume_token()
     if token == ':':
       obj.body = parse_expr()
@@ -325,7 +325,7 @@ def parse(input, name):
         nodes.append(parse_param_or_var())
       elif token == 'set':
         nodes.append(parse_set())
-      elif token == 'minimize':
+      elif token == 'minimize' or token == 'maximize':
         nodes.append(parse_obj())
       elif token == 'data':
         kind = consume_token()
