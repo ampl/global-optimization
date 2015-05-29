@@ -114,7 +114,8 @@ def parse(input, name):
   precedence = {
     '+': ADDITIVE,
     '-': ADDITIVE,
-    '*': MULTIPLICATIVE
+    '*': MULTIPLICATIVE,
+    '/': MULTIPLICATIVE
   }
   
   funcs = {'exp', 'sin', 'cos'}
