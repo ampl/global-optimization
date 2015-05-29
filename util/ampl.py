@@ -56,8 +56,16 @@ class CallExpr:
   def __repr__(self):
     return '{}({})'.format(self.func_name, self.arg)
 
+class InitAttr:
+  "Init attribute (= init)"
+  def __init__(self, init):
+    self.init = init
+
+  def __repr__(self):
+    return '= {}'.format(self.init)
+
 class InAttr:
-  "In attribute"
+  "In attribute (in [lb, ub])"
   def __init__(self, lb, ub):
     self.lb = lb
     self.ub = ub
@@ -203,11 +211,15 @@ def parse(input, name):
       return lhs
     return parse_rhs_of_binary_expr(lhs, min_prec)
 
-  def parse_var():
-    "Parse a variable declaration."
-    consume_token() # consume 'var'
+  def parse_param_or_var():
+    "Parse a parameter or a variable declaration."
+    kind = consume_token() # consume keyword
     name = consume_token()
     attrs = []
+    if token == '=':
+      consume_token()
+      init = parse_expr()
+      attrs.append(InitAttr(init))
     if token == 'in':
       consume_token()
       consume_token('[')
@@ -217,7 +229,7 @@ def parse(input, name):
       consume_token(']')
       attrs.append(InAttr(lb, ub))
     consume_token(';')
-    return Decl('var', name, attrs)
+    return Decl(kind, name, attrs)
 
   def parse_obj():
     "Parse an objective declaration."
@@ -235,8 +247,8 @@ def parse(input, name):
   while True:
     if not token:
       break
-    elif token == 'var':
-      decls.append(parse_var())
+    elif token == 'param' or token == 'var':
+      decls.append(parse_param_or_var())
     elif token == 'minimize':
       decls.append(parse_obj())
     else:
