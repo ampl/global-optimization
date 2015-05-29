@@ -1,12 +1,13 @@
 # Benchmark utilities
 
 from __future__ import print_function
-import hashlib, os, signal, tempfile, threading, time
+import glob, hashlib, os, signal, tempfile, threading, time
 from contextlib import contextmanager
 from datetime import datetime
 from subprocess import check_call, Popen, PIPE, STDOUT
 
 default_timeout = 1e9
+repo_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 def files(dirname, filenames):
   """
@@ -38,6 +39,15 @@ def sha1_file(filename):
       hasher.update(buf)
       buf = f.read(blocksize)
     return hasher.hexdigest()
+
+def get_models(*args):
+  """
+  Returns all models from the directories given as arguments.
+  """
+  models = []
+  for subdir in args:
+    models += glob.glob(os.path.join(repo_dir, subdir, '*.mod'))
+  return sorted([os.path.relpath(m, repo_dir) for m in models])
 
 def amplgsl_path():
   # Find amplgsl.
@@ -203,8 +213,6 @@ def solve(ampl_filename, **kwargs):
         os.remove(sol_filename)
       except OSError:
         pass
-
-repo_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 class Benchmark:
   "A solver benchmark"

@@ -19,6 +19,12 @@ def test_sha1_file():
     f.flush()
     assert(util.sha1_file(f.name) == '4f7a376f6110cb8aad4f02e319b52f7325d63a83')
 
+def test_get_models():
+  models = util.get_models('hansen')
+  assert len(models) == 20
+  assert models[0]  == 'hansen/hansen01.mod'
+  assert models[19] == 'hansen/hansen20.mod'
+
 @contextmanager
 def temp_ampl_file(content='var x >= 42; minimize o: x;'):
   with tempfile.NamedTemporaryFile() as ampl_file:

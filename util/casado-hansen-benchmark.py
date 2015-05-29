@@ -2,18 +2,13 @@
 
 from __future__ import print_function
 import glob, os
-from util import Benchmark, read_nl_header, repo_dir
+from util import Benchmark, get_models, read_nl_header, repo_dir
 
 # Timeout in seconds
 TIMEOUT = 60
 
 LGO_LOCAL_SEARCH_MODE = 0
 LGO_MULTISTART_MODE   = 3
-
-models = []
-for subdir in ['casado', 'hansen']:
-  models += glob.glob(os.path.join(repo_dir, subdir, '*.mod'))
-models = sorted([os.path.relpath(m, repo_dir) for m in models])
 
 class Config:
   def __init__(self, solver, solver_options={}, suffix=None, on_nl_file=None):
@@ -38,6 +33,7 @@ configs = [
 ]
 
 k = 2
+models = get_models('casado', 'hansen')
 for c in configs:
   log = 'casado-hansen-' + c.solver
   if c.suffix:
