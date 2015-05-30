@@ -59,7 +59,7 @@ class Indexing:
     result = ''
     if self.index:
       result += self.index + ' in '
-    return result + self.set_expr
+    return '{' + result + self.set_expr + '}'
 
 class SumExpr:
   "Sum expression"
@@ -68,7 +68,7 @@ class SumExpr:
     self.arg = arg
 
   def __repr__(self):
-    return 'sum {} {}'.format(self.indexing, self.arg)
+    return 'sum{} {}'.format(self.indexing, self.arg)
 
 class CallExpr:
   "Call expression"
