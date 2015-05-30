@@ -345,7 +345,7 @@ def parse(input, name):
     return obj
 
   def parse_model(nodes):
-    "Parse AMPL model returning true on EOF or false to switch to the data mode."
+    "Parse AMPL model returning True on EOF or False to switch to the data mode."
     while True:
       if not token:
         return True
@@ -364,7 +364,7 @@ def parse(input, name):
         report_error('unknown token: ' + token)
 
   def parse_data(nodes):
-    "Parse AMPL data returning true on EOF or false to switch to the model mode."
+    "Parse AMPL data returning True on EOF or False to switch to the model mode."
     while True:
       if not token:
         return True
