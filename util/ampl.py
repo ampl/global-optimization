@@ -2,6 +2,29 @@
 
 import re
 
+class Reference:
+  "Reference expression"
+  def __init__(self, name):
+    self.name = name
+
+  def __repr__(self):
+    return self.name
+  
+  def accept(self, visitor):
+    visitor.visit_reference(self)
+
+class SubscriptExpr:
+  "Subscript expression"
+  def __init__(self, name, subscript):
+    self.name = name
+    self.subscript = subscript
+
+  def __repr__(self):
+    return '{}[{}]'.format(self.name, self.subscript)
+
+  def accept(self, visitor):
+    visitor.visit_subscript(self)
+
 class ParenExpr:
   "Parenthesized expression"
   def __init__(self, arg):
@@ -9,6 +32,9 @@ class ParenExpr:
 
   def __repr__(self):
     return '({})'.format(str(self.arg))
+  
+  def accept(self, visitor):
+    visitor.visit_paren(self)
 
 class UnaryExpr:
   "Unary expression"
@@ -19,6 +45,9 @@ class UnaryExpr:
   def __repr__(self):
     return self.op + str(self.arg)
 
+  def accept(self, visitor):
+    visitor.visit_unary(self)
+
 class BinaryExpr:
   "Binary expression"
   def __init__(self, op, lhs, rhs):
@@ -28,6 +57,9 @@ class BinaryExpr:
 
   def __repr__(self):
     return '{} {} {}'.format(self.lhs, self.op, self.rhs)
+
+  def accept(self, visitor):
+    visitor.visit_binary(self)
 
 class IfExpr:
   "If expression"
@@ -40,14 +72,8 @@ class IfExpr:
     return 'if {} then {} else {}'.format(
       self.condition, self.true_expr, self.false_expr)
 
-class SubscriptExpr:
-  "Subscript expression"
-  def __init__(self, name, subscript):
-    self.name = name
-    self.subscript = subscript
-
-  def __repr__(self):
-    return '{}[{}]'.format(self.name, self.subscript)
+  def accept(self, visitor):
+    visitor.visit_if(self)
 
 class Indexing:
   "Indexing expression"
@@ -59,7 +85,10 @@ class Indexing:
     result = ''
     if self.index:
       result += self.index + ' in '
-    return '{' + result + self.set_expr + '}'
+    return '{' + result + str(self.set_expr) + '}'
+
+  def accept(self, visitor):
+    visitor.visit_indexing(self)
 
 class SumExpr:
   "Sum expression"
@@ -70,6 +99,9 @@ class SumExpr:
   def __repr__(self):
     return 'sum{} {}'.format(self.indexing, self.arg)
 
+  def accept(self, visitor):
+    visitor.visit_sum(self)
+
 class CallExpr:
   "Call expression"
   def __init__(self, func_name, arg):
@@ -78,6 +110,9 @@ class CallExpr:
 
   def __repr__(self):
     return '{}({})'.format(self.func_name, self.arg)
+
+  def accept(self, visitor):
+    visitor.visit_call(self)
 
 class InitAttr:
   "Init attribute (= init)"
@@ -207,6 +242,7 @@ def parse(input, name):
   lineno = 1
 
   def report_error(message):
+    print(token)
     raise Exception('{}:{}: {}'.format(name, lineno, message))
   
   def consume_token(expected_token=None):
@@ -230,7 +266,7 @@ def parse(input, name):
 
   def parse_set_expr():
     "Parse a set expression."
-    return consume_token()
+    return Reference(consume_token())
 
   def parse_indexing():
     "Parse an indexing expression."
@@ -272,12 +308,13 @@ def parse(input, name):
       consume_token(')')
       expr = CallExpr(t, arg)
     else:
-      expr = t
       if token == '[':
         consume_token()
         subscript = parse_expr()
         consume_token(']')
-        expr = SubscriptExpr(expr, subscript)
+        expr = SubscriptExpr(t, subscript)
+      else:
+        expr = Reference(t)
     if token == '^' or token == '**':
       op = consume_token()
       return BinaryExpr(op, expr, parse_unary_expr())
