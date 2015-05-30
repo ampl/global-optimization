@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-import glob, os
-from util import Benchmark, get_models, read_nl_header, repo_dir
+from util import Benchmark, get_models, read_nl_header
 
 # Timeout in seconds
 TIMEOUT = 60
