@@ -73,7 +73,7 @@ def print_ast(nodes):
   for node in nodes:
     print(node)
 
-models = util.get_models('casado')
+models = util.get_models('casado', 'hansen')
 for m1 in models:
   for m2 in models:
     print(m1, m2)
