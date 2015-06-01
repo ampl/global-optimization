@@ -13,7 +13,7 @@ import ampl, glob, os, util
 def find_obj(nodes):
   for i in range(len(nodes)):
     node = nodes[i]
-    if type(node) is ampl.Decl and node.kind == 'minimize':
+    if type(node) is ampl.Decl and (node.kind == 'minimize' or node.kind == 'maximize'):
       return i
 
 class RenamingVisitor:
@@ -75,5 +75,8 @@ for m1 in models:
     head1, obj1, tail1 = parse(m1, 1)
     head2, obj2, tail2 = parse(m2, 2)
     obj = ampl.Decl('minimize', 'f')
+    # Invert sign if objectives are of different kinds.
     obj.body = ampl.BinaryExpr('*', ampl.ParenExpr(obj1.body), ampl.ParenExpr(obj2.body))
+    if obj1.kind != obj2.kind:
+      obj.body = ampl.UnaryExpr('-', obj.body)
     print_ast(head1 + head2 + [obj] + tail1 + tail2)
