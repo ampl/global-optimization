@@ -335,12 +335,12 @@ class RenamingVisitor:
 def parse(model, suffix):
   suffix = str(suffix)
   with open(os.path.join(repo_dir, model), 'r') as f:
-    nodes = ampl.parse(f.read(), model)
+    nodes = ampl.parse(f.read(), model).nodes
     # Rename declarations.
     names = {}
     visitor = RenamingVisitor(names)
     for n in nodes:
-      if type(n) is ampl.Decl:
+      if isinstance(n, ampl.Decl):
         new_name = n.name + suffix
         names[n.name] = new_name
         n.name = new_name
@@ -367,4 +367,4 @@ def merge_models(model1, model2):
   obj.body = ampl.BinaryExpr('*', ampl.ParenExpr(obj1.body), ampl.ParenExpr(obj2.body))
   if obj1.kind != obj2.kind:
     obj.body = ampl.UnaryExpr('-', obj.body)
-  return head1 + head2 + [obj] + tail1 + tail2
+  return ampl.TranslationUnit(head1 + head2 + [obj] + tail1 + tail2)
