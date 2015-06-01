@@ -21,7 +21,7 @@ configs = [
   Config('couenne')
 ]
 
-index = util.load_index('casado', 'hansen').values()[:4]
+index = util.load_index('casado', 'hansen').values()
 models = []
 composite_index = {}
 for i in range(len(index)):
