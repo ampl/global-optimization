@@ -14,11 +14,11 @@ class Config:
     self.on_nl_file = on_nl_file
 
 configs = [
+  Config('lgo', {'opmode': lgo.LOCAL_SEARCH_MODE}, 'local-search'),
+  Config('lgo', {'opmode': lgo.MULTISTART_MODE}, 'multistart', lgo.make_maxfct_setter(2)),
   Config('minos'),
   Config('baron'),
-  Config('couenne'),
-  Config('lgo', {'opmode': lgo.LOCAL_SEARCH_MODE}, 'local-search'),
-  Config('lgo', {'opmode': lgo.MULTISTART_MODE}, 'multistart', lgo.make_maxfct_setter(2))
+  Config('couenne')
 ]
 
 index = util.load_index('casado', 'hansen').values()[:4]
