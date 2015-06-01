@@ -4,7 +4,7 @@ from __future__ import print_function
 import lgo, os, util, yaml
 
 # Timeout in seconds
-TIMEOUT = 1
+TIMEOUT = 60
 
 class Config:
   def __init__(self, solver, solver_options={}, suffix=None, on_nl_file=None):
