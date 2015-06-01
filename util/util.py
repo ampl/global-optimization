@@ -324,7 +324,7 @@ class RenamingVisitor:
   def visit_indexing(self, expr):
     expr.set_expr.accept(self)
 
-def parse(model, suffix):
+def prepare_for_merge(model, suffix):
   suffix = str(suffix)
   path = model['path']
   with open(os.path.join(repo_dir, path), 'r') as f:
@@ -344,10 +344,11 @@ def parse(model, suffix):
     # Add objective offset to make the optimal value nonnegative.
     obj = nodes[obj_index]
     sign = 1 if obj.kind == 'minimize' else -1
-    offset = math.ceil(abs(min(0.0, sign * model['best_obj'])))
+    best_obj = sign * model['best_obj']
+    offset = math.ceil(abs(min(0.0, best_obj)))
     if offset > 0:
       obj.body = ampl.BinaryExpr('+', ampl.ParenExpr(obj.body), offset)
-    return nodes[:obj_index], obj, nodes[obj_index + 1:]
+    return nodes[:obj_index], obj, nodes[obj_index + 1:], best_obj + offset
            
 
 def merge_models(model1, model2):
@@ -360,14 +361,14 @@ def merge_models(model1, model2):
   are combined into a single model
     minimize o: f1(x1) * f2(x2);
   """
-  head1, obj1, tail1 = parse(model1, 1)
-  head2, obj2, tail2 = parse(model2, 2)
+  head1, obj1, tail1, best_obj1 = prepare_for_merge(model1, 1)
+  head2, obj2, tail2, best_obj2 = prepare_for_merge(model2, 2)
   obj = ampl.Decl('minimize', 'f')
   # Invert sign if objectives are of different kinds.
   obj.body = ampl.BinaryExpr('*', ampl.ParenExpr(obj1.body), ampl.ParenExpr(obj2.body))
   if obj1.kind != obj2.kind:
     obj.body = ampl.UnaryExpr('-', obj.body)
-  return ampl.TranslationUnit(head1 + head2 + [obj] + tail1 + tail2)
+  return ampl.TranslationUnit(head1 + head2 + [obj] + tail1 + tail2), best_obj1 * best_obj2
 
 def load_index(*dirs):
   """

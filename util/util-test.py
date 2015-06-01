@@ -214,12 +214,13 @@ def test_benchmark_removes_backspace():
 
 def test_merge_models():
   index = util.load_index('casado')
-  tu = util.merge_models(index['casado01'], index['casado03'])
+  tu, best_obj = util.merge_models(index['casado01'], index['casado03'])
   assert str(tu) == \
 """var x1 in [0, 20];
 var x2 in [-10, 10];
 minimize f: ((exp(-3 * x1) - sin(x1) ^ 3) + 1.0) * ((x2 - x2 ^ 2) ^ 2 + (x2 - 1) ^ 2);
 """
+  assert best_obj == 0
 
 def test_load_index():
   index = util.load_index('cute')
