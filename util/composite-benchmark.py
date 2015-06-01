@@ -26,6 +26,7 @@ models = []
 composite_index = {}
 for i in range(len(index)):
   for j in range(len(index)):
+    if i > j: continue
     m1, m2 = index[i], index[j]
     print('Merging {} and {}'.format(m1['path'], m2['path']))
     name = '{:02}-{:02}'.format(i + 1, j + 1)
