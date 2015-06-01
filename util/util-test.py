@@ -219,7 +219,8 @@ def test_benchmark_removes_backspace():
     assert entry['output'] == 'a\n'
 
 def test_merge_models():
-  tu = util.merge_models('casado/casado01.mod', 'casado/casado02.mod')
+  index = util.load_index('casado')
+  tu = util.merge_models(index['casado01'], index['casado02'])
   assert str(tu) == \
 """var x1 in [0, 20];
 var x2 in [0.2, 7];
@@ -230,3 +231,4 @@ def test_load_index():
   index = util.load_index('cute')
   assert len(index) == 738
   assert index['cresc100']['best_obj'] == 1e-08
+  assert index['cresc100']['path'] == os.path.join('cute', 'cresc100.mod')
