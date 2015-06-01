@@ -1,7 +1,7 @@
 # Benchmark utilities
 
 from __future__ import print_function
-import ampl, glob, hashlib, os, signal, tempfile, threading, time, yaml
+import ampl, glob, hashlib, math, os, signal, tempfile, threading, time, yaml
 from collections import OrderedDict
 from contextlib import contextmanager
 from datetime import datetime
@@ -335,8 +335,9 @@ class RenamingVisitor:
 
 def parse(model, suffix):
   suffix = str(suffix)
-  with open(os.path.join(repo_dir, model), 'r') as f:
-    nodes = ampl.parse(f.read(), model).nodes
+  path = model['path']
+  with open(os.path.join(repo_dir, path), 'r') as f:
+    nodes = ampl.parse(f.read(), path).nodes
     # Rename declarations.
     names = {}
     visitor = RenamingVisitor(names)
@@ -349,7 +350,14 @@ def parse(model, suffix):
           n.body.accept(visitor)
     # Find the first objective and partition the nodes around it.
     obj_index = find_obj(nodes)
-    return nodes[:obj_index], nodes[obj_index], nodes[obj_index + 1:]
+    # Add objective offset to make the optimal value nonnegative.
+    obj = nodes[obj_index]
+    sign = 1 if obj.kind == 'minimize' else -1
+    offset = math.ceil(abs(min(0.0, sign * model['best_obj'])))
+    if offset > 0:
+      obj.body = ampl.BinaryExpr('+', ampl.ParenExpr(obj.body), offset)
+    return nodes[:obj_index], obj, nodes[obj_index + 1:]
+           
 
 def merge_models(model1, model2):
   """
@@ -361,8 +369,8 @@ def merge_models(model1, model2):
   are combined into a single model
     minimize o: f1(x1) * f2(x2);
   """
-  head1, obj1, tail1 = parse(model1['path'], 1)
-  head2, obj2, tail2 = parse(model2['path'], 2)
+  head1, obj1, tail1 = parse(model1, 1)
+  head2, obj2, tail2 = parse(model2, 2)
   obj = ampl.Decl('minimize', 'f')
   # Invert sign if objectives are of different kinds.
   obj.body = ampl.BinaryExpr('*', ampl.ParenExpr(obj1.body), ampl.ParenExpr(obj2.body))
