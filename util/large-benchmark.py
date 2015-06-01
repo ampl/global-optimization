@@ -1,45 +1,33 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-import glob, lgo, os
-from util import Benchmark, read_nl_header, repo_dir
+import lgo, util
 
 # Timeout in seconds
 TIMEOUT = 300
 
-models = []
-for subdir in ['cute', 'jdp', 'nlmodels']:
-  models += glob.glob(os.path.join(repo_dir, subdir, '*.mod'))
-models = sorted([os.path.relpath(m, repo_dir) for m in models])
+class Config:
+  def __init__(self, solver, solver_options={}, suffix=None, on_nl_file=None):
+    self.solver = solver
+    self.solver_options = solver_options
+    self.suffix = suffix
+    self.on_nl_file = on_nl_file
 
-with Benchmark(log='large-knitro.yaml', timeout=TIMEOUT,
-               solver='knitro', solver_options={'feastol': 1e-8}) as b:
-  for model in models:
-    print(model)
-    b.run(model)
+configs = [
+  Config('minos'),
+  Config('baron'),
+  Config('couenne'),
+  Config('lgo', {'opmode': lgo.LOCAL_SEARCH_MODE}, 'local-search'),
+  Config('lgo', {'opmode': lgo.MULTISTART_MODE}, 'multistart', lgo.make_maxfct_setter(2))
+]
 
-with Benchmark(log='large-baron.yaml', timeout=TIMEOUT, solver='baron') as b:
-  for model in models:
-    print(model)
-    b.run(model)
-
-with Benchmark(log='large-lgo-local-search.yaml', timeout=TIMEOUT,
-               solver='lgo', solver_options={'opmode': lgo.LOCAL_SEARCH_MODE}) as b:
-  for model in models:
-    print(model)
-    b.run(model)
-
-def update_options(nl_file):
-  header = read_nl_header(nl_file.name)
-  maxfct = k * 50 * (header.num_vars + header.num_cons + 2) ** 2
-  b.solver_options['g_maxfct'] = maxfct
-  b.solver_options['l_maxfct'] = maxfct
-  b.solver_options['maxnosuc'] = maxfct
-
-k = 2
-with Benchmark(log='large-lgo-multistart.yaml', timeout=TIMEOUT,
-               solver='lgo', solver_options={'opmode': lgo.MULTISTART_MODE},
-               on_nl_file=update_options) as b:
-  for model in models:
-    print(model)
-    b.run(model)
+models = util.load_index('cute', 'jdp', 'nlmodels').values()
+for c in configs:
+  log = 'large-' + c.solver
+  if c.suffix:
+    log += '-' + c.suffix
+  with util.Benchmark(log=log + '.yaml', timeout=TIMEOUT, solver=c.solver,
+                      solver_options=c.solver_options, on_nl_file=c.on_nl_file) as b:
+    for model in models:
+      print(model['path'])
+      b.run(model['path'])

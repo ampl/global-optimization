@@ -72,17 +72,9 @@ with Benchmark(log='small-lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
     print(model)
     b.run(model)
 
-def update_options(nl_file):
-  header = read_nl_header(nl_file.name)
-  maxfct = k * 50 * (header.num_vars + header.num_cons + 2) ** 2
-  b.solver_options['g_maxfct'] = maxfct
-  b.solver_options['l_maxfct'] = maxfct
-  b.solver_options['maxnosuc'] = maxfct
-
 # Run benchmarks with multistart search effort set to 2.
-for k in [2]:
-  with Benchmark(log='small-lgo-multistart-k{}.yaml'.format(k), solver='lgo', timeout=TIMEOUT,
-                 solver_options={'opmode': lgo.MULTISTART_MODE}, on_nl_file=update_options) as b:
-    for model in models:
-      print(model)
-      b.run(model)
+with Benchmark(log='small-lgo-multistart-k{}.yaml'.format(k), solver='lgo', timeout=TIMEOUT,
+               solver_options={'opmode': lgo.MULTISTART_MODE}, on_nl_file=lgo.make_maxfct_setter(2)) as b:
+  for model in models:
+    print(model)
+    b.run(model)

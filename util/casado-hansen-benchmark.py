@@ -13,22 +13,14 @@ class Config:
     self.suffix = suffix
     self.on_nl_file = on_nl_file
 
-def update_lgo_options(nl_file):
-  header = util.read_nl_header(nl_file.name)
-  maxfct = k * 50 * (header.num_vars + header.num_cons + 2) ** 2
-  b.solver_options['g_maxfct'] = maxfct
-  b.solver_options['l_maxfct'] = maxfct
-  b.solver_options['maxnosuc'] = maxfct
-
 configs = [
   Config('minos'),
   Config('baron'),
   Config('couenne'),
   Config('lgo', {'opmode': lgo.LOCAL_SEARCH_MODE}, 'local-search'),
-  Config('lgo', {'opmode': lgo.MULTISTART_MODE}, 'multistart', update_lgo_options)
+  Config('lgo', {'opmode': lgo.MULTISTART_MODE}, 'multistart', lgo.make_maxfct_setter(2))
 ]
 
-k = 2
 models = util.load_index('casado', 'hansen').values()
 for c in configs:
   log = 'casado-hansen-' + c.solver
