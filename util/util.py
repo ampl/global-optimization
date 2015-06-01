@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 import ampl, glob, hashlib, os, signal, tempfile, threading, time, yaml
+from collections import OrderedDict
 from contextlib import contextmanager
 from datetime import datetime
 from subprocess import check_call, Popen, PIPE, STDOUT
@@ -375,9 +376,13 @@ def load_index(*args):
   Example:
     index = load_index('casado', 'hansen')
   """
-  index = {}
+  index = OrderedDict()
   for dirname in args:
-    index.update(yaml.load(open(os.path.join(repo_dir, dirname, 'index.yaml'))))
+    with open(os.path.join(repo_dir, dirname, 'index.yaml')) as f:
+      items = sorted(yaml.load(f).items())
+      for k, v in items:
+        v['path'] = os.path.join(dirname, k + '.mod')
+      index.update(items)
   for k, v in index.iteritems():
     # Convert values such as 1e-8 to float since YAML treats them as strings.
     v['best_obj'] = float(v['best_obj'])
