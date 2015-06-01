@@ -10,22 +10,10 @@ Options:
 """
 
 from __future__ import print_function
-import docopt, os, re, sys, yaml
+import docopt, os, re, sys, util, yaml
 import pandas as pd
-from util import AMPL
 
-repo_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-
-def load_index(*args):
-  index = {}
-  for dirname in args:
-    index.update(yaml.load(open(os.path.join(repo_dir, dirname, 'index.yaml'))))
-  for k, v in index.iteritems():
-    # Convert values such as 1e-8 to float since YAML doesn't do it.
-    v['best_obj'] = float(v['best_obj'])
-  return index
-
-index = load_index('casado', 'cute', 'jdp', 'hansen', 'nlmodels')
+index = util.load_index('casado', 'cute', 'jdp', 'hansen', 'nlmodels')
 
 def model_name(result):
   "Extracts the model name from a benchmark result."
@@ -95,9 +83,9 @@ def read_log(filename, excludes):
       result['solve_message'] = ''
     # Convert values such as 1e-8 to float since YAML doesn't do it.
     result['obj'] = float(result['obj'])
-    ampl_filename = os.path.join(repo_dir, result['model'])
+    ampl_filename = os.path.join(util.repo_dir, result['model'])
     dirname, filename = os.path.split(ampl_filename)
-    with AMPL(dirname) as ampl:
+    with util.AMPL(dirname) as ampl:
       ampl.eval('model {};'.format(ampl_filename))
       result['num_vars'] = ampl.eval_expr('_snvars')
       result['num_cons'] = ampl.eval_expr('_sncons')
