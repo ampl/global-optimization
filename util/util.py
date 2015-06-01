@@ -169,7 +169,7 @@ def solve(ampl_filename, **kwargs):
   with temp_nl_file(ampl_filename) as nl_file:
     on_nl_file = kwargs.get('on_nl_file')
     if on_nl_file:
-      on_nl_file(nl_file)
+      on_nl_file(nl_file, kwargs)
     sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
     # Prepare the solver command.
     command = [kwargs.get('solver', 'minos'), nl_file.name, '-AMPL']

@@ -124,7 +124,7 @@ def test_solve_interrupt():
 def test_solve_on_nl_file():
   nl_filename = []
   solver_options = {'foo': 0}
-  def on_nl_file(nl_file):
+  def on_nl_file(nl_file, args):
     nl_filename.append(nl_file.name)
     assert os.path.exists(nl_file.name)
     solver_options['foo'] = 42
