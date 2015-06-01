@@ -188,7 +188,7 @@ class DataStmt:
     result += ' :=\n'
     for i in range(0, num_values, num_cols):
       result += self.format_row(self.values[i:i + num_cols], col_widths) + '\n'
-    return result
+    return result + ';'
 
 class TranslationUnit:
   def __init__(self, nodes=None):
