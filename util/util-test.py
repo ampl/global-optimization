@@ -225,3 +225,8 @@ def test_merge_models():
 var x2 in [0.2, 7];
 minimize f: (exp(-3 * x1) - sin(x1) ^ 3) * (sum{k in 1..5} -cos((k + 1) * x2) + 4);
 """
+
+def test_load_index():
+  index = util.load_index('cute')
+  assert len(index) == 738
+  assert index['cresc100']['best_obj'] == 1e-08
