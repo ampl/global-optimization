@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+import lgo
 from util import files, Benchmark, read_nl_header
 
 models = files('nlmodels', '''
@@ -59,9 +60,6 @@ models += files('jdp', '''
 # Timeout in seconds
 TIMEOUT = 300
 
-LGO_LOCAL_SEARCH_MODE = 0
-LGO_MULTISTART_MODE   = 3
-
 with Benchmark(log='small-knitro.yaml', solver='knitro', timeout=TIMEOUT,
                solver_options={'feastol': 1e-8}) as b:
   for model in models:
@@ -69,7 +67,7 @@ with Benchmark(log='small-knitro.yaml', solver='knitro', timeout=TIMEOUT,
     b.run(model)
 
 with Benchmark(log='small-lgo-local-search.yaml', solver='lgo', timeout=TIMEOUT,
-                solver_options={'opmode': LGO_LOCAL_SEARCH_MODE}) as b:
+                solver_options={'opmode': lgo.LOCAL_SEARCH_MODE}) as b:
   for model in models:
     print(model)
     b.run(model)
@@ -84,7 +82,7 @@ def update_options(nl_file):
 # Run benchmarks with multistart search effort set to 2.
 for k in [2]:
   with Benchmark(log='small-lgo-multistart-k{}.yaml'.format(k), solver='lgo', timeout=TIMEOUT,
-                 solver_options={'opmode': LGO_MULTISTART_MODE}, on_nl_file=update_options) as b:
+                 solver_options={'opmode': lgo.MULTISTART_MODE}, on_nl_file=update_options) as b:
     for model in models:
       print(model)
       b.run(model)

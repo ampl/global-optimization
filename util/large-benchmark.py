@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-import glob, os
+import glob, lgo, os
 from util import Benchmark, read_nl_header, repo_dir
 
 # Timeout in seconds
 TIMEOUT = 300
-
-LGO_LOCAL_SEARCH_MODE = 0
-LGO_MULTISTART_MODE   = 3
 
 models = []
 for subdir in ['cute', 'jdp', 'nlmodels']:
@@ -27,7 +24,7 @@ with Benchmark(log='large-baron.yaml', timeout=TIMEOUT, solver='baron') as b:
     b.run(model)
 
 with Benchmark(log='large-lgo-local-search.yaml', timeout=TIMEOUT,
-               solver='lgo', solver_options={'opmode': LGO_LOCAL_SEARCH_MODE}) as b:
+               solver='lgo', solver_options={'opmode': lgo.LOCAL_SEARCH_MODE}) as b:
   for model in models:
     print(model)
     b.run(model)
@@ -41,7 +38,7 @@ def update_options(nl_file):
 
 k = 2
 with Benchmark(log='large-lgo-multistart.yaml', timeout=TIMEOUT,
-               solver='lgo', solver_options={'opmode': LGO_MULTISTART_MODE},
+               solver='lgo', solver_options={'opmode': lgo.MULTISTART_MODE},
                on_nl_file=update_options) as b:
   for model in models:
     print(model)

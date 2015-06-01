@@ -1,13 +1,10 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-import util
+import lgo, util
 
 # Timeout in seconds
 TIMEOUT = 60
-
-LGO_LOCAL_SEARCH_MODE = 0
-LGO_MULTISTART_MODE   = 3
 
 class Config:
   def __init__(self, solver, solver_options={}, suffix=None, on_nl_file=None):
@@ -27,8 +24,8 @@ configs = [
   Config('minos'),
   Config('baron'),
   Config('couenne'),
-  Config('lgo', {'opmode': LGO_LOCAL_SEARCH_MODE}, 'local-search'),
-  Config('lgo', {'opmode': LGO_MULTISTART_MODE}, 'multistart', update_lgo_options)
+  Config('lgo', {'opmode': lgo.LOCAL_SEARCH_MODE}, 'local-search'),
+  Config('lgo', {'opmode': lgo.MULTISTART_MODE}, 'multistart', update_lgo_options)
 ]
 
 k = 2
