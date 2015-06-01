@@ -283,11 +283,13 @@ def parse(input, name):
     "Parse an indexing expression."
     consume_token('{')
     index = None
-    expr = consume_token()
+    token = consume_token()
     if ns.token == 'in':
       consume_token()
-      index = expr
+      index = token
       expr = parse_set_expr()
+    else:
+      expr = Reference(token)
     consume_token('}')
     return Indexing(index, expr)
 
