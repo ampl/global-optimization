@@ -217,3 +217,11 @@ def test_benchmark_removes_backspace():
     log = yaml.load(log_file.read())
     entry = log[0]
     assert entry['output'] == 'a\n'
+
+def test_merge_models():
+  tu = util.merge_models('casado/casado01.mod', 'casado/casado02.mod')
+  assert str(tu) == \
+"""var x1 in [0, 20];
+var x2 in [0.2, 7];
+minimize f: (exp(-3 * x1) - sin(x1) ^ 3) * (sum{k in 1..5} -cos((k + 1) * x2) + 4);
+"""
