@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-from util import Benchmark, get_models, read_nl_header
+import util
 
 # Timeout in seconds
 TIMEOUT = 60
@@ -17,7 +17,7 @@ class Config:
     self.on_nl_file = on_nl_file
 
 def update_lgo_options(nl_file):
-  header = read_nl_header(nl_file.name)
+  header = util.read_nl_header(nl_file.name)
   maxfct = k * 50 * (header.num_vars + header.num_cons + 2) ** 2
   b.solver_options['g_maxfct'] = maxfct
   b.solver_options['l_maxfct'] = maxfct
@@ -32,13 +32,13 @@ configs = [
 ]
 
 k = 2
-models = get_models('casado', 'hansen')
+models = util.load_index('casado', 'hansen').values()
 for c in configs:
   log = 'casado-hansen-' + c.solver
   if c.suffix:
     log += '-' + c.suffix
-  with Benchmark(log=log + '.yaml', timeout=TIMEOUT,
-               solver=c.solver, solver_options=c.solver_options, on_nl_file=c.on_nl_file) as b:
+  with util.Benchmark(log=log + '.yaml', timeout=TIMEOUT, solver=c.solver,
+                      solver_options=c.solver_options, on_nl_file=c.on_nl_file) as b:
     for model in models:
-      print(model)
-      b.run(model)
+      print(model['path'])
+      b.run(model['path'])

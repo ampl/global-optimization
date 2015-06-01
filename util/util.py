@@ -41,15 +41,6 @@ def sha1_file(filename):
       buf = f.read(blocksize)
     return hasher.hexdigest()
 
-def get_models(*args):
-  """
-  Returns all models from the directories given as arguments.
-  """
-  models = []
-  for subdir in args:
-    models += glob.glob(os.path.join(repo_dir, subdir, '*.mod'))
-  return sorted([os.path.relpath(m, repo_dir) for m in models])
-
 def amplgsl_path():
   # Find amplgsl.
   for path in os.environ['PATH'].split(os.pathsep):
