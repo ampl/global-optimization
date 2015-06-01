@@ -36,6 +36,11 @@ class RenamingVisitor:
     expr.lhs.accept(self)
     expr.rhs.accept(self)
 
+  def visit_if(self, expr):
+    expr.condition.accept(self)
+    expr.true_expr.accept(self)
+    expr.false_expr.accept(self)
+
   def visit_call(self, expr):
     expr.arg.accept(self)
 
