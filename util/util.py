@@ -337,8 +337,13 @@ def prepare_for_merge(model, suffix):
         new_name = n.name + suffix
         names[n.name] = new_name
         n.name = new_name
+        if n.indexing:
+          n.indexing.accept(visitor)
         if n.body:
           n.body.accept(visitor)
+      if isinstance(n, ampl.DataStmt):
+        n.set_name = n.set_name + suffix
+        n.param_names = [name + suffix for name in n.param_names]
     # Find the first objective and partition the nodes around it.
     obj_index = find_obj(nodes)
     # Add objective offset to make the optimal value nonnegative.
