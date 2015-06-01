@@ -361,8 +361,8 @@ def merge_models(model1, model2):
   are combined into a single model
     minimize o: f1(x1) * f2(x2);
   """
-  head1, obj1, tail1 = parse(model1, 1)
-  head2, obj2, tail2 = parse(model2, 2)
+  head1, obj1, tail1 = parse(model1['path'], 1)
+  head2, obj2, tail2 = parse(model2['path'], 2)
   obj = ampl.Decl('minimize', 'f')
   # Invert sign if objectives are of different kinds.
   obj.body = ampl.BinaryExpr('*', ampl.ParenExpr(obj1.body), ampl.ParenExpr(obj2.body))
