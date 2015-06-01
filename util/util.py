@@ -369,14 +369,14 @@ def merge_models(model1, model2):
     obj.body = ampl.UnaryExpr('-', obj.body)
   return ampl.TranslationUnit(head1 + head2 + [obj] + tail1 + tail2)
 
-def load_index(*args):
+def load_index(*dirs):
   """
   Load problem index.
   Example:
     index = load_index('casado', 'hansen')
   """
   index = OrderedDict()
-  for dirname in args:
+  for dirname in dirs:
     with open(os.path.join(repo_dir, dirname, 'index.yaml')) as f:
       items = sorted(yaml.load(f).items())
       for k, v in items:
