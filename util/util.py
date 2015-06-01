@@ -1,7 +1,7 @@
 # Benchmark utilities
 
 from __future__ import print_function
-import ampl, glob, hashlib, os, signal, tempfile, threading, time
+import ampl, glob, hashlib, os, signal, tempfile, threading, time, yaml
 from contextlib import contextmanager
 from datetime import datetime
 from subprocess import check_call, Popen, PIPE, STDOUT
@@ -368,3 +368,17 @@ def merge_models(model1, model2):
   if obj1.kind != obj2.kind:
     obj.body = ampl.UnaryExpr('-', obj.body)
   return ampl.TranslationUnit(head1 + head2 + [obj] + tail1 + tail2)
+
+def load_index(*args):
+  """
+  Load problem index.
+  Example:
+    index = load_index('casado', 'hansen')
+  """
+  index = {}
+  for dirname in args:
+    index.update(yaml.load(open(os.path.join(repo_dir, dirname, 'index.yaml'))))
+  for k, v in index.iteritems():
+    # Convert values such as 1e-8 to float since YAML treats them as strings.
+    v['best_obj'] = float(v['best_obj'])
+  return index
