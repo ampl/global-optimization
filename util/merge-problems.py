@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # Merge multiple AMPL problems into a single one.
 # For example, two problems
 #   minimize o: f1(x);
@@ -13,7 +13,7 @@ import ampl, glob, os, util
 def find_obj(nodes):
   for i in range(len(nodes)):
     node = nodes[i]
-    if type(node) is ampl.Decl and (node.kind == 'minimize' or node.kind == 'maximize'):
+    if isinstance(node, ampl.Decl) and (node.kind == 'minimize' or node.kind == 'maximize'):
       return i
 
 class RenamingVisitor:

@@ -235,33 +235,34 @@ def parse(input, name):
     return precedence.get(op, UNKNOWN)
 
   # Current position in input.
-  pos = 0
+  class Namespace: pass
+  ns = Namespace()
+  ns.pos = 0
   space_re = re.compile(r'[ \t\r]*(#.*)?')
   token_re = re.compile(r'([a-zA-Z0-9_.]+|:=|<=|==|<>|!=|>=|.)?')
-  token = None # Next token
-  lineno = 1
+  ns.token = None # Next token
+  ns.lineno = 1
 
   def report_error(message):
     print(token)
-    raise Exception('{}:{}: {}'.format(name, lineno, message))
+    raise Exception('{}:{}: {}'.format(name, ns.lineno, message))
   
   def consume_token(expected_token=None):
     "Consume token."
-    nonlocal pos, token, lineno
-    if expected_token and token != expected_token:
+    if expected_token and ns.token != expected_token:
       report_error("expected '{}'".format(expected_token))
-    old_token = token
+    old_token = ns.token
     while True:
-      m = space_re.match(input, pos)
-      pos = m.end(0)
-      if pos < len(input) and input[pos] == '\n':
-        lineno += 1
-        pos += 1
+      m = space_re.match(input, ns.pos)
+      ns.pos = m.end(0)
+      if ns.pos < len(input) and input[ns.pos] == '\n':
+        ns.lineno += 1
+        ns.pos += 1
       else:
         break
-    m = token_re.match(input, pos)
-    pos = m.end(0)
-    token = m.group(0)
+    m = token_re.match(input, ns.pos)
+    ns.pos = m.end(0)
+    ns.token = m.group(0)
     return old_token
 
   def parse_set_expr():
@@ -273,7 +274,7 @@ def parse(input, name):
     consume_token('{')
     index = None
     expr = consume_token()
-    if token == 'in':
+    if ns.token == 'in':
       consume_token()
       index = expr
       expr = parse_set_expr()
@@ -298,7 +299,7 @@ def parse(input, name):
       consume_token('then')
       true_expr = parse_expr(CONDITIONAL)
       false_expr = None
-      if token == 'else':
+      if ns.token == 'else':
         consume_token('else')
         false_expr = parse_expr(CONDITIONAL)
       return IfExpr(condition, true_expr, false_expr)
@@ -308,30 +309,30 @@ def parse(input, name):
       consume_token(')')
       expr = CallExpr(t, arg)
     else:
-      if token == '[':
+      if ns.token == '[':
         consume_token()
         subscript = parse_expr()
         consume_token(']')
         expr = SubscriptExpr(t, subscript)
       else:
         expr = Reference(t)
-    if token == '^' or token == '**':
+    if ns.token == '^' or ns.token == '**':
       op = consume_token()
       return BinaryExpr(op, expr, parse_unary_expr())
     return expr
 
   def parse_rhs_of_binary_expr(lhs, min_prec):
-    next_token_prec = get_bin_op_precedence(token)
+    next_token_prec = get_bin_op_precedence(ns.token)
     while True:
       if next_token_prec < min_prec:
         return lhs
       op = consume_token()
       rhs = parse_unary_expr()
       prec = next_token_prec
-      next_token_prec = get_bin_op_precedence(token)
+      next_token_prec = get_bin_op_precedence(ns.token)
       if prec < next_token_prec:
         rhs = parse_rhs_of_binary_expr(rhs, prec + 1)
-        next_token_prec = get_bin_op_precedence(token)
+        next_token_prec = get_bin_op_precedence(ns.token)
       assert prec >= next_token_prec
       lhs = BinaryExpr(op, lhs, rhs);
 
@@ -346,13 +347,13 @@ def parse(input, name):
     "Parse a parameter or a variable declaration."
     kind = consume_token() # consume keyword
     name = consume_token()
-    indexing = parse_indexing() if token == '{' else None
+    indexing = parse_indexing() if ns.token == '{' else None
     attrs = []
-    if token == '=':
+    if ns.token == '=':
       consume_token()
       init = parse_expr()
       attrs.append(InitAttr(init))
-    if token == 'in':
+    if ns.token == 'in':
       consume_token()
       consume_token('[')
       lb = parse_expr()
@@ -384,38 +385,38 @@ def parse(input, name):
   def parse_model(nodes):
     "Parse AMPL model returning True on EOF or False to switch to the data mode."
     while True:
-      if not token:
+      if not ns.token:
         return True
-      if token == 'param' or token == 'var':
+      if ns.token == 'param' or ns.token == 'var':
         nodes.append(parse_param_or_var())
-      elif token == 'set':
+      elif ns.token == 'set':
         nodes.append(parse_set())
-      elif token == 'minimize' or token == 'maximize':
+      elif ns.token == 'minimize' or ns.token == 'maximize':
         nodes.append(parse_obj())
-      elif token == 'data':
+      elif ns.token == 'data':
         kind = consume_token()
         consume_token(';')
         nodes.append(IncludeStmt(kind))
         return False
       else:
-        report_error('unknown token: ' + token)
+        report_error('unknown token: ' + ns.token)
 
   def parse_data(nodes):
     "Parse AMPL data returning True on EOF or False to switch to the model mode."
     while True:
-      if not token:
+      if not ns.token:
         return True
-      if token == 'param' or token == 'var':
+      if ns.token == 'param' or ns.token == 'var':
         kind = consume_token()
         consume_token(':')
         set_name = consume_token()
         consume_token(':')
         param_names = []
-        while token and token != ':=':
+        while ns.token and ns.token != ':=':
           param_names.append(consume_token())
         consume_token()
         values = []
-        while token and token != ';':
+        while ns.token and ns.token != ';':
           values.append(consume_token())
         consume_token();
         nodes.append(DataStmt(kind, set_name, param_names, values))
