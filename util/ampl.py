@@ -190,6 +190,16 @@ class DataStmt:
       result += self.format_row(self.values[i:i + num_cols], col_widths) + '\n'
     return result
 
+class TranslationUnit:
+  def __init__(self, nodes=None):
+    self.nodes = nodes if nodes else []
+
+  def __repr__(self):
+    result = ''
+    for n in self.nodes:
+      result += str(n) + '\n'
+    return result
+
 def parse(input, name):
   "Parse AMPL code (kind of)."
 
@@ -382,26 +392,26 @@ def parse(input, name):
     consume_token(';')
     return obj
 
-  def parse_model(nodes):
+  def parse_model(tu):
     "Parse AMPL model returning True on EOF or False to switch to the data mode."
     while True:
       if not ns.token:
         return True
       if ns.token == 'param' or ns.token == 'var':
-        nodes.append(parse_param_or_var())
+        tu.nodes.append(parse_param_or_var())
       elif ns.token == 'set':
-        nodes.append(parse_set())
+        tu.nodes.append(parse_set())
       elif ns.token == 'minimize' or ns.token == 'maximize':
-        nodes.append(parse_obj())
+        tu.nodes.append(parse_obj())
       elif ns.token == 'data':
         kind = consume_token()
         consume_token(';')
-        nodes.append(IncludeStmt(kind))
+        tu.nodes.append(IncludeStmt(kind))
         return False
       else:
         report_error('unknown token: ' + ns.token)
 
-  def parse_data(nodes):
+  def parse_data(tu):
     "Parse AMPL data returning True on EOF or False to switch to the model mode."
     while True:
       if not ns.token:
@@ -419,12 +429,12 @@ def parse(input, name):
         while ns.token and ns.token != ';':
           values.append(consume_token())
         consume_token();
-        nodes.append(DataStmt(kind, set_name, param_names, values))
+        tu.nodes.append(DataStmt(kind, set_name, param_names, values))
       else:
         return False
   
   consume_token()
-  nodes = []
+  tu = TranslationUnit()
   while True:
-    if parse_model(nodes) or parse_data(nodes):
-      return nodes
+    if parse_model(tu) or parse_data(tu):
+      return tu
