@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-import couenne, lgo, os, util, yaml
+import ampl, couenne, lgo, os, util, yaml
 
 # Timeout in seconds
 TIMEOUT = 60
@@ -34,7 +34,7 @@ for i in range(len(index)):
     models.append(os.path.relpath(filename, util.repo_dir))
     merged_model, best_obj = util.merge_models(m1, m2)
     with open(filename, 'w') as f:
-      f.write(str(merged_model))
+      ampl.pretty_print(f, merged_model)
     composite_index[name] = {'best_obj': best_obj}
 
 with open('index.yaml', 'w') as f:

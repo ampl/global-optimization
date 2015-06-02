@@ -1,7 +1,8 @@
 # The util module tests
 
-import os, tempfile, time, util, yaml
+import ampl, os, tempfile, time, util, yaml
 from contextlib import contextmanager
+from cStringIO import StringIO
 from subprocess import check_call, check_output, PIPE
 
 solver = 'couenne'
@@ -214,8 +215,10 @@ def test_benchmark_removes_backspace():
 
 def test_merge_models():
   index = util.load_index('casado')
-  tu, best_obj = util.merge_models(index['casado01'], index['casado03'])
-  assert str(tu) == \
+  stmt, best_obj = util.merge_models(index['casado01'], index['casado03'])
+  output = StringIO()
+  ampl.pretty_print(output, stmt)
+  assert output.getvalue() == \
 """var x1 in [0, 20];
 var x2 in [-10, 10];
 minimize f: ((exp(-3 * x1) - sin(x1) ^ 3) + 1.0) * ((x2 - x2 ^ 2) ^ 2 + (x2 - 1) ^ 2);

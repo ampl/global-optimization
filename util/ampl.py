@@ -3,13 +3,10 @@
 import re
 
 class Reference:
-  "Reference expression"
+  "Reference"
   def __init__(self, name):
     self.name = name
 
-  def __repr__(self):
-    return self.name
-  
   def accept(self, visitor):
     visitor.visit_reference(self)
 
@@ -19,9 +16,6 @@ class SubscriptExpr:
     self.name = name
     self.subscript = subscript
 
-  def __repr__(self):
-    return '{}[{}]'.format(self.name, self.subscript)
-
   def accept(self, visitor):
     visitor.visit_subscript(self)
 
@@ -30,9 +24,6 @@ class ParenExpr:
   def __init__(self, arg):
     self.arg = arg
 
-  def __repr__(self):
-    return '({})'.format(str(self.arg))
-  
   def accept(self, visitor):
     visitor.visit_paren(self)
 
@@ -41,9 +32,6 @@ class UnaryExpr:
   def __init__(self, op, arg):
     self.op = op
     self.arg = arg
-
-  def __repr__(self):
-    return self.op + str(self.arg)
 
   def accept(self, visitor):
     visitor.visit_unary(self)
@@ -55,40 +43,27 @@ class BinaryExpr:
     self.lhs = lhs
     self.rhs = rhs
 
-  def __repr__(self):
-    return '{} {} {}'.format(self.lhs, self.op, self.rhs)
-
   def accept(self, visitor):
     visitor.visit_binary(self)
 
 class IfExpr:
   "If expression"
-  def __init__(self, condition, true_expr, false_expr):
+  def __init__(self, condition, then_expr, else_expr):
     self.condition = condition
-    self.true_expr = true_expr
-    self.false_expr = false_expr
-
-  def __repr__(self):
-    return 'if {} then {} else {}'.format(
-      self.condition, self.true_expr, self.false_expr)
+    self.then_expr = then_expr
+    self.else_expr = else_expr
 
   def accept(self, visitor):
     visitor.visit_if(self)
 
-class Indexing:
-  "Indexing expression"
-  def __init__(self, index, set_expr):
-    self.index = index
-    self.set_expr = set_expr
-
-  def __repr__(self):
-    result = ''
-    if self.index:
-      result += self.index + ' in '
-    return '{' + result + str(self.set_expr) + '}'
+class CallExpr:
+  "Call expression"
+  def __init__(self, func_name, args):
+    self.func_name = func_name
+    self.args = args
 
   def accept(self, visitor):
-    visitor.visit_indexing(self)
+    visitor.visit_call(self)
 
 class SumExpr:
   "Sum expression"
@@ -96,31 +71,25 @@ class SumExpr:
     self.indexing = indexing
     self.arg = arg
 
-  def __repr__(self):
-    return 'sum{} {}'.format(self.indexing, self.arg)
-
   def accept(self, visitor):
     visitor.visit_sum(self)
 
-class CallExpr:
-  "Call expression"
-  def __init__(self, func_name, arg):
-    self.func_name = func_name
-    self.arg = arg
-
-  def __repr__(self):
-    return '{}({})'.format(self.func_name, self.arg)
+class Indexing:
+  "Indexing expression"
+  def __init__(self, index, set_expr):
+    self.index = index
+    self.set_expr = set_expr
 
   def accept(self, visitor):
-    visitor.visit_call(self)
+    visitor.visit_indexing(self)
 
 class InitAttr:
   "Init attribute (= init)"
   def __init__(self, init):
     self.init = init
 
-  def __repr__(self):
-    return '= {}'.format(self.init)
+  def accept(self, visitor):
+    visitor.visit_init(self)
 
 class InAttr:
   "In attribute (in [lb, ub])"
@@ -128,8 +97,8 @@ class InAttr:
     self.lb = lb
     self.ub = ub
 
-  def __repr__(self):
-    return 'in [{}, {}]'.format(self.lb, self.ub)
+  def accept(self, visitor):
+    visitor.visit_in(self)
 
 class Decl:
   "AMPL declaration"
@@ -141,15 +110,8 @@ class Decl:
     self.body = None
     self.attrs = attrs
 
-  def __repr__(self):
-    result = self.kind + ' ' + self.name
-    for attr in self.attrs:
-      result += ' ' + str(attr)
-    if self.indexing:
-      result += str(self.indexing)
-    if self.body:
-      result += ': ' + str(self.body)
-    return result + ';'
+  def accept(self, visitor):
+    visitor.visit_decl(self)
 
 class IncludeStmt:
   "Include statement such as include, model or data"
@@ -157,8 +119,8 @@ class IncludeStmt:
   def __init__(self, kind):
     self.kind = kind
 
-  def __repr__(self):
-    return self.kind + ';'
+  def accept(self, visitor):
+    visitor.visit_include(self)
 
 class DataStmt:
   "Data statement"
@@ -169,36 +131,125 @@ class DataStmt:
     self.param_names = param_names
     self.values = values
 
-  def format_row(self, values, col_widths, first_sep=' '):
-    result = '{:>{}}'.format(values[0], col_widths[0])
-    for i in range(1, len(values)):
-      result += '{}{:>{}}'.format(first_sep, values[i], col_widths[i])
-      first_sep = ' '
-    return result
+  def accept(self, visitor):
+    visitor.visit_data(self)
 
-  def __repr__(self):
-    result = self.kind + ':\n'
-    num_cols = len(self.param_names) + 1
-    col_widths = [len(self.set_name)] + [len(n) for n in self.param_names]
-    num_values = len(self.values)
-    for i in range(num_values):
-      col = i % num_cols
-      col_widths[col] = max(col_widths[col], len(self.values[i]))
-    result += self.format_row([self.set_name] + self.param_names, col_widths, ':')
-    result += ' :=\n'
-    for i in range(0, num_values, num_cols):
-      result += self.format_row(self.values[i:i + num_cols], col_widths) + '\n'
-    return result + ';'
-
-class TranslationUnit:
+class CompoundStmt:
   def __init__(self, nodes=None):
     self.nodes = nodes if nodes else []
 
-  def __repr__(self):
-    result = ''
-    for n in self.nodes:
-      result += str(n) + '\n'
-    return result
+  def accept(self, visitor):
+    visitor.visit_compound(self)
+
+class PrettyPrinter:
+  def __init__(self, stream):
+    self.stream = stream
+
+  def visit_reference(self, expr):
+    self.stream.write(expr.name)
+
+  def visit_subscript(self, expr):
+    self.stream.write('{}[{}]'.format(expr.name, expr.subscript))
+
+  def visit_paren(self, expr):
+    self.stream.write('(')
+    expr.arg.accept(self)
+    self.stream.write(')')
+
+  def visit_unary(self, expr):
+    self.stream.write(expr.op)
+    expr.arg.accept(self)
+
+  def visit_binary(self, expr):
+    expr.lhs.accept(self)
+    self.stream.write(' ' + expr.op + ' ')
+    expr.rhs.accept(self)
+
+  def visit_if(self, expr):
+    self.stream.write('if ')
+    expr.condition.accept(self)
+    self.stream.write(' then ')
+    expr.then_expr.accept(self)
+    if expr.else_expr:
+      self.stream.write(' else ')
+      expr.else_expr.accept(self)
+
+  def visit_call(self, expr):
+    self.stream.write(expr.func_name + '(')
+    for i in range(len(expr.args)):
+      if i != 0:
+        self.stream.write(', ')
+      expr.args[i].accept(self)
+    self.stream.write(')')
+
+  def visit_sum(self, expr):
+    self.stream.write('sum')
+    expr.indexing.accept(self)
+    self.stream.write(' ')
+    expr.arg.accept(self)
+
+  def visit_indexing(self, expr):
+    self.stream.write('{')
+    if expr.index:
+      self.stream.write(expr.index + ' in ')
+    expr.set_expr.accept(self)
+    self.stream.write('}')
+
+  def visit_init(self, attr):
+    self.stream.write('= {}')
+    attr.init.accept(self)
+
+  def visit_in(self, attr):
+    self.stream.write('in [')
+    attr.lb.accept(self)
+    self.stream.write(', ')
+    attr.ub.accept(self)
+    self.stream.write(']')
+
+  def visit_decl(self, decl):
+    self.stream.write(decl.kind + ' ' + decl.name)
+    if decl.indexing:
+      decl.indexing.accept(self)
+    for attr in decl.attrs:
+      self.stream.write(' ')
+      attr.accept(self)
+    if decl.body:
+      self.stream.write(': ')
+      decl.body.accept(self)
+    self.stream.write(';\n')
+
+  def visit_include(self, stmt):
+    self.stream.write(stmt.kind + ';')
+
+  def visit_data(self, stmt):
+    self.stream.write(stmt.kind + ':\n')
+    num_cols = len(stmt.param_names) + 1
+    col_widths = [len(stmt.set_name)] + [len(n) for n in stmt.param_names]
+    num_values = len(stmt.values)
+    for i in range(num_values):
+      col = i % num_cols
+      col_widths[col] = max(col_widths[col], len(stmt.values[i]))
+
+    def format_row(values, first_sep=' '):
+      self.stream.write('{:>{}}'.format(values[0], col_widths[0]))
+      for i in range(1, len(values)):
+        self.stream.write('{}{:>{}}'.format(first_sep, values[i], col_widths[i]))
+        first_sep = ' '
+
+    format_row([stmt.set_name] + stmt.param_names, ':')
+    self.stream.write(' :=\n')
+    for i in range(0, num_values, num_cols):
+      format_row(stmt.values[i:i + num_cols])
+      self.stream.write('\n')
+    self.stream.write(';\n')
+
+  def visit_compound(self, stmt):
+    for node in stmt.nodes:
+      node.accept(self)
+
+def pretty_print(stream, node):
+  "Pretty print the AST node."
+  node.accept(PrettyPrinter(stream))
 
 def parse(input, name):
   "Parse AMPL code (kind of)."
@@ -254,7 +305,6 @@ def parse(input, name):
   ns.lineno = 1
 
   def report_error(message):
-    print(token)
     raise Exception('{}:{}: {}'.format(name, ns.lineno, message))
   
   def consume_token(expected_token=None):
@@ -309,17 +359,17 @@ def parse(input, name):
     elif t == 'if':
       condition = parse_expr()
       consume_token('then')
-      true_expr = parse_expr(CONDITIONAL)
-      false_expr = None
+      then_expr = parse_expr(CONDITIONAL)
+      else_expr = None
       if ns.token == 'else':
         consume_token('else')
-        false_expr = parse_expr(CONDITIONAL)
-      return IfExpr(condition, true_expr, false_expr)
+        else_expr = parse_expr(CONDITIONAL)
+      return IfExpr(condition, then_expr, else_expr)
     elif t in funcs:
       consume_token('(')
       arg = parse_expr()
       consume_token(')')
-      expr = CallExpr(t, arg)
+      expr = CallExpr(t, [arg])
     else:
       if ns.token == '[':
         consume_token()
@@ -394,26 +444,26 @@ def parse(input, name):
     consume_token(';')
     return obj
 
-  def parse_model(tu):
+  def parse_model(compound):
     "Parse AMPL model returning True on EOF or False to switch to the data mode."
     while True:
       if not ns.token:
         return True
       if ns.token == 'param' or ns.token == 'var':
-        tu.nodes.append(parse_param_or_var())
+        compound.nodes.append(parse_param_or_var())
       elif ns.token == 'set':
-        tu.nodes.append(parse_set())
+        compound.nodes.append(parse_set())
       elif ns.token == 'minimize' or ns.token == 'maximize':
-        tu.nodes.append(parse_obj())
+        compound.nodes.append(parse_obj())
       elif ns.token == 'data':
         kind = consume_token()
         consume_token(';')
-        tu.nodes.append(IncludeStmt(kind))
+        compound.nodes.append(IncludeStmt(kind))
         return False
       else:
         report_error('unknown token: ' + ns.token)
 
-  def parse_data(tu):
+  def parse_data(compound):
     "Parse AMPL data returning True on EOF or False to switch to the model mode."
     while True:
       if not ns.token:
@@ -431,12 +481,12 @@ def parse(input, name):
         while ns.token and ns.token != ';':
           values.append(consume_token())
         consume_token();
-        tu.nodes.append(DataStmt(kind, set_name, param_names, values))
+        compound.nodes.append(DataStmt(kind, set_name, param_names, values))
       else:
         return False
   
   consume_token()
-  tu = TranslationUnit()
+  compound = CompoundStmt()
   while True:
-    if parse_model(tu) or parse_data(tu):
-      return tu
+    if parse_model(compound) or parse_data(compound):
+      return compound

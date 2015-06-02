@@ -311,11 +311,12 @@ class RenamingVisitor:
 
   def visit_if(self, expr):
     expr.condition.accept(self)
-    expr.true_expr.accept(self)
-    expr.false_expr.accept(self)
+    expr.then_expr.accept(self)
+    expr.else_expr.accept(self)
 
   def visit_call(self, expr):
-    expr.arg.accept(self)
+    for arg in expr.args:
+      arg.accept(self)
 
   def visit_sum(self, expr):
     expr.indexing.accept(self)
@@ -355,9 +356,8 @@ def prepare_for_merge(model, suffix):
     if obj.kind == 'maximize':
       obj.body = ampl.UnaryExpr('-', obj.body)
     if offset > 0:
-      obj.body = ampl.ParenExpr(ampl.BinaryExpr('+', obj.body, offset))
+      obj.body = ampl.ParenExpr(ampl.BinaryExpr('+', obj.body, ampl.Reference(str(offset))))
     return nodes[:obj_index], obj, nodes[obj_index + 1:], best_obj + offset
-           
 
 def merge_models(model1, model2):
   """
@@ -374,7 +374,7 @@ def merge_models(model1, model2):
   obj = ampl.Decl('minimize', 'f')
   # Invert sign if objectives are of different kinds.
   obj.body = ampl.BinaryExpr('*', obj1.body, obj2.body)
-  return ampl.TranslationUnit(head1 + head2 + [obj] + tail1 + tail2), best_obj1 * best_obj2
+  return ampl.CompoundStmt(head1 + head2 + [obj] + tail1 + tail2), best_obj1 * best_obj2
 
 def load_index(*dirs):
   """
