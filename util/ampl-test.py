@@ -20,9 +20,10 @@ def test_reference():
   check_accept(expr, 'visit_reference')
 
 def test_subscript():
-  expr = ampl.SubscriptExpr('foo', 'bar')
-  assert expr.name == 'foo'
-  assert expr.subscript == 'bar'
+  sub = ampl.Reference('foo')
+  expr = ampl.SubscriptExpr('bar', sub)
+  assert expr.name == 'bar'
+  assert expr.subscript == sub
   check_accept(expr, 'visit_subscript')
 
 def test_paren():
@@ -140,11 +141,12 @@ def check_print(output, node):
   "Check if the output of pretty_print for the given AST node."
   stream = StringIO()
   ampl.pretty_print(stream, node)
-  assert stream.getvalue() == output
+  real_output = stream.getvalue()
+  assert real_output == output
 
 def test_pretty_print():
   check_print('a', ampl.Reference('a'))
-  check_print('a[b]', ampl.SubscriptExpr('a', 'b'))
+  check_print('a[b]', ampl.SubscriptExpr('a', ampl.Reference('b')))
   check_print('(a)', ampl.ParenExpr(ampl.Reference('a')))
   check_print('-a', ampl.UnaryExpr('-', ampl.Reference('a')))
   check_print('a + b', ampl.BinaryExpr('+', ampl.Reference('a'), ampl.Reference('b')))
@@ -154,7 +156,7 @@ def test_pretty_print():
               ampl.IfExpr(ampl.Reference('a'), ampl.Reference('b'), None))
   check_print('f(a, b)', ampl.CallExpr('f', [ampl.Reference('a'), ampl.Reference('b')]))
   check_print('sum{s in S} x[s]', ampl.SumExpr(ampl.Indexing(ampl.Reference('S'), 's'),
-                                               ampl.SubscriptExpr('x', 's')))
+                                               ampl.SubscriptExpr('x', ampl.Reference('s'))))
   check_print('{s in S}', ampl.Indexing(ampl.Reference('S'), 's'))
   check_print('{S}', ampl.Indexing(ampl.Reference('S')))
   check_print('= a', ampl.InitAttr(ampl.Reference('a')))

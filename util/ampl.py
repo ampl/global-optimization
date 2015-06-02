@@ -151,7 +151,9 @@ class PrettyPrinter:
     self.stream.write(expr.name)
 
   def visit_subscript(self, expr):
-    self.stream.write('{}[{}]'.format(expr.name, expr.subscript))
+    self.stream.write(expr.name + '[')
+    expr.subscript.accept(self)
+    self.stream.write(']')
 
   def visit_paren(self, expr):
     self.stream.write('(')
