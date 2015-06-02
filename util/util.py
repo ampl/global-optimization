@@ -351,8 +351,11 @@ def prepare_for_merge(model, suffix):
     sign = 1 if obj.kind == 'minimize' else -1
     best_obj = sign * model['best_obj']
     offset = math.ceil(abs(min(0.0, best_obj)))
+    obj.body = ampl.ParenExpr(obj.body)
+    if obj.kind == 'maximize':
+      obj.body = ampl.UnaryExpr('-', obj.body)
     if offset > 0:
-      obj.body = ampl.BinaryExpr('+', ampl.ParenExpr(obj.body), offset)
+      obj.body = ampl.BinaryExpr('+', obj.body, offset)
     return nodes[:obj_index], obj, nodes[obj_index + 1:], best_obj + offset
            
 
@@ -371,8 +374,6 @@ def merge_models(model1, model2):
   obj = ampl.Decl('minimize', 'f')
   # Invert sign if objectives are of different kinds.
   obj.body = ampl.BinaryExpr('*', ampl.ParenExpr(obj1.body), ampl.ParenExpr(obj2.body))
-  if obj1.kind != obj2.kind:
-    obj.body = ampl.UnaryExpr('-', obj.body)
   return ampl.TranslationUnit(head1 + head2 + [obj] + tail1 + tail2), best_obj1 * best_obj2
 
 def load_index(*dirs):
