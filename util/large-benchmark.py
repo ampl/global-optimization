@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-import lgo, util
+import couenne, lgo, util
 
 # Timeout in seconds
 TIMEOUT = 300
@@ -16,7 +16,7 @@ class Config:
 configs = [
   Config('minos'),
   Config('baron'),
-  Config('couenne'),
+  Config('couenne', couenne.options()),
   Config('lgo', {'opmode': lgo.LOCAL_SEARCH_MODE}, 'local-search'),
   Config('lgo', {'opmode': lgo.MULTISTART_MODE}, 'multistart', lgo.make_maxfct_setter(2))
 ]

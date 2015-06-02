@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-import lgo, os, util, yaml
+import couenne, lgo, os, util, yaml
 
 # Timeout in seconds
 TIMEOUT = 60
@@ -18,7 +18,7 @@ configs = [
   Config('lgo', {'opmode': lgo.MULTISTART_MODE}, 'multistart', lgo.make_maxfct_setter(2)),
   Config('minos'),
   Config('baron'),
-  Config('couenne')
+  Config('couenne', couenne.options())
 ]
 
 index = util.load_index('casado', 'hansen').values()
