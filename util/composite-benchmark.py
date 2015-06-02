@@ -16,6 +16,7 @@ class Config:
 configs = [
   Config('lgo', {'opmode': lgo.LOCAL_SEARCH_MODE}, 'local-search'),
   Config('lgo', {'opmode': lgo.MULTISTART_MODE}, 'multistart', lgo.make_maxfct_setter(2)),
+  Config('lgo', {'opmode': lgo.MULTISTART_MODE}, 'multistart-k4', lgo.make_maxfct_setter(4)),
   Config('minos'),
   Config('baron'),
   Config('couenne', couenne.options())
