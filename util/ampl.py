@@ -76,15 +76,15 @@ class SumExpr:
 
 class Indexing:
   "Indexing expression"
-  def __init__(self, index, set_expr):
-    self.index = index
+  def __init__(self, set_expr, index=None):
     self.set_expr = set_expr
+    self.index = index
 
   def accept(self, visitor):
     visitor.visit_indexing(self)
 
 class InitAttr:
-  "Init attribute (= init)"
+  "Init attribute ``= init``"
   def __init__(self, init):
     self.init = init
 
@@ -92,7 +92,7 @@ class InitAttr:
     visitor.visit_init(self)
 
 class InAttr:
-  "In attribute (in [lb, ub])"
+  "In attribute ``in [lb, ub]``"
   def __init__(self, lb, ub):
     self.lb = lb
     self.ub = ub
@@ -341,7 +341,7 @@ def parse(input, name):
     else:
       expr = Reference(token)
     consume_token('}')
-    return Indexing(index, expr)
+    return Indexing(expr, index)
 
   def parse_unary_expr():
     "Parse a unary numeric expression."
