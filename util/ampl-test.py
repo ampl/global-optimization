@@ -1,6 +1,7 @@
 # AMPL parser and AST tests
 
 import ampl
+from cStringIO import StringIO
 from mock import MagicMock
 
 class MockVisitor: pass
@@ -54,6 +55,8 @@ def test_if():
   assert expr.condition == condition
   assert expr.then_expr == then_expr
   assert expr.else_expr == else_expr
+  expr = ampl.IfExpr(condition, then_expr)
+  assert expr.else_expr == None
   check_accept(expr, 'visit_if')
 
 def test_call():
@@ -105,6 +108,7 @@ def test_decl():
   assert decl.name == 'x'
   assert decl.indexing == indexing
   assert decl.attrs == attrs
+  assert decl.body == None
   decl = ampl.Decl('var', 'x', indexing)
   assert decl.attrs == []
   decl = ampl.Decl('var', 'x')
@@ -131,3 +135,43 @@ def test_compound():
   stmt = ampl.CompoundStmt(nodes)
   assert stmt.nodes == nodes
   check_accept(stmt, 'visit_compound')
+
+def check_print(output, node):
+  "Check if the output of pretty_print for the given AST node."
+  stream = StringIO()
+  ampl.pretty_print(stream, node)
+  assert stream.getvalue() == output
+
+def test_pretty_print():
+  check_print('a', ampl.Reference('a'))
+  check_print('a[b]', ampl.SubscriptExpr('a', 'b'))
+  check_print('(a)', ampl.ParenExpr(ampl.Reference('a')))
+  check_print('-a', ampl.UnaryExpr('-', ampl.Reference('a')))
+  check_print('a + b', ampl.BinaryExpr('+', ampl.Reference('a'), ampl.Reference('b')))
+  check_print('if a then b else c',
+              ampl.IfExpr(ampl.Reference('a'), ampl.Reference('b'), ampl.Reference('c')))
+  check_print('if a then b',
+              ampl.IfExpr(ampl.Reference('a'), ampl.Reference('b'), None))
+  check_print('f(a, b)', ampl.CallExpr('f', [ampl.Reference('a'), ampl.Reference('b')]))
+  check_print('sum{s in S} x[s]', ampl.SumExpr(ampl.Indexing(ampl.Reference('S'), 's'),
+                                               ampl.SubscriptExpr('x', 's')))
+  check_print('{s in S}', ampl.Indexing(ampl.Reference('S'), 's'))
+  check_print('{S}', ampl.Indexing(ampl.Reference('S')))
+  check_print('= a', ampl.InitAttr(ampl.Reference('a')))
+  check_print('in [a, b]', ampl.InAttr(ampl.Reference('a'), ampl.Reference('b')))
+  check_print('var x{S} = a;\n', ampl.Decl('var', 'x', ampl.Indexing(ampl.Reference('S')),
+                                           [ampl.InitAttr(ampl.Reference('a'))]))
+  decl = ampl.Decl('minimize', 'o')
+  decl.body = ampl.UnaryExpr('-', ampl.Reference('x'))
+  check_print('minimize o: -x;\n', decl)
+  check_print('model;\n', ampl.IncludeStmt('model'))
+  param_names = ['a', 'b']
+  values = [str(n) for n in range(6)]
+  check_print(
+    'param:\n' +
+    'S:a b :=\n' +
+    '0 1 2\n' +
+    '3 4 5\n' +
+    ';\n', ampl.DataStmt('param', 'S', param_names, values))
+  check_print('model;\nvar x;\n',
+              ampl.CompoundStmt([ampl.IncludeStmt('model'), ampl.Decl('var', 'x')]))

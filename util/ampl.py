@@ -48,7 +48,7 @@ class BinaryExpr:
 
 class IfExpr:
   "If expression"
-  def __init__(self, condition, then_expr, else_expr):
+  def __init__(self, condition, then_expr, else_expr=None):
     self.condition = condition
     self.then_expr = then_expr
     self.else_expr = else_expr
@@ -142,6 +142,8 @@ class CompoundStmt:
     visitor.visit_compound(self)
 
 class PrettyPrinter:
+  "Pretty printer for AMPL AST without precedence handling"
+
   def __init__(self, stream):
     self.stream = stream
 
@@ -196,7 +198,7 @@ class PrettyPrinter:
     self.stream.write('}')
 
   def visit_init(self, attr):
-    self.stream.write('= {}')
+    self.stream.write('= ')
     attr.init.accept(self)
 
   def visit_in(self, attr):
@@ -219,7 +221,7 @@ class PrettyPrinter:
     self.stream.write(';\n')
 
   def visit_include(self, stmt):
-    self.stream.write(stmt.kind + ';')
+    self.stream.write(stmt.kind + ';\n')
 
   def visit_data(self, stmt):
     self.stream.write(stmt.kind + ':\n')
