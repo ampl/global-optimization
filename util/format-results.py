@@ -164,7 +164,7 @@ def write_summary(file, results, obj_tolerance):
               format(normalized_func_evals / len(results)))
     file.write('where modc is the estimated model complexity\n')
     file.write('modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1\n')
-    file.write('Total LGO solver runtime (seconds): {:.2f}\n'.format(total_time))
+  file.write('Total solver runtime (seconds): {:.2f}\n'.format(total_time))
 
 legend = {
   'MN': 'Model Name',
