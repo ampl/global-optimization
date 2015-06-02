@@ -82,3 +82,52 @@ def test_indexing():
   assert expr.index == None
   assert expr.set_expr == set_expr
   check_accept(expr, 'visit_indexing')
+
+def test_init():
+  init = ampl.Reference('a')
+  attr = ampl.InitAttr(init)
+  assert attr.init == init
+  check_accept(attr, 'visit_init')
+
+def test_in():
+  lb = ampl.Reference('a')
+  ub = ampl.Reference('b')
+  attr = ampl.InAttr(lb, ub)
+  assert attr.lb == lb
+  assert attr.ub == ub
+  check_accept(attr, 'visit_in')
+
+def test_decl():
+  indexing = ampl.Indexing(ampl.Reference('a'))
+  attrs = [ampl.InitAttr(ampl.Reference('a'))]
+  decl = ampl.Decl('var', 'x', indexing, attrs)
+  assert decl.kind == 'var'
+  assert decl.name == 'x'
+  assert decl.indexing == indexing
+  assert decl.attrs == attrs
+  decl = ampl.Decl('var', 'x', indexing)
+  assert decl.attrs == []
+  decl = ampl.Decl('var', 'x')
+  assert decl.indexing == None
+  check_accept(decl, 'visit_decl')
+
+def test_include():
+  stmt = ampl.IncludeStmt('model')
+  assert stmt.kind == 'model'
+  check_accept(stmt, 'visit_include')
+
+def test_data():
+  param_names = ['a', 'b']
+  values = [0, 1, 2, 3, 4, 5]
+  stmt = ampl.DataStmt('param', 'S', param_names, values)
+  assert stmt.kind == 'param'
+  assert stmt.set_name == 'S'
+  assert stmt.param_names == param_names
+  assert stmt.values == values
+  check_accept(stmt, 'visit_data')
+
+def test_compound():
+  nodes = [ampl.IncludeStmt('model'), ampl.Decl('var', 'x')]
+  stmt = ampl.CompoundStmt(nodes)
+  assert stmt.nodes == nodes
+  check_accept(stmt, 'visit_compound')
