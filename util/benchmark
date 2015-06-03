@@ -24,6 +24,7 @@ if __name__ == '__main__':
       if hasattr(inputs, '__call__'):
         print('Getting inputs...')
         inputs = inputs(workdir)
+      print('Running benchmark...')
       for c in module.configs:
         log = module_name + '-' + c.solver
         if c.suffix:
