@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+
+"""Benchmark.
+
+Usage:
+  benchmark run <module>
+  benchmark list
+"""
+
+from __future__ import print_function
+import docopt, glob, imp, os, shutil, sys, tempfile, util
+
+module_dir = os.path.join(util.repo_dir, 'util', 'modules')
+
+if __name__ == '__main__':
+  args = docopt.docopt(__doc__)
+  if args['run']:
+    module_name = args['<module>']
+    if not os.path.exists(os.path.join(module_dir, module_name + '.py')):
+      print('Invalid module: ' + module_name)
+      sys.exit(1)
+    sys.path.insert(0, module_dir)
+    module = __import__(module_name)
+    inputs = module.inputs
+    workdir = tempfile.mkdtemp()
+    try:
+      # If inputs is callable, call it to get inputs.
+      if hasattr(inputs, '__call__'):
+        print('Getting inputs...')
+        inputs = inputs(workdir)
+      for c in module.configs:
+        log = module_name + '-' + c.solver
+        if c.suffix:
+          log += '-' + c.suffix
+        with util.Benchmark(log=log + '.yaml', timeout=module.timeout, solver=c.solver,
+                            solver_options=c.solver_options, on_nl_file=c.on_nl_file) as b:
+          for name, data in inputs.iteritems():
+            print(name)
+            b.run(data['path'])
+    finally:
+      shutil.rmtree(workdir)
+  elif args['list']:
+    for path in glob.glob(os.path.join(module_dir, '*.py')):
+      print(os.path.splitext(os.path.basename(path))[0])

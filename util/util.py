@@ -393,3 +393,10 @@ def load_index(*dirs):
     # Convert values such as 1e-8 to float since YAML treats them as strings.
     v['best_obj'] = float(v['best_obj'])
   return index
+
+class Config:
+  def __init__(self, solver, solver_options={}, **kwargs):
+    self.solver = solver
+    self.solver_options = solver_options
+    self.suffix = kwargs.get('suffix')
+    self.on_nl_file = kwargs.get('on_nl_file')
