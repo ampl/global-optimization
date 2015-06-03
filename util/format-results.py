@@ -73,6 +73,16 @@ def check_obj(result, obj_tolerance):
         solved = True
   return (solved, rel_error)
 
+def obj_status(result, obj_tolerance):
+  solved, rel_error = check_obj(result, obj_tolerance)
+  status = ' ' if solved else '?'
+  sign = 1 if result['obj_kind'] == 'minimize' else -1
+  obj = sign * result['obj']
+  best_obj = sign * index[model_name(result)]['best_obj']
+  if obj < best_obj and rel_error > 1e-6:
+    status += '!'
+  return status
+
 # Read the log and get the number of variables and constraints
 # for each problem.
 def read_log(filename, excludes):
@@ -122,7 +132,7 @@ def write_results(file, results, obj_tolerance):
     'FE': [num_func_evals(r) for r in results],
     # Solver runtime
     'RT': [r['time'] for r in results],
-    ' ':  [' ' if check_obj(r, obj_tolerance)[0] else '?' for r in results]
+    ' ':  [obj_status(r, obj_tolerance) for r in results]
     }, index=range(1, len(results) + 1), columns=columns)
   for col in ['OV', 'OS']:
     df[col] = df[col].map('{:g}'.format)
