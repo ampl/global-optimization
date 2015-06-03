@@ -138,7 +138,9 @@ def write_summary(file, results, obj_tolerance):
   total_time = 0
   normalized_func_evals = 0
   num_solved = 0
-  total_rel_error = 0
+  num_unsolved = 0
+  solved_rel_error = 0
+  unsolved_rel_error = 0
   for r in results:
     total_time += r['time']
     if solver == 'lgo' and r['solver_options']['opmode'] != opmode:
@@ -151,14 +153,19 @@ def write_summary(file, results, obj_tolerance):
       normalized_func_evals += nfe / modc
     solved, rel_error = check_obj(r, obj_tolerance)
     if solved:
-        total_rel_error += rel_error
-        num_solved += 1
+      solved_rel_error += rel_error
+      num_solved += 1
+    else:
+      unsolved_rel_error += rel_error
+      num_unsolved += 1
   if solver == 'lgo':
     file.write('LGO operational mode: {}\n'.format(opmode))
     file.write('Relative error tolerance for successful solution: {}\n'.format(obj_tolerance))
   file.write('Number of successful solutions: {} of {}\n'.format(num_solved, len(results)))
-  avg_rel_error = '{:.2}'.format(total_rel_error / num_solved) if num_solved != 0 else '-'
-  file.write('Average relative error of solutions found: {}\n'.format(avg_rel_error))
+  avg_solved_rel_error = '{:.2}'.format(solved_rel_error / num_solved) if num_solved != 0 else '-'
+  file.write('Average relative error of solutions found: {}\n'.format(avg_solved_rel_error))
+  avg_unsolved_rel_error = '{:.2}'.format(unsolved_rel_error / num_unsolved) if num_unsolved != 0 else '-'
+  file.write('Average relative error of unsolved problems: {}\n'.format(avg_unsolved_rel_error))
   if solver == 'lgo':
     file.write('Average normalized number of function evaluations (FE/modc): {}\n'.
               format(normalized_func_evals / len(results)))
