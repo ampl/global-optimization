@@ -359,9 +359,10 @@ def prepare_for_merge(model, suffix):
       obj.body = ampl.ParenExpr(ampl.BinaryExpr('+', obj.body, ampl.Reference(str(offset))))
     return nodes[:obj_index], obj, nodes[obj_index + 1:], best_obj + offset
 
-def merge_models(model1, model2):
+def merge_models(models):
   """
-  Merge two AMPL models into a single one.
+  Merge given AMPL models into a single one using product composition
+  of objective functions.
   For example, two models
     minimize o: f1(x);
   and
@@ -369,12 +370,21 @@ def merge_models(model1, model2):
   are combined into a single model
     minimize o: f1(x1) * f2(x2);
   """
-  head1, obj1, tail1, best_obj1 = prepare_for_merge(model1, 1)
-  head2, obj2, tail2, best_obj2 = prepare_for_merge(model2, 2)
-  obj = ampl.Decl('minimize', 'f')
+  merged_head = []
+  merged_tail = []
+  merged_best_obj = 1
+  merged_obj = ampl.Decl('minimize', 'f')
+  for i in range(len(models)):
+    head, obj, tail, best_obj = prepare_for_merge(models[i], i + 1)
+    merged_head += head
+    merged_tail += tail
+    merged_best_obj *= best_obj
+    if merged_obj.body:
+      merged_obj.body = ampl.BinaryExpr('*', merged_obj.body, obj.body)
+    else:
+      merged_obj.body = obj.body
   # Invert sign if objectives are of different kinds.
-  obj.body = ampl.BinaryExpr('*', obj1.body, obj2.body)
-  return ampl.CompoundStmt(head1 + head2 + [obj] + tail1 + tail2), best_obj1 * best_obj2
+  return ampl.CompoundStmt(merged_head + [merged_obj] + merged_tail), merged_best_obj
 
 def load_index(*dirs):
   """

@@ -215,7 +215,7 @@ def test_benchmark_removes_backspace():
 
 def test_merge_models():
   index = util.load_index('casado')
-  stmt, best_obj = util.merge_models(index['casado01'], index['casado03'])
+  stmt, best_obj = util.merge_models([index['casado01'], index['casado03']])
   output = StringIO()
   ampl.pretty_print(output, stmt)
   assert output.getvalue() == \
