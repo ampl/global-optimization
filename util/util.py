@@ -1,7 +1,8 @@
 # Benchmark utilities
 
 from __future__ import print_function
-import ampl, glob, hashlib, math, os, signal, tempfile, threading, time, yaml
+import ampl, glob, hashlib, itertools, math, os
+import random, signal, tempfile, threading, time, yaml
 from collections import OrderedDict
 from contextlib import contextmanager
 from datetime import datetime
@@ -385,6 +386,30 @@ def merge_models(models):
       merged_obj.body = obj.body
   # Invert sign if objectives are of different kinds.
   return ampl.CompoundStmt(merged_head + [merged_obj] + merged_tail), merged_best_obj
+
+def get_problem_combinator(index, n, num_problems=None):
+  """
+  Returns a function that combines *n* problems from *index* to get the given
+  number of combined problems selected at random.
+  """
+  index = index.values()
+  combinations = [i for i in itertools.combinations_with_replacement(range(len(index)), n)]
+  if num_problems is not None:
+    # Set seed to make sure that pseudo-random sequence is reproducible.
+    random.seed(0)
+    combinations = sorted(random.sample(combinations, num_problems))
+  def combine_problems(dirname):
+    composite_index = OrderedDict()
+    for indices in combinations:
+      merged_model, best_obj = merge_models([index[i] for i in indices])
+      name = '-'.join(['{:02}'.format(i + 1) for i in indices])
+      filename = name + '.mod'
+      path = os.path.join(dirname, filename)
+      with open(path, 'w') as f:
+        ampl.pretty_print(f, merged_model)
+      composite_index[name] = {'best_obj': best_obj, 'path': path}
+    return composite_index
+  return combine_problems
 
 def load_index(*dirs):
   """
