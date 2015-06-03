@@ -3,13 +3,14 @@
 # by combining problems from Casado and Hansen.
 
 import ampl, couenne, lgo, os, util
+from collections import OrderedDict
 from util import Config
 
 def inputs(dirname):
   "Generate inputs by combining problems from Casado and Hansen."
   index = util.load_index('casado', 'hansen').values()
   models = []
-  composite_index = {}
+  composite_index = OrderedDict()
   for i in range(len(index)):
     for j in range(len(index)):
       if i > j: continue
