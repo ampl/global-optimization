@@ -123,7 +123,7 @@ def write_results(file, results, obj_tolerance):
     # Solver runtime
     'RT': [r['time'] for r in results],
     ' ':  [' ' if check_obj(r, obj_tolerance)[0] else '?' for r in results]
-    }, columns=columns)
+    }, index=range(1, len(results) + 1), columns=columns)
   for col in ['OV', 'OS']:
     df[col] = df[col].map('{:g}'.format)
   file.write(df.to_string())
