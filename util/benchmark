@@ -125,15 +125,16 @@ def obj_status(result, inputs, obj_tolerance):
 
 # Read the log and get the number of variables and constraints
 # for each problem.
-def read_log(filename, excludes=[]):
+def read_log(filename, inputs, excludes=[]):
   results = [r for r in yaml.load(open(filename, 'r')) if model_name(r) not in excludes]
   for result in results:
-    print(result['model'])
+    model = model_name(result)
+    print(model)
     if not result['solve_message']:
       result['solve_message'] = ''
     # Convert values such as 1e-8 to float since YAML doesn't do it.
     result['obj'] = float(result['obj'])
-    ampl_filename = os.path.join(util.repo_dir, result['model'])
+    ampl_filename = inputs[model]['path']
     dirname, filename = os.path.split(ampl_filename)
     with util.AMPL(dirname) as ampl:
       ampl.eval('model {};'.format(ampl_filename))
@@ -238,9 +239,10 @@ legend = OrderedDict([
 def format_logs(path):
   module = read_module(path)
   with get_inputs(module) as inputs:
+    print('Formatting results...')
     for c in module.configs:
       log = log_filename(module, c)
-      results = read_log(log)
+      results = read_log(log, inputs)
       output_filename = os.path.splitext(log)[0] + '.txt'
       obj_tolerance = 0.0001
       with open(output_filename, 'w') as f:
