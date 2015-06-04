@@ -59,10 +59,10 @@ def model_name(result):
   "Extracts the model name from a benchmark result."
   return os.path.splitext(os.path.split(result['model'])[1])[0]
 
-def printed_model_name(result):
+def printed_model_name(result, inputs):
   "Returns model name with '*' if it is a maximization problem."
   name = model_name(result)
-  if result['obj_kind'] == 'maximize':
+  if inputs[name]['obj_kind'] == 'maximize':
     name += '*'
   return name
 
@@ -116,9 +116,10 @@ def check_obj(result, inputs, obj_tolerance):
 def obj_status(result, inputs, obj_tolerance):
   solved, rel_error = check_obj(result, inputs, obj_tolerance)
   status = ' ' if solved else '?'
-  sign = 1 if result['obj_kind'] == 'minimize' else -1
+  input = inputs[model_name(result)]
+  sign = 1 if input['obj_kind'] == 'minimize' else -1
   obj = sign * result['obj']
-  best_obj = sign * inputs[model_name(result)]['best_obj']
+  best_obj = sign * input['best_obj']
   if obj < best_obj and rel_error > 1e-6:
     status += '!'
   return status
@@ -128,20 +129,10 @@ def obj_status(result, inputs, obj_tolerance):
 def read_log(filename, inputs, excludes=[]):
   results = [r for r in yaml.load(open(filename, 'r')) if model_name(r) not in excludes]
   for result in results:
-    model = model_name(result)
-    print(model)
     if not result['solve_message']:
       result['solve_message'] = ''
     # Convert values such as 1e-8 to float since YAML doesn't do it.
     result['obj'] = float(result['obj'])
-    ampl_filename = inputs[model]['path']
-    dirname, filename = os.path.split(ampl_filename)
-    with util.AMPL(dirname) as ampl:
-      ampl.eval('model {};'.format(ampl_filename))
-      result['num_vars'] = ampl.eval_expr('_snvars')
-      result['num_cons'] = ampl.eval_expr('_sncons')
-      objname = ampl.eval_expr('_objname[1]')
-      result['obj_kind'] = ampl.eval('show {};'.format(objname))[0][1].split()[0]
   return results
 
 def write_header(stream, authors, legend):
@@ -156,11 +147,11 @@ def write_header(stream, authors, legend):
 def write_results(stream, results, inputs, columns, obj_tolerance):
   df = pd.DataFrame({
     # Model Name
-    'MN': [printed_model_name(r) for r in results],
+    'MN': [printed_model_name(r, inputs) for r in results],
     # Number of variables
-    'NV': [r['num_vars'] for r in results],
+    'NV': [inputs[model_name(r)]['num_vars'] for r in results],
     # Number of constraints
-    'NC': [r['num_cons'] for r in results],
+    'NC': [inputs[model_name(r)]['num_cons'] for r in results],
     # Best known objective value
     'OV': [inputs[model_name(r)]['best_obj'] for r in results],
     # Objective value returned by the solver
@@ -194,8 +185,9 @@ def write_summary(stream, results, inputs, obj_tolerance):
     total_time += r['time']
     if solver == 'lgo' and r['solver_options']['opmode'] != opmode:
       raise Exception('Inconsistent opmode')
-    nvars = r['num_vars']
-    ncons = r['num_cons']
+    model = model_name(r)
+    nvars = inputs[model]['num_vars']
+    ncons = inputs[model]['num_cons']
     modc = (nvars + ncons) * (nvars + ncons + 1) / 2 + (nvars + ncons) + 1
     nfe = num_func_evals(r)
     if nfe != '-':
@@ -239,10 +231,22 @@ legend = OrderedDict([
 def format_logs(path):
   module = read_module(path)
   with get_inputs(module) as inputs:
-    print('Formatting results...')
+    print('Getting problem information...')
+    for input in inputs.values():
+      ampl_filename = input['path']
+      print(os.path.basename(ampl_filename))
+      dirname, filename = os.path.split(ampl_filename)
+      with util.AMPL(dirname) as ampl:
+        ampl.eval('model {};'.format(ampl_filename))
+        input['num_vars'] = ampl.eval_expr('_snvars')
+        input['num_cons'] = ampl.eval_expr('_sncons')
+        objname = ampl.eval_expr('_objname[1]')
+        input['obj_kind'] = ampl.eval('show {};'.format(objname))[0][1].split()[0]
     for c in module.configs:
       log = log_filename(module, c)
+      print('Parsing ' + log)
       results = read_log(log, inputs)
+      print('Formatting results...')
       output_filename = os.path.splitext(log)[0] + '.txt'
       obj_tolerance = 0.0001
       with open(output_filename, 'w') as f:
