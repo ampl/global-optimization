@@ -442,8 +442,8 @@ def parse(input, name):
     kind = consume_token() # consume keyword
     name = consume_token()
     obj = Decl(kind, name)
-    token = consume_token()
-    if token == ':':
+    if ns.token == ':':
+      consume_token()
       obj.body = parse_expr()
     consume_token(';')
     return obj

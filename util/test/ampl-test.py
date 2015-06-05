@@ -193,3 +193,34 @@ def test_pretty_print():
     ';\n', ampl.DataStmt('param', 'S', param_names, values))
   check_print('model;\nvar x;\n',
               ampl.CompoundStmt([ampl.IncludeStmt('model'), ampl.Decl('var', 'x')]))
+
+def equal_node_lists(lhs, rhs):
+  "Compare lists of AST nodes for equality."
+  if len(lhs) != len(rhs):
+    return False
+  for i, j in zip(lhs, rhs):
+    if not equal_nodes(i, j):
+      return False
+  return True
+
+def equal_nodes(lhs, rhs):
+  "Compare AST nodes for equality."
+  if type(lhs) != type(rhs):
+    return False
+  class Comparator:
+    def visit_decl(self, decl):
+      return lhs.kind == rhs.kind and lhs.name == rhs.name and \
+        equal_nodes(lhs.indexing, rhs.indexing) and equal_nodes(lhs.body, rhs.body) and \
+        equal_node_lists(lhs.attrs, rhs.attrs)
+    def visit_compound(self, stmt):
+      return equal_node_lists(lhs.nodes, rhs.nodes)
+  return True if lhs is None else lhs.accept(Comparator())
+
+def check_parse(input, *nodes):
+  assert equal_nodes(ampl.parse(input, 'in'), ampl.CompoundStmt(nodes))
+
+def test_parse():
+  check_parse('param p;', ampl.Decl('param', 'p'))
+  check_parse('var x;', ampl.Decl('var', 'x'))
+  check_parse('set S;', ampl.Decl('set', 'S'))
+  check_parse('minimize o;', ampl.Decl('minimize', 'o'))
