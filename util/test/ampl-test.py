@@ -198,17 +198,28 @@ def equal_nodes(lhs, rhs):
   "Compare AST nodes for equality."
   if type(lhs) != type(rhs):
     return False
+
   class Comparator:
     def visit_reference(self, expr):
       return lhs.name == rhs.name
+
     def visit_indexing(self, expr):
       return lhs.index == rhs.index and equal_nodes(lhs.set_expr, rhs.set_expr)
+
+    def visit_init(self, attr):
+      return equal_nodes(lhs.init, rhs.init)
+
+    def visit_in(self, attr):
+      return equal_nodes(lhs.lb, rhs.lb) and equal_nodes(lhs.ub, rhs.ub)
+
     def visit_decl(self, decl):
       return lhs.kind == rhs.kind and lhs.name == rhs.name and \
         equal_nodes(lhs.indexing, rhs.indexing) and equal_nodes(lhs.body, rhs.body) and \
         equal_node_lists(lhs.attrs, rhs.attrs)
+
     def visit_compound(self, stmt):
       return equal_node_lists(lhs.nodes, rhs.nodes)
+
   return True if lhs is None else lhs.accept(Comparator())
 
 def equal_node_lists(lhs, rhs):
@@ -237,14 +248,19 @@ def test_equal_node_lists():
 def check_parse(input, *nodes):
   assert equal_nodes(ampl.parse(input, 'in'), ampl.CompoundStmt(nodes))
 
-def test_parse():
+def ref(name):
+  return ampl.Reference(name)
+
+def test_parse_decls():
   s_decl = ampl.Decl('set', 'S')
-  indexing = ampl.Indexing(ampl.Reference('S'))
-  check_parse('param p;', ampl.Decl('param', 'p'))
-  check_parse('set S; param p{S};', s_decl, ampl.Decl('param', 'p', indexing))
-  check_parse('var x;', ampl.Decl('var', 'x'))
-  check_parse('set S; var x{S};', s_decl, ampl.Decl('var', 'x', indexing))
-  check_parse('set S;', ampl.Decl('set', 'S'))
-  check_parse('set S; set T{S};', s_decl, ampl.Decl('set', 'T', indexing))
-  check_parse('minimize o;', ampl.Decl('minimize', 'o'))
-  check_parse('set S; minimize o{S};', s_decl, ampl.Decl('minimize', 'o', indexing))
+  indexing = ampl.Indexing(ref('S'))
+  for kw in ['param', 'var', 'set', 'minimize']:
+    check_parse(kw + ' a;', ampl.Decl(kw, 'a'))
+    check_parse('set S; ' + kw + ' a{S};', s_decl, ampl.Decl(kw, 'a', indexing))
+
+def test_parse_attrs():
+  for kw in ['param', 'var']:
+    check_parse(kw + ' a = 42;',
+                ampl.Decl(kw, 'a', None, [ampl.InitAttr(ref('42'))]))
+    check_parse(kw + ' a in [0, 1];',
+                ampl.Decl(kw, 'a', None, [ampl.InAttr(ref('0'), ref('1'))]))
