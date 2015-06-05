@@ -299,10 +299,9 @@ def parse(input, name):
   def get_bin_op_precedence(op):
     return precedence.get(op, UNKNOWN)
 
-  # Current position in input.
   class Namespace: pass
   ns = Namespace()
-  ns.pos = 0
+  ns.pos = 0 # Current position in input
   space_re = re.compile(r'[ \t\r]*(#.*)?')
   token_re = re.compile(r'([a-zA-Z0-9_.]+|:=|<=|==|<>|!=|>=|.)?')
   ns.token = None # Next token
