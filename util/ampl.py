@@ -103,12 +103,12 @@ class InAttr(object):
 class Decl(object):
   "AMPL declaration"
 
-  def __init__(self, kind, name, indexing=None, attrs=[]):
+  def __init__(self, kind, name, indexing=None, attrs=None):
     self.kind = kind
     self.name = name
     self.indexing = indexing
     self.body = None
-    self.attrs = attrs
+    self.attrs = attrs if attrs else []
 
   def accept(self, visitor):
     return visitor.visit_decl(self)
@@ -409,16 +409,18 @@ def parse(input, name):
       return lhs
     return parse_rhs_of_binary_expr(lhs, min_prec)
 
-  def parse_param_or_var():
-    "Parse a parameter or a variable declaration."
+  def parse_decl_start():
     kind = consume_token() # consume keyword
     name = consume_token()
-    indexing = parse_indexing() if ns.token == '{' else None
-    attrs = []
+    return Decl(kind, name, parse_indexing() if ns.token == '{' else None)
+
+  def parse_param_or_var():
+    "Parse a parameter or a variable declaration."
+    decl = parse_decl_start()
     if ns.token == '=':
       consume_token()
       init = parse_expr()
-      attrs.append(InitAttr(init))
+      decl.attrs.append(InitAttr(init))
     if ns.token == 'in':
       consume_token()
       consume_token('[')
@@ -426,27 +428,24 @@ def parse(input, name):
       consume_token(',')
       ub = parse_expr()
       consume_token(']')
-      attrs.append(InAttr(lb, ub))
+      decl.attrs.append(InAttr(lb, ub))
     consume_token(';')
-    return Decl(kind, name, indexing, attrs)
+    return decl
 
   def parse_set():
     "Parse a set declaration."
-    kind = consume_token() # consume 'set'
-    name = consume_token()
+    decl = parse_decl_start()
     consume_token(';')
-    return Decl(kind, name)
+    return decl
 
   def parse_obj():
     "Parse an objective declaration."
-    kind = consume_token() # consume keyword
-    name = consume_token()
-    obj = Decl(kind, name)
+    decl = parse_decl_start()
     if ns.token == ':':
       consume_token()
-      obj.body = parse_expr()
+      decl.body = parse_expr()
     consume_token(';')
-    return obj
+    return decl
 
   def parse_model(compound):
     "Parse AMPL model returning True on EOF or False to switch to the data mode."

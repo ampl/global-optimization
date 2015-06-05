@@ -199,6 +199,10 @@ def equal_nodes(lhs, rhs):
   if type(lhs) != type(rhs):
     return False
   class Comparator:
+    def visit_reference(self, expr):
+      return lhs.name == rhs.name
+    def visit_indexing(self, expr):
+      return lhs.index == rhs.index and equal_nodes(lhs.set_expr, rhs.set_expr)
     def visit_decl(self, decl):
       return lhs.kind == rhs.kind and lhs.name == rhs.name and \
         equal_nodes(lhs.indexing, rhs.indexing) and equal_nodes(lhs.body, rhs.body) and \
@@ -234,7 +238,13 @@ def check_parse(input, *nodes):
   assert equal_nodes(ampl.parse(input, 'in'), ampl.CompoundStmt(nodes))
 
 def test_parse():
+  s_decl = ampl.Decl('set', 'S')
+  indexing = ampl.Indexing(ampl.Reference('S'))
   check_parse('param p;', ampl.Decl('param', 'p'))
+  check_parse('set S; param p{S};', s_decl, ampl.Decl('param', 'p', indexing))
   check_parse('var x;', ampl.Decl('var', 'x'))
+  check_parse('set S; var x{S};', s_decl, ampl.Decl('var', 'x', indexing))
   check_parse('set S;', ampl.Decl('set', 'S'))
+  check_parse('set S; set T{S};', s_decl, ampl.Decl('set', 'T', indexing))
   check_parse('minimize o;', ampl.Decl('minimize', 'o'))
+  check_parse('set S; minimize o{S};', s_decl, ampl.Decl('minimize', 'o', indexing))
