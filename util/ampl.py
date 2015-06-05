@@ -2,7 +2,7 @@
 
 import re
 
-class Reference:
+class Reference(object):
   "Reference"
   def __init__(self, name):
     self.name = name
@@ -10,7 +10,7 @@ class Reference:
   def accept(self, visitor):
     visitor.visit_reference(self)
 
-class SubscriptExpr:
+class SubscriptExpr(object):
   "Subscript expression"
   def __init__(self, name, subscript):
     self.name = name
@@ -19,7 +19,7 @@ class SubscriptExpr:
   def accept(self, visitor):
     visitor.visit_subscript(self)
 
-class ParenExpr:
+class ParenExpr(object):
   "Parenthesized expression"
   def __init__(self, arg):
     self.arg = arg
@@ -27,7 +27,7 @@ class ParenExpr:
   def accept(self, visitor):
     visitor.visit_paren(self)
 
-class UnaryExpr:
+class UnaryExpr(object):
   "Unary expression"
   def __init__(self, op, arg):
     self.op = op
@@ -36,7 +36,7 @@ class UnaryExpr:
   def accept(self, visitor):
     visitor.visit_unary(self)
 
-class BinaryExpr:
+class BinaryExpr(object):
   "Binary expression"
   def __init__(self, op, lhs, rhs):
     self.op = op
@@ -46,7 +46,7 @@ class BinaryExpr:
   def accept(self, visitor):
     visitor.visit_binary(self)
 
-class IfExpr:
+class IfExpr(object):
   "If expression"
   def __init__(self, condition, then_expr, else_expr=None):
     self.condition = condition
@@ -56,7 +56,7 @@ class IfExpr:
   def accept(self, visitor):
     visitor.visit_if(self)
 
-class CallExpr:
+class CallExpr(object):
   "Call expression"
   def __init__(self, func_name, args):
     self.func_name = func_name
@@ -65,7 +65,7 @@ class CallExpr:
   def accept(self, visitor):
     visitor.visit_call(self)
 
-class SumExpr:
+class SumExpr(object):
   "Sum expression"
   def __init__(self, indexing, arg):
     self.indexing = indexing
@@ -74,7 +74,7 @@ class SumExpr:
   def accept(self, visitor):
     visitor.visit_sum(self)
 
-class Indexing:
+class Indexing(object):
   "Indexing expression"
   def __init__(self, set_expr, index=None):
     self.set_expr = set_expr
@@ -83,7 +83,7 @@ class Indexing:
   def accept(self, visitor):
     visitor.visit_indexing(self)
 
-class InitAttr:
+class InitAttr(object):
   "Init attribute ``= init``"
   def __init__(self, init):
     self.init = init
@@ -91,7 +91,7 @@ class InitAttr:
   def accept(self, visitor):
     visitor.visit_init(self)
 
-class InAttr:
+class InAttr(object):
   "In attribute ``in [lb, ub]``"
   def __init__(self, lb, ub):
     self.lb = lb
@@ -100,7 +100,7 @@ class InAttr:
   def accept(self, visitor):
     visitor.visit_in(self)
 
-class Decl:
+class Decl(object):
   "AMPL declaration"
 
   def __init__(self, kind, name, indexing=None, attrs=[]):
@@ -113,7 +113,7 @@ class Decl:
   def accept(self, visitor):
     visitor.visit_decl(self)
 
-class IncludeStmt:
+class IncludeStmt(object):
   "Include statement such as include, model or data"
 
   def __init__(self, kind):
@@ -122,7 +122,7 @@ class IncludeStmt:
   def accept(self, visitor):
     visitor.visit_include(self)
 
-class DataStmt:
+class DataStmt(object):
   "Data statement"
   
   def __init__(self, kind, set_name, param_names, values):
@@ -134,7 +134,7 @@ class DataStmt:
   def accept(self, visitor):
     visitor.visit_data(self)
 
-class CompoundStmt:
+class CompoundStmt(object):
   def __init__(self, nodes=None):
     self.nodes = nodes if nodes else []
 

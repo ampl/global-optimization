@@ -16,12 +16,14 @@ def check_accept(node, method_name):
 
 def test_reference():
   expr = ampl.Reference('foo')
+  assert(type(expr) == ampl.Reference)
   assert expr.name == 'foo'
   check_accept(expr, 'visit_reference')
 
 def test_subscript():
   sub = ampl.Reference('foo')
   expr = ampl.SubscriptExpr('bar', sub)
+  assert(type(expr) == ampl.SubscriptExpr)
   assert expr.name == 'bar'
   assert expr.subscript == sub
   check_accept(expr, 'visit_subscript')
@@ -29,12 +31,14 @@ def test_subscript():
 def test_paren():
   arg = ampl.Reference('a')
   expr = ampl.ParenExpr(arg)
+  assert(type(expr) == ampl.ParenExpr)
   assert expr.arg == arg
   check_accept(expr, 'visit_paren')
 
 def test_unary():
   arg = ampl.Reference('a')
   expr = ampl.UnaryExpr('-', arg)
+  assert(type(expr) == ampl.UnaryExpr)
   assert expr.op == '-'
   assert expr.arg == arg
   check_accept(expr, 'visit_unary')
@@ -43,6 +47,7 @@ def test_binary():
   lhs = ampl.Reference('a')
   rhs = ampl.Reference('b')
   expr = ampl.BinaryExpr('+', lhs, rhs)
+  assert(type(expr) == ampl.BinaryExpr)
   assert expr.op == '+'
   assert expr.lhs == lhs
   assert expr.rhs == rhs
@@ -53,6 +58,7 @@ def test_if():
   then_expr = ampl.Reference('b')
   else_expr = ampl.Reference('c')
   expr = ampl.IfExpr(condition, then_expr, else_expr)
+  assert(type(expr) == ampl.IfExpr)
   assert expr.condition == condition
   assert expr.then_expr == then_expr
   assert expr.else_expr == else_expr
@@ -64,6 +70,7 @@ def test_call():
   arg0 = ampl.Reference('a')
   arg1 = ampl.Reference('b')
   expr = ampl.CallExpr('foo', [arg0, arg1])
+  assert(type(expr) == ampl.CallExpr)
   assert expr.func_name == 'foo'
   assert expr.args == [arg0, arg1]
   check_accept(expr, 'visit_call')
@@ -72,6 +79,7 @@ def test_sum():
   indexing = ampl.Indexing(ampl.Reference('a'))
   arg = ampl.Reference('b')
   expr = ampl.SumExpr(indexing, arg)
+  assert(type(expr) == ampl.SumExpr)
   assert expr.indexing == indexing
   assert expr.arg == arg
   check_accept(expr, 'visit_sum')
@@ -80,6 +88,7 @@ def test_indexing():
   index = 'a'
   set_expr = ampl.Reference('b')
   expr = ampl.Indexing(set_expr, index)
+  assert(type(expr) == ampl.Indexing)
   assert expr.index == index
   assert expr.set_expr == set_expr
   expr = ampl.Indexing(set_expr)
@@ -90,6 +99,7 @@ def test_indexing():
 def test_init():
   init = ampl.Reference('a')
   attr = ampl.InitAttr(init)
+  assert(type(attr) == ampl.InitAttr)
   assert attr.init == init
   check_accept(attr, 'visit_init')
 
@@ -97,6 +107,7 @@ def test_in():
   lb = ampl.Reference('a')
   ub = ampl.Reference('b')
   attr = ampl.InAttr(lb, ub)
+  assert(type(attr) == ampl.InAttr)
   assert attr.lb == lb
   assert attr.ub == ub
   check_accept(attr, 'visit_in')
@@ -105,6 +116,7 @@ def test_decl():
   indexing = ampl.Indexing(ampl.Reference('a'))
   attrs = [ampl.InitAttr(ampl.Reference('a'))]
   decl = ampl.Decl('var', 'x', indexing, attrs)
+  assert(type(decl) == ampl.Decl)
   assert decl.kind == 'var'
   assert decl.name == 'x'
   assert decl.indexing == indexing
@@ -118,6 +130,7 @@ def test_decl():
 
 def test_include():
   stmt = ampl.IncludeStmt('model')
+  assert(type(stmt) == ampl.IncludeStmt)
   assert stmt.kind == 'model'
   check_accept(stmt, 'visit_include')
 
@@ -125,6 +138,7 @@ def test_data():
   param_names = ['a', 'b']
   values = [0, 1, 2, 3, 4, 5]
   stmt = ampl.DataStmt('param', 'S', param_names, values)
+  assert(type(stmt) == ampl.DataStmt)
   assert stmt.kind == 'param'
   assert stmt.set_name == 'S'
   assert stmt.param_names == param_names
@@ -134,6 +148,7 @@ def test_data():
 def test_compound():
   nodes = [ampl.IncludeStmt('model'), ampl.Decl('var', 'x')]
   stmt = ampl.CompoundStmt(nodes)
+  assert(type(stmt) == ampl.CompoundStmt)
   assert stmt.nodes == nodes
   check_accept(stmt, 'visit_compound')
 
