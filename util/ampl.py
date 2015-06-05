@@ -8,7 +8,7 @@ class Reference(object):
     self.name = name
 
   def accept(self, visitor):
-    visitor.visit_reference(self)
+    return visitor.visit_reference(self)
 
 class SubscriptExpr(object):
   "Subscript expression"
@@ -17,7 +17,7 @@ class SubscriptExpr(object):
     self.subscript = subscript
 
   def accept(self, visitor):
-    visitor.visit_subscript(self)
+    return visitor.visit_subscript(self)
 
 class ParenExpr(object):
   "Parenthesized expression"
@@ -25,7 +25,7 @@ class ParenExpr(object):
     self.arg = arg
 
   def accept(self, visitor):
-    visitor.visit_paren(self)
+    return visitor.visit_paren(self)
 
 class UnaryExpr(object):
   "Unary expression"
@@ -34,7 +34,7 @@ class UnaryExpr(object):
     self.arg = arg
 
   def accept(self, visitor):
-    visitor.visit_unary(self)
+    return visitor.visit_unary(self)
 
 class BinaryExpr(object):
   "Binary expression"
@@ -44,7 +44,7 @@ class BinaryExpr(object):
     self.rhs = rhs
 
   def accept(self, visitor):
-    visitor.visit_binary(self)
+    return visitor.visit_binary(self)
 
 class IfExpr(object):
   "If expression"
@@ -54,7 +54,7 @@ class IfExpr(object):
     self.else_expr = else_expr
 
   def accept(self, visitor):
-    visitor.visit_if(self)
+    return visitor.visit_if(self)
 
 class CallExpr(object):
   "Call expression"
@@ -63,7 +63,7 @@ class CallExpr(object):
     self.args = args
 
   def accept(self, visitor):
-    visitor.visit_call(self)
+    return visitor.visit_call(self)
 
 class SumExpr(object):
   "Sum expression"
@@ -72,7 +72,7 @@ class SumExpr(object):
     self.arg = arg
 
   def accept(self, visitor):
-    visitor.visit_sum(self)
+    return visitor.visit_sum(self)
 
 class Indexing(object):
   "Indexing expression"
@@ -81,7 +81,7 @@ class Indexing(object):
     self.index = index
 
   def accept(self, visitor):
-    visitor.visit_indexing(self)
+    return visitor.visit_indexing(self)
 
 class InitAttr(object):
   "Init attribute ``= init``"
@@ -89,7 +89,7 @@ class InitAttr(object):
     self.init = init
 
   def accept(self, visitor):
-    visitor.visit_init(self)
+    return visitor.visit_init(self)
 
 class InAttr(object):
   "In attribute ``in [lb, ub]``"
@@ -98,7 +98,7 @@ class InAttr(object):
     self.ub = ub
 
   def accept(self, visitor):
-    visitor.visit_in(self)
+    return visitor.visit_in(self)
 
 class Decl(object):
   "AMPL declaration"
@@ -111,7 +111,7 @@ class Decl(object):
     self.attrs = attrs
 
   def accept(self, visitor):
-    visitor.visit_decl(self)
+    return visitor.visit_decl(self)
 
 class IncludeStmt(object):
   "Include statement such as include, model or data"
@@ -120,7 +120,7 @@ class IncludeStmt(object):
     self.kind = kind
 
   def accept(self, visitor):
-    visitor.visit_include(self)
+    return visitor.visit_include(self)
 
 class DataStmt(object):
   "Data statement"
@@ -132,14 +132,14 @@ class DataStmt(object):
     self.values = values
 
   def accept(self, visitor):
-    visitor.visit_data(self)
+    return visitor.visit_data(self)
 
 class CompoundStmt(object):
   def __init__(self, nodes=None):
     self.nodes = nodes if nodes else []
 
   def accept(self, visitor):
-    visitor.visit_compound(self)
+    return visitor.visit_compound(self)
 
 class PrettyPrinter:
   "Pretty printer for AMPL AST without precedence handling"

@@ -11,7 +11,8 @@ def check_accept(node, method_name):
   visitor = MockVisitor()
   mock = MagicMock()
   setattr(visitor, method_name, mock)
-  node.accept(visitor)
+  mock.return_value = 42
+  assert node.accept(visitor) == 42
   mock.assert_called_with(node)
 
 def test_reference():
