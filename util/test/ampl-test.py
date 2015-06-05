@@ -194,15 +194,6 @@ def test_pretty_print():
   check_print('model;\nvar x;\n',
               ampl.CompoundStmt([ampl.IncludeStmt('model'), ampl.Decl('var', 'x')]))
 
-def equal_node_lists(lhs, rhs):
-  "Compare lists of AST nodes for equality."
-  if len(lhs) != len(rhs):
-    return False
-  for i, j in zip(lhs, rhs):
-    if not equal_nodes(i, j):
-      return False
-  return True
-
 def equal_nodes(lhs, rhs):
   "Compare AST nodes for equality."
   if type(lhs) != type(rhs):
@@ -215,6 +206,29 @@ def equal_nodes(lhs, rhs):
     def visit_compound(self, stmt):
       return equal_node_lists(lhs.nodes, rhs.nodes)
   return True if lhs is None else lhs.accept(Comparator())
+
+def equal_node_lists(lhs, rhs):
+  "Compare lists of AST nodes for equality."
+  if len(lhs) != len(rhs):
+    return False
+  for i, j in zip(lhs, rhs):
+    if not equal_nodes(i, j):
+      return False
+  return True
+
+def test_equal_nodes():
+  assert equal_nodes(None, None)
+  assert not equal_nodes(None, ampl.Decl('var', 'x'))
+  assert equal_nodes(ampl.Decl('var', 'x'), ampl.Decl('var', 'x'))
+  assert not equal_nodes(ampl.Decl('var', 'x'), ampl.Decl('var', 'y'))
+  assert not equal_nodes(ampl.Decl('var', 'x'), ampl.CompoundStmt([]))
+
+def test_equal_node_lists():
+  assert equal_node_lists([], [])
+  assert not equal_node_lists([], [ampl.Decl('var', 'x')])
+  assert equal_node_lists([ampl.Decl('var', 'x')], [ampl.Decl('var', 'x')])
+  assert not equal_node_lists([ampl.Decl('var', 'x')], [ampl.Decl('var', 'y')])
+  assert not equal_node_lists([ampl.Decl('var', 'x')], [ampl.Decl('var', 'x'), ampl.Decl('var', 'y')])
 
 def check_parse(input, *nodes):
   assert equal_nodes(ampl.parse(input, 'in'), ampl.CompoundStmt(nodes))
