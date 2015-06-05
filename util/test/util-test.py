@@ -1,10 +1,14 @@
 # The util module tests
 
-import ampl, os, tempfile, time, util, yaml
+import ampl, errno, os, tempfile, time, util, yaml
 from contextlib import contextmanager
 from cStringIO import StringIO
 from subprocess import check_call, check_output, PIPE
 
+test_dir = os.path.dirname(os.path.realpath(__file__))
+repo_dir = os.path.dirname(os.path.dirname(test_dir))
+
+mock_solver = os.path.join(test_dir, 'mock-solver')
 solver = 'couenne'
 
 def test_files():
@@ -82,22 +86,29 @@ def test_read_solution():
       assert sol.solve_result == 'solved'
       assert 'couenne' in sol.solve_message
 
+def remove_if_exists(filename):
+  try:
+    os.remove(filename)
+  except OSError as e:
+    if e.errno != errno.ENOENT:
+      raise
+
 def test_mock_solver():
   try:
     sol_filename = None
     with tempfile.NamedTemporaryFile(suffix='.nl') as nl_file:
       sol_filename = os.path.splitext(nl_file.name)[0] + '.sol'
-      command = ['./mock-solver', nl_file.name]
+      command = [mock_solver, nl_file.name]
       assert check_output(command).rstrip() == str(command)
     assert(os.path.exists(sol_filename))
   finally:
-    os.remove(sol_filename)
+    remove_if_exists(sol_filename)
 
 def test_solve():
   with temp_ampl_file() as ampl_file:
     nl_filename = None
     sol_filename = None
-    with util.solve(ampl_file.name, solver='./mock-solver') as result:
+    with util.solve(ampl_file.name, solver=mock_solver) as result:
       sol_filename = result.sol_filename
       nl_filename = os.path.splitext(sol_filename)[0] + '.nl'
       assert(os.path.exists(nl_filename))
@@ -110,7 +121,7 @@ def test_solve_interrupt():
     # Check if files are deleted even in case of KeyboardInterrupt.
     caught = False
     try:
-      with util.solve(ampl_file.name, solver='./mock-solver') as result:
+      with util.solve(ampl_file.name, solver=mock_solver) as result:
         sol_filename = result.sol_filename
         nl_filename = os.path.splitext(sol_filename)[0] + '.nl'
         assert(os.path.exists(nl_filename))
@@ -130,13 +141,11 @@ def test_solve_on_nl_file():
     assert os.path.exists(nl_file.name)
     solver_options['foo'] = 42
   with temp_ampl_file() as ampl_file:
-    with util.solve(ampl_file.name, solver='./mock-solver',
+    with util.solve(ampl_file.name, solver=mock_solver,
                     solver_options=solver_options, on_nl_file=on_nl_file) as result:
       sol_filename = result.sol_filename
       assert nl_filename[0] == os.path.splitext(sol_filename)[0] + '.nl'
       assert 'foo=42' in result.output
-
-repo_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 def test_solve_timeout():
   start_time = time.time()
@@ -147,17 +156,17 @@ def test_solve_timeout():
 
 def test_solver_options():
   with temp_ampl_file() as ampl_file:
-    with util.solve(ampl_file.name, solver='./mock-solver',
+    with util.solve(ampl_file.name, solver=mock_solver,
                     solver_options={'foo': 42, 'bar': 'baz'}) as result:
       assert result.output.endswith("'-AMPL', 'foo=42', 'bar=baz']\n")
 
 def test_solve_env():
   with temp_ampl_file() as ampl_file:
-    with util.solve(ampl_file.name, solver='./mock-solver',
+    with util.solve(ampl_file.name, solver=mock_solver,
                     solver_options={'print_env': 1}) as result:
       assert result.output == str(os.environ) + '\n'
     env = {'foo': 'bar'}
-    with util.solve(ampl_file.name, solver='./mock-solver',
+    with util.solve(ampl_file.name, solver=mock_solver,
                     solver_options={'print_env': 1}, env=env) as result:
       assert result.output == str(env) + '\n'
 
@@ -176,7 +185,7 @@ def test_benchmark():
   assert b.on_nl_file == on_nl_file
   with temp_ampl_file() as ampl_file:
     with tempfile.NamedTemporaryFile() as log_file:
-      with util.Benchmark(solver='./mock-solver', solver_options={'answer': 42},
+      with util.Benchmark(solver=mock_solver, solver_options={'answer': 42},
                           log=log_file.name) as b:
         assert log_file.read() == ''
         b.run(ampl_file.name)
@@ -185,7 +194,7 @@ def test_benchmark():
       entry = log[0]
       assert entry['model'] == ampl_file.name
       assert entry['sha'] == util.sha1_file(ampl_file.name)
-      assert entry['solver'] == './mock-solver'
+      assert entry['solver'] == mock_solver
       assert entry['solver_options'] == {'answer': 42}
       assert entry['start']
       assert float(entry['time']) > 0
@@ -198,7 +207,7 @@ def test_benchmark():
 def test_benchmark_env():
   with temp_ampl_file() as ampl_file:
     with tempfile.NamedTemporaryFile() as log_file:
-      with util.Benchmark(solver='./mock-solver', solver_options={'print_env': 1},
+      with util.Benchmark(solver=mock_solver, solver_options={'print_env': 1},
                           log=log_file.name) as b:
         b.run(ampl_file.name)
       log = yaml.load(log_file.read())
