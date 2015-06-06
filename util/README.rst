@@ -91,7 +91,7 @@ the YAML_ format and here is a sample log entry:
     output: |
       MINOS 5.51: 
 
-.. _YAML:: http://yaml.org/
+.. _YAML: http://yaml.org/
 
 Formatting results
 ------------------
