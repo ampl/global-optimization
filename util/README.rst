@@ -76,18 +76,18 @@ the YAML_ format and here is a sample log entry:
 
 .. code:: yaml
 
-  - model: /tmp/tmpkOJSRH/01-01-10.mod
-    sha: 5aad7f30608601641bc2869a07dc5b8315584e5f
+  - model: casado/casado01.mod
+    sha: d83bc5f2a89421d937b9d2ea8f9053d822231d4d
     solver: minos
-    start: 2015-06-03 14:58:43.972498
-    time: 0.0059061050415
+    start: 2015-06-05 17:53:01.772361
+    time: 0.00385594367981
     timeout: False
-    obj: 0.0157685012892
+    obj: -0.99113461363
     solve_result: solved
     solve_message: |
       MINOS 5.51: optimal solution found.
-      11 iterations, objective 0.015768501289210177
-      Nonlin evals: obj = 39, grad = 38.
+      3 iterations, objective -0.9911346136299205
+      Nonlin evals: obj = 9, grad = 8.
     output: |
       MINOS 5.51: 
 
