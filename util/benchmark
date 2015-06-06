@@ -9,7 +9,7 @@ Usage:
 """
 
 from __future__ import print_function
-import docopt, glob, imp, os, re, shutil, sys, tempfile, util, yaml
+import docopt, glob, os, re, shutil, sys, tempfile, util, yaml
 import pandas as pd
 from collections import OrderedDict
 from contextlib import contextmanager
