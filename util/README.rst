@@ -53,8 +53,8 @@ Example of a Python benchmark module:
 The ``load_index`` method returns the list of all models from the casado_
 and hansen_ collections.
 
-_casado: https://github.com/ampl/global-optimization/tree/master/casado
-_hansen: https://github.com/ampl/global-optimization/tree/master/hansen
+.. _casado: https://github.com/ampl/global-optimization/tree/master/casado
+.. _hansen: https://github.com/ampl/global-optimization/tree/master/hansen
 
 Note that the ``lgo`` solver is included in two configurations.
 The ``suffix`` argument specifies a suffix to be added to the log name.
