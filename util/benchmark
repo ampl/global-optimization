@@ -236,8 +236,10 @@ def format_logs(path):
       ampl_filename = input['path']
       print(os.path.basename(ampl_filename))
       dirname, filename = os.path.split(ampl_filename)
+      if not os.path.isabs(dirname):
+        dirname = os.path.join(util.repo_dir, dirname)
       with util.AMPL(dirname) as ampl:
-        ampl.eval('model {};'.format(ampl_filename))
+        ampl.eval('model {};'.format(filename))
         input['num_vars'] = ampl.eval_expr('_snvars')
         input['num_cons'] = ampl.eval_expr('_sncons')
         objname = ampl.eval_expr('_objname[1]')

@@ -422,7 +422,7 @@ def load_index(*dirs):
     with open(os.path.join(repo_dir, dirname, 'index.yaml')) as f:
       items = sorted(yaml.load(f).items())
       for k, v in items:
-        v['path'] = os.path.join(repo_dir, dirname, k + '.mod')
+        v['path'] = os.path.join(dirname, k + '.mod')
       index.update(items)
   for k, v in index.iteritems():
     # Convert values such as 1e-8 to float since YAML treats them as strings.
