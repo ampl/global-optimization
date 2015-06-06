@@ -71,7 +71,27 @@ where ``<path>`` is a path to the Python benchmark module. Example:
   benchmark run montreal2015/casado-hansen.py
 
 This will run the ``casado-hansen`` benchmark and write log files such as
-``casado-hansen-minos.yaml``, one for each configuration.
+``casado-hansen-minos.yaml``, one for each configuration. Logs are written in
+the YAML_ format and here is a sample log entry:
+
+.. code:: yaml
+
+  - model: /tmp/tmpkOJSRH/01-01-10.mod
+    sha: 5aad7f30608601641bc2869a07dc5b8315584e5f
+    solver: minos
+    start: 2015-06-03 14:58:43.972498
+    time: 0.0059061050415
+    timeout: False
+    obj: 0.0157685012892
+    solve_result: solved
+    solve_message: |
+      MINOS 5.51: optimal solution found.
+      11 iterations, objective 0.015768501289210177
+      Nonlin evals: obj = 39, grad = 38.
+    output: |
+      MINOS 5.51: 
+
+.. _YAML:: http://yaml.org/
 
 Formatting results
 ------------------
