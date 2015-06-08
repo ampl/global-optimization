@@ -212,6 +212,12 @@ def equal_nodes(lhs, rhs):
     def visit_reference(self, expr):
       return lhs.name == rhs.name
 
+    def visit_subscript(self, expr):
+      return lhs.name == rhs.name and equal_nodes(lhs.subscript, rhs.subscript)
+
+    def visit_paren(self, expr):
+      return equal_nodes(lhs.arg, rhs.arg)
+
     def visit_unary(self, expr):
       return lhs.op == rhs.op and equal_nodes(lhs.arg, rhs.arg)
 
@@ -246,6 +252,9 @@ def equal_nodes(lhs, rhs):
         equal_nodes(lhs.indexing, rhs.indexing) and equal_nodes(lhs.body, rhs.body) and \
         equal_node_lists(lhs.attrs, rhs.attrs)
 
+    def visit_include(self, stmt):
+      return lhs.kind == rhs.kind
+
     def visit_compound(self, stmt):
       return equal_node_lists(lhs.nodes, rhs.nodes)
 
@@ -277,6 +286,7 @@ def test_equal_nodes():
   ix = ampl.Indexing(x)
   iy = ampl.Indexing(y)
   check_equal_nodes(x, y)
+  check_equal_nodes(ampl.ParenExpr(x), ampl.UnaryExpr('-', x))
   check_equal_nodes(ampl.UnaryExpr('-', x), ampl.UnaryExpr('+', x), ampl.UnaryExpr('-', y))
   check_equal_nodes(ampl.BinaryExpr('*', x, y), ampl.BinaryExpr('+', x, y),
                     ampl.BinaryExpr('*', y, y), ampl.BinaryExpr('*', x, x))
@@ -287,6 +297,7 @@ def test_equal_nodes():
   check_equal_nodes(ampl.SumExpr(ix, x), ampl.SumExpr(iy, x), ampl.SumExpr(ix, y))
   check_equal_nodes(ix, iy)
   check_equal_nodes(ampl.Decl('var', 'x'), ampl.Decl('var', 'y'))
+  check_equal_nodes(ampl.IncludeStmt('data'), ampl.IncludeStmt('model'))
   assert not equal_nodes(ampl.Decl('var', 'x'), ampl.CompoundStmt([]))
 
 def test_equal_node_lists():
@@ -303,13 +314,50 @@ def check_parse(input, *nodes):
 def test_parse_decls():
   s_decl = ampl.Decl('set', 'S')
   indexing = ampl.Indexing(ref('S'))
-  for kw in ['param', 'var', 'set', 'minimize']:
+  for kw in ['param', 'var', 'set', 'minimize', 'maximize']:
     check_parse(kw + ' a;', ampl.Decl(kw, 'a'))
     check_parse('set S; ' + kw + ' a{S};', s_decl, ampl.Decl(kw, 'a', indexing))
 
 def test_parse_attrs():
+  e1 = ampl.BinaryExpr('+', ref('x'), ref('y'))
+  e2 = ampl.UnaryExpr('-', ref('x'))
   for kw in ['param', 'var']:
-    check_parse(kw + ' a = 42;',
-                ampl.Decl(kw, 'a', None, [ampl.InitAttr(ref('42'))]))
-    check_parse(kw + ' a in [0, 1];',
-                ampl.Decl(kw, 'a', None, [ampl.InAttr(ref('0'), ref('1'))]))
+    check_parse(kw + ' a = x + y;',
+                ampl.Decl(kw, 'a', None, [ampl.InitAttr(e1)]))
+    check_parse(kw + ' a in [x + y, -x];',
+                ampl.Decl(kw, 'a', None, [ampl.InAttr(e1, e2)]))
+
+def test_parse_obj_body():
+  decl = ampl.Decl('minimize', 'o')
+  decl.body = ampl.BinaryExpr('+', ref('x'), ref('y'))
+  check_parse('minimize o: x + y;', decl)
+
+def check_parse_expr(input, expr):
+  "Check parsing arithmetic expression."
+  assert equal_nodes(ampl.parse('var x = {};'.format(input), 'in'),
+                     ampl.CompoundStmt([ampl.Decl('var', 'x', None, [ampl.InitAttr(expr)])]))
+
+def check_parse_lexpr(input, expr):
+  "Check parsing logical expression."
+  check_parse_expr('if {} then 1'.format(input), ampl.IfExpr(expr, ref('1')))
+
+def test_parse_expr():
+  check_parse_expr('42', ref('42'))
+  check_parse_expr('-x', ampl.UnaryExpr('-', ref('x')))
+  check_parse_expr('(x)', ampl.ParenExpr(ref('x')))
+  check_parse_expr('sum{S} x', ampl.SumExpr(ampl.Indexing(ref('S')), ref('x')))
+  check_parse_expr('sum{s in S} x', ampl.SumExpr(ampl.Indexing(ref('S'), 's'), ref('x')))
+  check_parse_expr('if x then y', ampl.IfExpr(ref('x'), ref('y')))
+  check_parse_expr('if x then y else z', ampl.IfExpr(ref('x'), ref('y'), ref('z')))
+  for f in ['abs', 'acos', 'acosh', 'alias', 'asin', 'asinh', 'atan', 'atan2', 'atanh',
+            'ceil', 'ctime', 'cos', 'exp', 'floor', 'log', 'log10', 'max', 'min',
+            'precision', 'round', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'time', 'trunc']:
+    check_parse_expr(f + '(x)', ampl.CallExpr(f, [ref('x')]))
+  check_parse_expr('x[y]', ampl.SubscriptExpr('x', ref('y')))
+  for op in ['^', '**', '+', '-', '*', '/']:
+    check_parse_expr('x ' + op + ' y', ampl.BinaryExpr(op, ref('x'), ref('y')))
+  for op in ['<', '<=', '=', '==', '<>', '!=', '<=', '>']:
+    check_parse_lexpr('x ' + op + ' y', ampl.BinaryExpr(op, ref('x'), ref('y')))
+
+def test_parse_data():
+  check_parse('data;', ampl.IncludeStmt('data'))

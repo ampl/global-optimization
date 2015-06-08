@@ -303,7 +303,7 @@ def parse(input, name):
   ns = Namespace()
   ns.pos = 0 # Current position in input
   space_re = re.compile(r'[ \t\r]*(#.*)?')
-  token_re = re.compile(r'([a-zA-Z0-9_.]+|:=|<=|==|<>|!=|>=|.)?')
+  token_re = re.compile(r'([a-zA-Z0-9_.]+|:=|<=|==|<>|!=|>=|\*\*|.)?')
   ns.token = None # Next token
   ns.lineno = 1
 
@@ -373,14 +373,13 @@ def parse(input, name):
       arg = parse_expr()
       consume_token(')')
       expr = CallExpr(t, [arg])
+    elif ns.token == '[':
+      consume_token()
+      subscript = parse_expr()
+      consume_token(']')
+      expr = SubscriptExpr(t, subscript)
     else:
-      if ns.token == '[':
-        consume_token()
-        subscript = parse_expr()
-        consume_token(']')
-        expr = SubscriptExpr(t, subscript)
-      else:
-        expr = Reference(t)
+      expr = Reference(t)
     if ns.token == '^' or ns.token == '**':
       op = consume_token()
       return BinaryExpr(op, expr, parse_unary_expr())
@@ -418,7 +417,7 @@ def parse(input, name):
     decl = parse_decl_start()
     if ns.token == '=':
       consume_token()
-      init = parse_expr()
+      init = parse_expr(CONDITIONAL)
       decl.attrs.append(InitAttr(init))
     if ns.token == 'in':
       consume_token()
