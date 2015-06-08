@@ -59,6 +59,14 @@ and hansen_ collections.
 Note that the ``lgo`` solver is included in two configurations.
 The ``suffix`` argument specifies a suffix to be added to the log name.
 
+Requirements
+------------
+
+The benchmark script is written in Python and uses the following modules:
+
+* `PyYAML <http://pyyaml.org/>`_: YAML implementations for Python
+* `Pandas <http://pandas.pydata.org/>`_: Python Data Analysis Library
+
 Running benchmarks
 ------------------
 
