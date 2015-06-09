@@ -1,4 +1,5 @@
 # Benchmark utilities
+# Copyright (c) 2015, Victor Zverovich
 
 from __future__ import print_function
 import ampl, glob, hashlib, itertools, math, os

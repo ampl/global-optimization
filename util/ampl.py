@@ -1,4 +1,5 @@
 # A basic AMPL parser and AST.
+# Copyright (c) 2015, Victor Zverovich
 
 import re
 
