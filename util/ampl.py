@@ -277,6 +277,9 @@ def parse(input, name):
   EXPONENTIATION   = 15 # ^ **
   
   precedence = {
+    '||': LOGICAL_OR,
+    'or': LOGICAL_OR,
+    'in': MEMBERSHIP,
     '<' : RELATIONAL,
     '<=': RELATIONAL,
     '=' : RELATIONAL,
@@ -285,6 +288,7 @@ def parse(input, name):
     '!=': RELATIONAL,
     '<=': RELATIONAL,
     '>' : RELATIONAL,
+    '&' : CONCATENATION,
     '+' : ADDITIVE,
     '-' : ADDITIVE,
     '*' : MULTIPLICATIVE,
@@ -303,7 +307,7 @@ def parse(input, name):
   ns = Namespace()
   ns.pos = 0 # Current position in input
   space_re = re.compile(r'[ \t\r]*(#.*)?')
-  token_re = re.compile(r'([a-zA-Z0-9_.]+|:=|<=|==|<>|!=|>=|\*\*|.)?')
+  token_re = re.compile(r'([a-zA-Z0-9_.]+|:=|<=|==|<>|!=|>=|\*\*|\|\||or|in|.)?')
   ns.token = None # Next token
   ns.lineno = 1
 

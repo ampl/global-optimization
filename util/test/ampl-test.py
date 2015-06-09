@@ -255,6 +255,10 @@ def equal_nodes(lhs, rhs):
     def visit_include(self, stmt):
       return lhs.kind == rhs.kind
 
+    def visit_data(self, stmt):
+      return lhs.kind == rhs.kind and lhs.set_name == rhs.set_name and \
+        lhs.param_names == rhs.param_names and lhs.values == rhs.values
+
     def visit_compound(self, stmt):
       return equal_node_lists(lhs.nodes, rhs.nodes)
 
@@ -298,6 +302,13 @@ def test_equal_nodes():
   check_equal_nodes(ix, iy)
   check_equal_nodes(ampl.Decl('var', 'x'), ampl.Decl('var', 'y'))
   check_equal_nodes(ampl.IncludeStmt('data'), ampl.IncludeStmt('model'))
+  check_equal_nodes(ampl.DataStmt('param', 'S', ['a', 'b'], ['1', '2', '3']),
+                    ampl.DataStmt('var', 'S', ['a', 'b'], ['1', '2', '3']),
+                    ampl.DataStmt('param', 'T', ['a', 'b'], ['1', '2', '3']),
+                    ampl.DataStmt('param', 'S', ['a'], ['1', '2', '3']),
+                    ampl.DataStmt('param', 'S', ['a', 'c'], ['1', '2', '3']),
+                    ampl.DataStmt('param', 'S', ['a', 'v'], ['1', '2']),
+                    ampl.DataStmt('param', 'S', ['a', 'v'], ['1', '2', '4']))
   assert not equal_nodes(ampl.Decl('var', 'x'), ampl.CompoundStmt([]))
 
 def test_equal_node_lists():
@@ -356,8 +367,45 @@ def test_parse_expr():
   check_parse_expr('x[y]', ampl.SubscriptExpr('x', ref('y')))
   for op in ['^', '**', '+', '-', '*', '/']:
     check_parse_expr('x ' + op + ' y', ampl.BinaryExpr(op, ref('x'), ref('y')))
-  for op in ['<', '<=', '=', '==', '<>', '!=', '<=', '>']:
+  for op in ['||', 'or', 'in', '<', '<=', '=', '==', '<>', '!=', '<=', '>']:
     check_parse_lexpr('x ' + op + ' y', ampl.BinaryExpr(op, ref('x'), ref('y')))
+
+def test_parse_expr_precedence():
+  x = ref('x')
+  y = ref('y')
+  z = ref('z')
+  check_parse_lexpr('(x || y)', ampl.ParenExpr(ampl.BinaryExpr('||', x, y)))
+  idx = ampl.Indexing(ref('S'))
+  check_parse_lexpr('sum{S} x * y', ampl.SumExpr(idx, ampl.BinaryExpr('*', x, y)))
+  check_parse_lexpr('sum{S} x + y', ampl.BinaryExpr('+', ampl.SumExpr(idx, x), y))
+  check_parse_expr('if x || y then z', ampl.IfExpr(ampl.BinaryExpr('||', x, y), z))
+  check_parse_expr('if x then y & z', ampl.IfExpr(x, ampl.BinaryExpr('&', y, z)))
+  check_parse_lexpr('if x then y in S', ampl.BinaryExpr('in', ampl.IfExpr(x, y), ref('S')))
+  check_parse_expr('if x then y else x & z', ampl.IfExpr(x, y, ampl.BinaryExpr('&', x, z)))
+  check_parse_lexpr('if x then y else z in S', ampl.BinaryExpr('in', ampl.IfExpr(x, y, z), ref('S')))
+  check_parse_expr('sin(if x then y)', ampl.CallExpr('sin', [ampl.IfExpr(x, y)]))
+  check_parse_expr('a[if x then y]', ampl.SubscriptExpr('a', ampl.IfExpr(x, y)))
+  check_parse_lexpr('x || y > z', ampl.BinaryExpr('||', x, ampl.BinaryExpr('>', y, z)))
+  check_parse_lexpr('x || y in z', ampl.BinaryExpr('||', x, ampl.BinaryExpr('in', y, z)))
+  
+  
+def test_parse_associativity():
+  x = ref('x')
+  y = ref('y')
+  z = ref('z')
+  check_parse_lexpr('x + y + z', ampl.BinaryExpr('+', ampl.BinaryExpr('+', x, y), z))
+  check_parse_lexpr('x + y - z', ampl.BinaryExpr('-', ampl.BinaryExpr('+', x, y), z))
+  check_parse_lexpr('x * y * z', ampl.BinaryExpr('*', ampl.BinaryExpr('*', x, y), z))
+  check_parse_lexpr('x * y / z', ampl.BinaryExpr('/', ampl.BinaryExpr('*', x, y), z))
+  check_parse_lexpr('x ^ y ^ z', ampl.BinaryExpr('^', x, ampl.BinaryExpr('^', y, z)))
 
 def test_parse_data():
   check_parse('data;', ampl.IncludeStmt('data'))
+  check_parse(
+    '''
+    data;
+    param:
+    S: a b :=
+    1  2 3;
+    ''',
+    ampl.IncludeStmt('data'), ampl.DataStmt('param', 'S', ['a', 'b'], ['1', '2', '3']))
