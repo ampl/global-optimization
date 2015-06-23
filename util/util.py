@@ -388,17 +388,29 @@ def merge_models(models):
   # Invert sign if objectives are of different kinds.
   return ampl.CompoundStmt(merged_head + [merged_obj] + merged_tail), merged_best_obj
 
+def random_combination_with_replacement(iterable, r):
+  "Random selection from itertools.combinations_with_replacement(iterable, r)"
+  pool = tuple(iterable)
+  n = len(pool)
+  indices = sorted(random.randrange(n) for i in xrange(r))
+  return tuple(pool[i] for i in indices)
+
 def get_problem_combinator(index, n, num_problems=None):
   """
   Returns a function that combines *n* problems from *index* to get the given
   number of combined problems selected at random.
   """
   index = index.values()
-  combinations = [i for i in itertools.combinations_with_replacement(range(len(index)), n)]
-  if num_problems is not None:
+  pool = range(len(index))
+  if num_problems is None:
+    # Get all combinations.
+    combinations = [i for i in itertools.combinations_with_replacement(pool, n)]
+  else:
     # Set seed to make sure that pseudo-random sequence is reproducible.
     random.seed(0)
-    combinations = sorted(random.sample(combinations, num_problems))
+    combinations = set()
+    while len(combinations) < num_problems:
+      combinations.add(random_combination_with_replacement(pool, n))
   def combine_problems(dirname):
     composite_index = OrderedDict()
     for indices in combinations:
