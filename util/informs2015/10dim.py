@@ -12,8 +12,6 @@ timeout = 60 * 60
 configs = [
   Config('lgo', {'opmode': lgo.LOCAL_SEARCH_MODE}, suffix='local-search'),
   Config('lgo', {'opmode': lgo.MULTISTART_MODE},
-         suffix='multistart', on_nl_file=lgo.make_maxfct_setter(2)),
-  Config('lgo', {'opmode': lgo.MULTISTART_MODE},
          suffix='multistart-k4', on_nl_file=lgo.make_maxfct_setter(4)),
   Config('minos'),
   Config('baron'),
