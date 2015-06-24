@@ -7,7 +7,7 @@ from util import Config, get_problem_combinator, load_index
 inputs = get_problem_combinator(load_index('casado', 'hansen'), 5, 1000)
 
 # Timeout in seconds
-timeout = 60 * 60
+timeout = 10 * 60
 
 configs = [
   Config('lgo', {'opmode': lgo.LOCAL_SEARCH_MODE}, suffix='local-search'),
