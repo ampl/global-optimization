@@ -14,6 +14,6 @@ configs = [
   Config('lgo', {'opmode': lgo.MULTISTART_MODE},
          suffix='multistart-k4', on_nl_file=lgo.make_maxfct_setter(4)),
   Config('minos'),
-  Config('baron'),
+  Config('baron', {'maxtime': -1}),
   Config('couenne', couenne.options())
 ]
