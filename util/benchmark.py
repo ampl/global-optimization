@@ -1,8 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Copyright (c) 2015, Victor Zverovich
 
-"""Benchmark.
+"""Benchmark script
 
 Usage:
   benchmark run <path>
@@ -257,7 +256,7 @@ def format_logs(path):
         write_results(f, results, inputs, legend.keys(), obj_tolerance)
         write_summary(f, results, inputs, obj_tolerance)
 
-if __name__ == '__main__':
+def run():
   args = docopt.docopt(__doc__)
   if args['run']:
     run_benchmark(args['<path>'])
