@@ -14,6 +14,8 @@ import pandas as pd
 from collections import OrderedDict
 from contextlib import contextmanager
 
+LOG_DIR = 'logs'
+
 def read_module(path):
   "Read a Python module with the benchmark configuration."
   module_dir, module_name = os.path.split(path)
@@ -25,7 +27,7 @@ def log_filename(module, config):
   filename = module.__name__ + '-' + config.solver
   if config.suffix:
     filename += '-' + config.suffix
-  return filename + '.yaml'
+  return os.path.join(LOG_DIR, filename + '.yaml')
 
 @contextmanager
 def get_inputs(module):
@@ -47,6 +49,8 @@ def run_benchmark(path):
   """
   module = read_module(path)
   with get_inputs(module) as inputs:
+    if not os.path.exists(LOG_DIR):
+      os.mkdir(LOG_DIR)
     print('Running benchmark...')
     for c in module.configs:
       with util.Benchmark(log=log_filename(module, c), timeout=module.timeout, solver=c.solver,
