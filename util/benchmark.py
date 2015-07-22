@@ -24,10 +24,10 @@ def read_module(path):
   return __import__(module_name)
 
 def log_filename(module, config):
-  filename = module.__name__ + '-' + config.solver
+  filename = config.solver
   if config.suffix:
     filename += '-' + config.suffix
-  return os.path.join(LOG_DIR, filename + '.yaml')
+  return os.path.join(LOG_DIR, module.__name__, filename + '.yaml')
 
 @contextmanager
 def get_inputs(module):
@@ -49,11 +49,13 @@ def run_benchmark(path):
   """
   module = read_module(path)
   with get_inputs(module) as inputs:
-    if not os.path.exists(LOG_DIR):
-      os.mkdir(LOG_DIR)
     print('Running benchmark...')
     for c in module.configs:
-      with util.Benchmark(log=log_filename(module, c), timeout=module.timeout, solver=c.solver,
+      log = log_filename(module, c)
+      log_dir = os.path.dirname(log)
+      if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+      with util.Benchmark(log=log, timeout=module.timeout, solver=c.solver,
                           solver_options=c.solver_options, on_nl_file=c.on_nl_file) as b:
         for name, data in inputs.iteritems():
           print(name)
