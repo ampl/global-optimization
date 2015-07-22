@@ -254,6 +254,8 @@ def format_logs(path):
       log = log_filename(module, c)
       print('Parsing ' + log)
       results = read_log(log, inputs)
+      if 'result_filter' in dir(module):
+        results = filter(module.result_filter, results)
       print('Formatting results...')
       output_filename = os.path.splitext(log)[0] + '.txt'
       obj_tolerance = 0.0001
