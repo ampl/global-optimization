@@ -3,6 +3,9 @@ Global Optimization Test Set
 
 Sources:
 
+* casado: Problems from "New Interval Analysis Support Functions Using Gradient
+  Information in a Global Minimization Algorithm" by L.G. Casado, J.A. Martinez,
+  I. Garcia and YA.D. Sergeyev, Journal of Global Optimization 25: 345–362, 2003
 * csp: `Constraint satisfaction test problems <http://icwww.epfl.ch/~sam/Coconut-benchs/>`_
 * cute: `CUTE test set <http://orfe.princeton.edu/~rvdb/ampl/nlmodels/cute/>`_
 * global: `GLOBAL library <http://www.gamsworld.org/global/globallib.htm>`_
