@@ -1,0 +1,180 @@
+# FINAL POSTURE DATA FILE 
+# Units of measure: [rad], [mm] 
+
+data; 
+# BODY INFO 
+param body := 
+1 78.0003
+2 252.9819;
+# D-H PARAMETERS OF THE ARM 
+param alpha := 
+1 1.5708
+2 1.5708
+3 -1.5708
+4 1.5708
+5 -1.5708
+6 1.5708
+7 -1.5708;
+param a := 
+1 0.0000
+2 0.0000
+3 0.0000
+4 0.0000
+5 0.0000
+6 0.0000
+7 0.0000;
+param d := 
+1 340.0000
+2 0.0000
+3 390.0000
+4 0.0000
+5 374.0000
+6 0.0000
+7 280.0000;
+# DISTANCE HAND - TARGET
+param dFH := -2147483648.0000;
+# INITIAL CONFIGURATION 
+param thet_init := 
+1 -1.29
+2 -1.50
+3 1.40
+4 -1.84
+5 -0.35
+6 0.47
+7 0.44;
+param Hand_init := 
+1 -701.28
+2 351.26
+3 1346.16;
+param x_H_init := 
+1 0.11
+2 0.03
+3 0.99;
+param y_H_init := 
+1 -0.00
+2 1.00
+3 -0.03;
+param z_H_init := 
+1 -0.99
+2 0.00
+3 0.11;
+param Elbow_init := 
+1 -107.54
+2 417.67
+3 1126.04;
+param x_E_init := 
+1 -0.95
+2 -0.17
+3 0.26;
+param y_E_init := 
+1 -0.14
+2 0.98
+3 0.11;
+param z_E_init := 
+1 -0.28
+2 0.07
+3 -0.96;
+param Wrist_init := 
+1 -107.54
+2 350.82
+3 1315.56;
+param x_W_init := 
+1 0.54
+2 -0.36
+3 0.76;
+param y_W_init := 
+1 0.05
+2 0.92
+3 0.40;
+param z_W_init := 
+1 -0.84
+2 -0.18
+3 0.51;
+param swivel_init := 3.02;
+# FINAL FINGER JOINTS 
+param joint_fingers := 
+1 0.00
+2 1.22
+3 1.22
+4 1.22;
+# JOINT EXPENSE FACTORS 
+param lambda := 
+1 1.00
+2 1.00
+3 1.00
+4 1.00
+5 1.00
+6 1.00
+7 1.00;
+# INITIAL GUESS 
+var theta = 
+1 -1.53254553
+2 -1.64059999
+3 1.58480551
+4 -0.95626614
+5 -0.04484903
+6 -0.56155987
+7 0.01135806;
+# PARAMETERS OF THE HAND 
+# R and J parameters 
+param rk := 
+1 -1
+2 1
+3 0;
+param jk := 
+1 -1
+2 1
+3 0;
+param Aw :=25.00;
+param A1 :=50.00;
+param A2 :=70.00;
+param A3 :=50.00;
+param D3 :=9.50;
+param phi_2 :=0.04;
+param phi_3 :=0.87;
+# TARGET POSITION 
+param Tar_pos := 
+1 -609.09
+2 349.14
+3 898.48;
+# TARGET ORIENTATION 
+param x_t := 
+1 0.00
+2 -0.02
+3 1.00;
+param y_t := 
+1 -0.03
+2 1.00
+3 0.02;
+param z_t := 
+1 -1.00
+2 -0.03
+3 -0.00;
+# OBSTACLES POSITION+RADIUS+ORIENTATION 
+param Obstacles : 1 2 3 4 5 6 7 8 9 := 
+1 -750.42 245.19 1094.15 250.00 25.00 250.00 1.56 0.04 -1.57  #Obstacle
+  ;
+ param n_Obstacles := 1;
+# CONSTRAINTS LAGRANGE MULTIPLIERS 
+param n_constr := 20; 
+param dual_in := 
+1 -0.00849411
+2 -102.76869394
+3 0.00000001
+4 0.00000008
+5 0.00000018
+6 0.00000026
+7 0.00000024
+8 0.00000020
+9 0.00000026
+10 0.00000026
+11 0.00000021
+12 -0.00000009
+13 0.00000003
+14 0.00000002
+15 -0.00000021
+16 -0.00000012
+17 -0.00000014
+18 0.00000065
+19 -0.00000010
+20 0.00000005; 
